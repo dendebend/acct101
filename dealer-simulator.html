@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEALER Transaction Simulator - ACCT101</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .dealer-reference {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            border: 3px solid #667eea;
+        }
+
+        .dealer-reference h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .dealer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .dealer-card {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .dealer-card.debit {
+            background: #e3f2fd;
+            border: 3px solid #1976d2;
+        }
+
+        .dealer-card.credit {
+            background: #f3e5f5;
+            border: 3px solid #7b1fa2;
+        }
+
+        .dealer-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .dealer-card.debit h3 {
+            color: #1976d2;
+        }
+
+        .dealer-card.credit h3 {
+            color: #7b1fa2;
+        }
+
+        .dealer-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .dealer-card li {
+            padding: 8px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .transaction-display {
+            background: #fff9e6;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #ffa726;
+            margin-bottom: 30px;
+        }
+
+        .transaction-display h3 {
+            color: #e65100;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .transaction-text {
+            font-size: 1.2em;
+            color: #333;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .analysis-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            background: #667eea;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .step h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .account-input-group {
+            margin-bottom: 20px;
+        }
+
+        .account-input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .account-input-group input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+
+        .account-input-group input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .side-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .side-btn {
+            flex: 1;
+            padding: 12px;
+            border: 3px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .side-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .side-btn.debit {
+            border-color: #1976d2;
+            color: #1976d2;
+        }
+
+        .side-btn.debit.selected {
+            background: #1976d2;
+            color: white;
+        }
+
+        .side-btn.credit {
+            border-color: #7b1fa2;
+            color: #7b1fa2;
+        }
+
+        .side-btn.credit.selected {
+            background: #7b1fa2;
+            color: white;
+        }
+
+        .category-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .category-btn {
+            padding: 10px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .category-btn.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-check {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-solution {
+            background: #ff9800;
+            color: white;
+        }
+
+        .btn-new {
+            background: #2196f3;
+            color: white;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+
+        .feedback.error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+
+        .feedback h4 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .feedback ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .feedback li {
+            margin: 5px 0;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .input-correct {
+            border-color: #28a745 !important;
+            background: #d4edda !important;
+        }
+
+        .input-incorrect {
+            border-color: #dc3545 !important;
+            background: #f8d7da !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💼 DEALER Transaction Simulator</h1>
+            <p>Master the DEALER mnemonic by analyzing real accounting transactions</p>
+        </div>
+
+        <div class="dealer-reference">
+            <h2>📚 DEALER Reference Guide</h2>
+            <p style="text-align: center; margin-bottom: 15px; font-size: 1.1em;">
+                <strong>DEALER</strong> tells you which accounts have <strong>DEBIT</strong> vs <strong>CREDIT</strong> normal balances
+            </p>
+            <div class="dealer-grid">
+                <div class="dealer-card debit">
+                    <h3>DEA = DEBIT ⬅️</h3>
+                    <ul>
+                        <li><strong>D</strong>ividends</li>
+                        <li><strong>E</strong>xpenses</li>
+                        <li><strong>A</strong>ssets</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-weight: 600;">Increase with DEBITS (left side)</p>
+                </div>
+                <div class="dealer-card credit">
+                    <h3>LER = CREDIT ➡️</h3>
+                    <ul>
+                        <li><strong>L</strong>iabilities</li>
+                        <li><strong>E</strong>quity</li>
+                        <li><strong>R</strong>evenue</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-weight: 600;">Increase with CREDITS (right side)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="score-display" id="scoreDisplay">
+                Transactions Analyzed: 0 | Correct: 0 | Accuracy: 0%
+            </div>
+
+            <div class="transaction-display">
+                <h3>📋 Transaction to Analyze:</h3>
+                <div class="transaction-text" id="transactionText"></div>
+            </div>
+
+            <div class="analysis-section">
+                <div class="section-title">Step 1: Identify the Two Accounts Affected</div>
+
+                <div class="step">
+                    <h4>Account #1</h4>
+                    <div class="account-input-group">
+                        <label>Account Name:</label>
+                        <input type="text" id="account1Name" placeholder="e.g., Cash, Accounts Receivable, Service Revenue">
+                    </div>
+                    <label style="font-weight: 600; color: #555; margin-bottom: 8px; display: block;">
+                        Account Category (use DEALER):
+                    </label>
+                    <div class="category-buttons" id="category1Buttons">
+                        <button class="category-btn" data-category="Dividends">Dividends</button>
+                        <button class="category-btn" data-category="Expenses">Expenses</button>
+                        <button class="category-btn" data-category="Assets">Assets</button>
+                        <button class="category-btn" data-category="Liabilities">Liabilities</button>
+                        <button class="category-btn" data-category="Equity">Equity</button>
+                        <button class="category-btn" data-category="Revenue">Revenue</button>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4>Account #2</h4>
+                    <div class="account-input-group">
+                        <label>Account Name:</label>
+                        <input type="text" id="account2Name" placeholder="e.g., Cash, Accounts Receivable, Service Revenue">
+                    </div>
+                    <label style="font-weight: 600; color: #555; margin-bottom: 8px; display: block;">
+                        Account Category (use DEALER):
+                    </label>
+                    <div class="category-buttons" id="category2Buttons">
+                        <button class="category-btn" data-category="Dividends">Dividends</button>
+                        <button class="category-btn" data-category="Expenses">Expenses</button>
+                        <button class="category-btn" data-category="Assets">Assets</button>
+                        <button class="category-btn" data-category="Liabilities">Liabilities</button>
+                        <button class="category-btn" data-category="Equity">Equity</button>
+                        <button class="category-btn" data-category="Revenue">Revenue</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analysis-section">
+                <div class="section-title">Step 2: Determine Debit or Credit (using DEALER)</div>
+
+                <div class="step">
+                    <h4>Account #1 Side</h4>
+                    <p style="margin-bottom: 10px; color: #666;">
+                        Think: Is this account <strong>increasing</strong> or <strong>decreasing</strong>?<br>
+                        Then use DEALER to determine if it gets debited or credited.
+                    </p>
+                    <div class="side-buttons">
+                        <button class="side-btn debit" data-account="1" data-side="Debit">
+                            ⬅️ DEBIT (Left)
+                        </button>
+                        <button class="side-btn credit" data-account="1" data-side="Credit">
+                            ➡️ CREDIT (Right)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4>Account #2 Side</h4>
+                    <p style="margin-bottom: 10px; color: #666;">
+                        Think: Is this account <strong>increasing</strong> or <strong>decreasing</strong>?<br>
+                        Then use DEALER to determine if it gets debited or credited.
+                    </p>
+                    <div class="side-buttons">
+                        <button class="side-btn debit" data-account="2" data-side="Debit">
+                            ⬅️ DEBIT (Left)
+                        </button>
+                        <button class="side-btn credit" data-account="2" data-side="Credit">
+                            ➡️ CREDIT (Right)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-check" onclick="checkAnswer()">✓ Check Answer</button>
+                <button class="btn btn-solution" onclick="showSolution()">💡 Show Solution</button>
+                <button class="btn btn-new" onclick="newTransaction()">🔄 New Transaction</button>
+            </div>
+
+            <div class="feedback" id="feedback"></div>
+        </div>
+    </div>
+
+    <script>
+        // Clear any stored state
+        localStorage.clear();
+
+        // Transaction templates
+        const transactions = [
+            {
+                text: "Received $5,000 cash from customers for services provided.",
+                accounts: [
+                    { name: "Cash", category: "Assets", side: "Debit", increasing: true },
+                    { name: "Service Revenue", category: "Revenue", side: "Credit", increasing: true }
+                ],
+                explanation: "Cash (Asset) increases → Debit. Service Revenue (Revenue) increases → Credit."
+            },
+            {
+                text: "Paid $1,200 cash for rent expense.",
+                accounts: [
+                    { name: "Rent Expense", category: "Expenses", side: "Debit", increasing: true },
+                    { name: "Cash", category: "Assets", side: "Credit", increasing: false }
+                ],
+                explanation: "Rent Expense (Expense) increases → Debit. Cash (Asset) decreases → Credit."
+            },
+            {
+                text: "Purchased equipment for $10,000 on credit (accounts payable).",
+                accounts: [
+                    { name: "Equipment", category: "Assets", side: "Debit", increasing: true },
+                    { name: "Accounts Payable", category: "Liabilities", side: "Credit", increasing: true }
+                ],
+                explanation: "Equipment (Asset) increases → Debit. Accounts Payable (Liability) increases → Credit."
+            },
+            {
+                text: "Owner invested $20,000 cash into the business.",
+                accounts: [
+                    { name: "Cash", category: "Assets", side: "Debit", increasing: true },
+                    { name: "Owner's Capital", category: "Equity", side: "Credit", increasing: true }
+                ],
+                explanation: "Cash (Asset) increases → Debit. Owner's Capital (Equity) increases → Credit."
+            },
+            {
+                text: "Paid $3,000 to creditors to reduce accounts payable.",
+                accounts: [
+                    { name: "Accounts Payable", category: "Liabilities", side: "Debit", increasing: false },
+                    { name: "Cash", category: "Assets", side: "Credit", increasing: false }
+                ],
+                explanation: "Accounts Payable (Liability) decreases → Debit. Cash (Asset) decreases → Credit."
+            },
+            {
+                text: "Provided services on account (accounts receivable) for $2,500.",
+                accounts: [
+                    { name: "Accounts Receivable", category: "Assets", side: "Debit", increasing: true },
+                    { name: "Service Revenue", category: "Revenue", side: "Credit", increasing: true }
+                ],
+                explanation: "Accounts Receivable (Asset) increases → Debit. Service Revenue (Revenue) increases → Credit."
+            },
+            {
+                text: "Paid $800 cash for utilities expense.",
+                accounts: [
+                    { name: "Utilities Expense", category: "Expenses", side: "Debit", increasing: true },
+                    { name: "Cash", category: "Assets", side: "Credit", increasing: false }
+                ],
+                explanation: "Utilities Expense (Expense) increases → Debit. Cash (Asset) decreases → Credit."
+            },
+            {
+                text: "Collected $1,500 cash from customers who owed money (accounts receivable).",
+                accounts: [
+                    { name: "Cash", category: "Assets", side: "Debit", increasing: true },
+                    { name: "Accounts Receivable", category: "Assets", side: "Credit", increasing: false }
+                ],
+                explanation: "Cash (Asset) increases → Debit. Accounts Receivable (Asset) decreases → Credit."
+            },
+            {
+                text: "Owner withdrew $2,000 cash for personal use (dividends/drawings).",
+                accounts: [
+                    { name: "Dividends", category: "Dividends", side: "Debit", increasing: true },
+                    { name: "Cash", category: "Assets", side: "Credit", increasing: false }
+                ],
+                explanation: "Dividends (Dividends) increases → Debit. Cash (Asset) decreases → Credit."
+            },
+            {
+                text: "Purchased $500 of supplies on credit.",
+                accounts: [
+                    { name: "Supplies", category: "Assets", side: "Debit", increasing: true },
+                    { name: "Accounts Payable", category: "Liabilities", side: "Credit", increasing: true }
+                ],
+                explanation: "Supplies (Asset) increases → Debit. Accounts Payable (Liability) increases → Credit."
+            },
+            {
+                text: "Paid $1,800 cash for salaries expense.",
+                accounts: [
+                    { name: "Salaries Expense", category: "Expenses", side: "Debit", increasing: true },
+                    { name: "Cash", category: "Assets", side: "Credit", increasing: false }
+                ],
+                explanation: "Salaries Expense (Expense) increases → Debit. Cash (Asset) decreases → Credit."
+            },
+            {
+                text: "Borrowed $15,000 from the bank (notes payable).",
+                accounts: [
+                    { name: "Cash", category: "Assets", side: "Debit", increasing: true },
+                    { name: "Notes Payable", category: "Liabilities", side: "Credit", increasing: true }
+                ],
+                explanation: "Cash (Asset) increases → Debit. Notes Payable (Liability) increases → Credit."
+            },
+            {
+                text: "Paid $600 cash for advertising expense.",
+                accounts: [
+                    { name: "Advertising Expense", category: "Expenses", side: "Debit", increasing: true },
+                    { name: "Cash", category: "Assets", side: "Credit", increasing: false }
+                ],
+                explanation: "Advertising Expense (Expense) increases → Debit. Cash (Asset) decreases → Credit."
+            },
+            {
+                text: "Received $4,000 cash in advance for services to be performed next month (unearned revenue).",
+                accounts: [
+                    { name: "Cash", category: "Assets", side: "Debit", increasing: true },
+                    { name: "Unearned Revenue", category: "Liabilities", side: "Credit", increasing: true }
+                ],
+                explanation: "Cash (Asset) increases → Debit. Unearned Revenue (Liability) increases → Credit."
+            },
+            {
+                text: "Paid $5,000 toward the principal of notes payable.",
+                accounts: [
+                    { name: "Notes Payable", category: "Liabilities", side: "Debit", increasing: false },
+                    { name: "Cash", category: "Assets", side: "Credit", increasing: false }
+                ],
+                explanation: "Notes Payable (Liability) decreases → Debit. Cash (Asset) decreases → Credit."
+            },
+            {
+                text: "Purchased office furniture for $3,500 cash.",
+                accounts: [
+                    { name: "Furniture", category: "Assets", side: "Debit", increasing: true },
+                    { name: "Cash", category: "Assets", side: "Credit", increasing: false }
+                ],
+                explanation: "Furniture (Asset) increases → Debit. Cash (Asset) decreases → Credit."
+            },
+            {
+                text: "Recorded depreciation expense of $400 on equipment.",
+                accounts: [
+                    { name: "Depreciation Expense", category: "Expenses", side: "Debit", increasing: true },
+                    { name: "Accumulated Depreciation", category: "Assets", side: "Credit", increasing: true }
+                ],
+                explanation: "Depreciation Expense (Expense) increases → Debit. Accumulated Depreciation (Contra-Asset) increases → Credit."
+            },
+            {
+                text: "Earned $3,200 of the unearned revenue by providing services.",
+                accounts: [
+                    { name: "Unearned Revenue", category: "Liabilities", side: "Debit", increasing: false },
+                    { name: "Service Revenue", category: "Revenue", side: "Credit", increasing: true }
+                ],
+                explanation: "Unearned Revenue (Liability) decreases → Debit. Service Revenue (Revenue) increases → Credit."
+            },
+            {
+                text: "Paid $250 cash for insurance expense.",
+                accounts: [
+                    { name: "Insurance Expense", category: "Expenses", side: "Debit", increasing: true },
+                    { name: "Cash", category: "Assets", side: "Credit", increasing: false }
+                ],
+                explanation: "Insurance Expense (Expense) increases → Debit. Cash (Asset) decreases → Credit."
+            },
+            {
+                text: "Purchased a vehicle for $25,000, paying $5,000 cash and financing the rest with a note payable.",
+                accounts: [
+                    { name: "Vehicle", category: "Assets", side: "Debit", increasing: true },
+                    { name: "Cash", category: "Assets", side: "Credit", increasing: false },
+                    { name: "Notes Payable", category: "Liabilities", side: "Credit", increasing: true }
+                ],
+                explanation: "Vehicle (Asset) increases → Debit $25,000. Cash (Asset) decreases → Credit $5,000. Notes Payable (Liability) increases → Credit $20,000.",
+                note: "This transaction affects 3 accounts! For this exercise, focus on the first two."
+            }
+        ];
+
+        let currentTransaction = null;
+        let stats = {
+            total: 0,
+            correct: 0
+        };
+
+        let selectedCategory1 = null;
+        let selectedCategory2 = null;
+        let selectedSide1 = null;
+        let selectedSide2 = null;
+
+        // Initialize
+        function init() {
+            setupCategoryButtons();
+            setupSideButtons();
+            newTransaction();
+        }
+
+        function setupCategoryButtons() {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const account = this.closest('.step').querySelector('h4').textContent.includes('#1') ? 1 : 2;
+                    const category = this.dataset.category;
+
+                    // Deselect siblings
+                    this.parentElement.querySelectorAll('.category-btn').forEach(b => b.classList.remove('selected'));
+
+                    // Select this one
+                    this.classList.add('selected');
+
+                    if (account === 1) {
+                        selectedCategory1 = category;
+                    } else {
+                        selectedCategory2 = category;
+                    }
+                });
+            });
+        }
+
+        function setupSideButtons() {
+            document.querySelectorAll('.side-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const account = this.dataset.account;
+                    const side = this.dataset.side;
+
+                    // Deselect siblings
+                    this.parentElement.querySelectorAll('.side-btn').forEach(b => b.classList.remove('selected'));
+
+                    // Select this one
+                    this.classList.add('selected');
+
+                    if (account === '1') {
+                        selectedSide1 = side;
+                    } else {
+                        selectedSide2 = side;
+                    }
+                });
+            });
+        }
+
+        function newTransaction() {
+            // Pick random transaction
+            currentTransaction = transactions[Math.floor(Math.random() * transactions.length)];
+
+            // Display it
+            document.getElementById('transactionText').textContent = currentTransaction.text;
+
+            // Reset inputs
+            document.getElementById('account1Name').value = '';
+            document.getElementById('account2Name').value = '';
+
+            // Reset selections
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelectorAll('.side-btn').forEach(btn => btn.classList.remove('selected'));
+            selectedCategory1 = null;
+            selectedCategory2 = null;
+            selectedSide1 = null;
+            selectedSide2 = null;
+
+            // Clear feedback
+            const feedback = document.getElementById('feedback');
+            feedback.className = 'feedback';
+            feedback.innerHTML = '';
+
+            // Reset input styling
+            document.querySelectorAll('input[type="text"]').forEach(input => {
+                input.classList.remove('input-correct', 'input-incorrect');
+            });
+        }
+
+        function checkAnswer() {
+            const account1Name = document.getElementById('account1Name').value.trim();
+            const account2Name = document.getElementById('account2Name').value.trim();
+
+            if (!account1Name || !account2Name || !selectedCategory1 || !selectedCategory2 || !selectedSide1 || !selectedSide2) {
+                showFeedback('error', 'Please fill in all fields before checking your answer!');
+                return;
+            }
+
+            stats.total++;
+
+            const correctAccounts = currentTransaction.accounts;
+            let errors = [];
+            let correct = true;
+
+            // Normalize account names for comparison (remove common variations)
+            const normalize = (str) => {
+                return str.toLowerCase()
+                    .replace(/\s+/g, ' ')
+                    .replace(/owner's capital/i, 'capital')
+                    .replace(/owner's equity/i, 'capital')
+                    .replace(/common stock/i, 'capital')
+                    .replace(/drawings/i, 'dividends')
+                    .replace(/withdrawals/i, 'dividends')
+                    .trim();
+            };
+
+            // Check if user's accounts match (order doesn't matter)
+            const userAccounts = [
+                { name: normalize(account1Name), category: selectedCategory1, side: selectedSide1 },
+                { name: normalize(account2Name), category: selectedCategory2, side: selectedSide2 }
+            ];
+
+            const correctAccountsNormalized = correctAccounts.slice(0, 2).map(acc => ({
+                name: normalize(acc.name),
+                category: acc.category,
+                side: acc.side
+            }));
+
+            // Try to match accounts (order independent)
+            let matched = [false, false];
+            let userMatched = [false, false];
+
+            for (let i = 0; i < 2; i++) {
+                for (let j = 0; j < 2; j++) {
+                    if (!matched[j] && !userMatched[i]) {
+                        const userAcc = userAccounts[i];
+                        const correctAcc = correctAccountsNormalized[j];
+
+                        // Check if names are similar enough
+                        const nameMatch = userAcc.name.includes(correctAcc.name) ||
+                                        correctAcc.name.includes(userAcc.name) ||
+                                        userAcc.name === correctAcc.name;
+
+                        if (nameMatch && userAcc.category === correctAcc.category && userAcc.side === correctAcc.side) {
+                            matched[j] = true;
+                            userMatched[i] = true;
+                        }
+                    }
+                }
+            }
+
+            // Build detailed feedback
+            let feedbackHTML = '<h4>';
+
+            if (matched[0] && matched[1]) {
+                feedbackHTML += '✓ Perfect! You nailed it!</h4>';
+                feedbackHTML += `<p style="margin-top: 10px;"><strong>Explanation:</strong> ${currentTransaction.explanation}</p>`;
+                stats.correct++;
+
+                // Visual feedback on inputs
+                document.getElementById('account1Name').classList.add('input-correct');
+                document.getElementById('account2Name').classList.add('input-correct');
+
+                showFeedback('success', feedbackHTML);
+            } else {
+                feedbackHTML += '✗ Not quite right. Here\'s what happened:</h4>';
+                feedbackHTML += '<ul>';
+
+                // Show what was wrong
+                for (let i = 0; i < 2; i++) {
+                    const userAcc = userAccounts[i];
+                    const accountNum = i + 1;
+
+                    if (!userMatched[i]) {
+                        feedbackHTML += `<li><strong>Account #${accountNum}:</strong> `;
+
+                        // Find what should have been
+                        const shouldBe = correctAccountsNormalized.find((_, idx) => !matched[idx]);
+                        if (shouldBe) {
+                            feedbackHTML += `You identified "${account1Name || account2Name}" but the correct account is <strong>${correctAccounts[matched[0] ? 1 : 0].name}</strong> `;
+                            feedbackHTML += `(${shouldBe.category}, ${shouldBe.side})`;
+                        }
+                        feedbackHTML += '</li>';
+                    }
+                }
+
+                feedbackHTML += '</ul>';
+                feedbackHTML += `<p style="margin-top: 15px;"><strong>Correct Answer:</strong></p>`;
+                feedbackHTML += `<p>${currentTransaction.explanation}</p>`;
+
+                if (currentTransaction.note) {
+                    feedbackHTML += `<p style="margin-top: 10px; font-style: italic; color: #666;">${currentTransaction.note}</p>`;
+                }
+
+                // Visual feedback on inputs
+                document.getElementById('account1Name').classList.add(userMatched[0] ? 'input-correct' : 'input-incorrect');
+                document.getElementById('account2Name').classList.add(userMatched[1] ? 'input-correct' : 'input-incorrect');
+
+                showFeedback('error', feedbackHTML);
+                correct = false;
+            }
+
+            updateScore();
+        }
+
+        function showSolution() {
+            const correctAccounts = currentTransaction.accounts;
+
+            // Fill in account 1
+            document.getElementById('account1Name').value = correctAccounts[0].name;
+            selectedCategory1 = correctAccounts[0].category;
+            selectedSide1 = correctAccounts[0].side;
+
+            // Fill in account 2
+            document.getElementById('account2Name').value = correctAccounts[1].name;
+            selectedCategory2 = correctAccounts[1].category;
+            selectedSide2 = correctAccounts[1].side;
+
+            // Select buttons
+            document.querySelectorAll('#category1Buttons .category-btn').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.category === correctAccounts[0].category);
+            });
+
+            document.querySelectorAll('#category2Buttons .category-btn').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.category === correctAccounts[1].category);
+            });
+
+            document.querySelectorAll('.side-btn[data-account="1"]').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.side === correctAccounts[0].side);
+            });
+
+            document.querySelectorAll('.side-btn[data-account="2"]').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.side === correctAccounts[1].side);
+            });
+
+            // Show explanation
+            let feedbackHTML = '<h4>💡 Solution Revealed</h4>';
+            feedbackHTML += `<p><strong>Explanation:</strong> ${currentTransaction.explanation}</p>`;
+
+            if (currentTransaction.note) {
+                feedbackHTML += `<p style="margin-top: 10px; font-style: italic; color: #666;">${currentTransaction.note}</p>`;
+            }
+
+            feedbackHTML += '<p style="margin-top: 15px;"><strong>Remember DEALER:</strong><br>';
+            feedbackHTML += '• <strong>DEA</strong> (Dividends, Expenses, Assets) → increase with DEBITS<br>';
+            feedbackHTML += '• <strong>LER</strong> (Liabilities, Equity, Revenue) → increase with CREDITS</p>';
+
+            showFeedback('success', feedbackHTML);
+        }
+
+        function showFeedback(type, message) {
+            const feedback = document.getElementById('feedback');
+            feedback.className = `feedback ${type} show`;
+            feedback.innerHTML = message;
+        }
+
+        function updateScore() {
+            const accuracy = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
+            document.getElementById('scoreDisplay').textContent =
+                `Transactions Analyzed: ${stats.total} | Correct: ${stats.correct} | Accuracy: ${accuracy}%`;
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
