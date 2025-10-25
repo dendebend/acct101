@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACCT101 - Closing Process Simulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .reference-section {
+            background: #fef3c7;
+            padding: 25px;
+            margin: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .reference-section h2 {
+            color: #92400e;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .account-types-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .account-type-card {
+            padding: 15px;
+            border-radius: 8px;
+            border: 3px solid;
+        }
+
+        .account-type-card.permanent {
+            background: #dbeafe;
+            border-color: #2563eb;
+        }
+
+        .account-type-card.temporary {
+            background: #fce7f3;
+            border-color: #db2777;
+        }
+
+        .account-type-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .account-type-card.permanent h3 {
+            color: #1e40af;
+        }
+
+        .account-type-card.temporary h3 {
+            color: #be185d;
+        }
+
+        .account-type-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .account-type-card li {
+            padding: 6px;
+            margin: 4px 0;
+            background: white;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .account-type-card p {
+            margin-top: 10px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .closing-steps {
+            background: #f0fdf4;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #10b981;
+        }
+
+        .closing-steps h2 {
+            color: #065f46;
+            margin-bottom: 15px;
+        }
+
+        .closing-step {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+        }
+
+        .closing-step h4 {
+            color: #059669;
+            margin-bottom: 8px;
+        }
+
+        .closing-step .entry {
+            font-family: 'Courier New', monospace;
+            background: #f9fafb;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 20px;
+            border: 3px solid #e5e7eb;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .mode-btn.active {
+            border-color: #8b5cf6;
+            background: #f5f3ff;
+        }
+
+        .mode-btn h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .mode-btn p {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .quiz-section {
+            display: none;
+        }
+
+        .quiz-section.active {
+            display: block;
+        }
+
+        .scenario-display {
+            background: #f0f9ff;
+            padding: 25px;
+            border-radius: 10px;
+            border: 3px solid #0ea5e9;
+            margin-bottom: 30px;
+        }
+
+        .scenario-display h3 {
+            color: #075985;
+            margin-bottom: 15px;
+        }
+
+        .account-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .account-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 4px solid #0ea5e9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .account-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .account-balance {
+            font-family: 'Courier New', monospace;
+            color: #0369a1;
+            font-weight: 600;
+        }
+
+        .question-section {
+            margin-bottom: 30px;
+        }
+
+        .question-title {
+            background: #8b5cf6;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .classification-exercise {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .account-card {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .account-card h4 {
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .radio-option input[type="radio"] {
+            cursor: pointer;
+        }
+
+        .radio-option label {
+            cursor: pointer;
+            color: #555;
+        }
+
+        .entry-builder {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .entry-builder h4 {
+            color: #374151;
+            margin-bottom: 15px;
+        }
+
+        .entry-line {
+            display: grid;
+            grid-template-columns: 150px 1fr 150px;
+            gap: 15px;
+            margin: 10px 0;
+            align-items: center;
+        }
+
+        .entry-line label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .entry-line select,
+        .entry-line input {
+            padding: 10px;
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+
+        .entry-line select:focus,
+        .entry-line input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-check {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-solution {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-new {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.success {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+            color: #065f46;
+        }
+
+        .feedback.error {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            color: #991b1b;
+        }
+
+        .feedback h4 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .feedback ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .feedback li {
+            margin: 5px 0;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .correct {
+            background: #d1fae5 !important;
+            border-color: #10b981 !important;
+        }
+
+        .incorrect {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+        }
+
+        .income-summary-box {
+            background: #fef3c7;
+            padding: 15px;
+            border-radius: 8px;
+            border: 3px solid #f59e0b;
+            margin: 15px 0;
+        }
+
+        .income-summary-box h4 {
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+
+        .income-summary-box p {
+            font-family: 'Courier New', monospace;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 Closing Process Simulator</h1>
+            <p>Master permanent vs temporary accounts and the 4-step closing process</p>
+        </div>
+
+        <div class="reference-section">
+            <h2>📚 Permanent vs Temporary Accounts</h2>
+            <div class="account-types-grid">
+                <div class="account-type-card permanent">
+                    <h3>🔵 PERMANENT (Real) Accounts</h3>
+                    <ul>
+                        <li>Assets</li>
+                        <li>Liabilities</li>
+                        <li>Equity (except Dividends)</li>
+                    </ul>
+                    <p>✓ NOT closed (carry forward to next period)<br>✓ Appear on Balance Sheet</p>
+                </div>
+                <div class="account-type-card temporary">
+                    <h3>🔴 TEMPORARY (Nominal) Accounts</h3>
+                    <ul>
+                        <li>Revenues</li>
+                        <li>Expenses</li>
+                        <li>Dividends</li>
+                    </ul>
+                    <p>✗ MUST be closed to $0 at year-end<br>✓ Appear on Income Statement / Retained Earnings Statement</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="closing-steps">
+            <h2>🔄 The 4 Closing Entries (in order)</h2>
+
+            <div class="closing-step">
+                <h4>Step 1: Close REVENUE accounts to Income Summary</h4>
+                <div class="entry">
+                    Debit: Revenue accounts (all)<br>
+                    Credit: Income Summary
+                </div>
+                <p style="margin-top: 8px; color: #666; font-size: 0.9em;">
+                    Purpose: Zero out revenue accounts. Since revenues have credit balances, we debit them to close.
+                </p>
+            </div>
+
+            <div class="closing-step">
+                <h4>Step 2: Close EXPENSE accounts to Income Summary</h4>
+                <div class="entry">
+                    Debit: Income Summary<br>
+                    Credit: Expense accounts (all)
+                </div>
+                <p style="margin-top: 8px; color: #666; font-size: 0.9em;">
+                    Purpose: Zero out expense accounts. Since expenses have debit balances, we credit them to close.
+                </p>
+            </div>
+
+            <div class="closing-step">
+                <h4>Step 3: Close INCOME SUMMARY to Retained Earnings</h4>
+                <div class="entry">
+                    If net income (credit balance in Income Summary):<br>
+                    Debit: Income Summary<br>
+                    Credit: Retained Earnings<br>
+                    <br>
+                    If net loss (debit balance in Income Summary):<br>
+                    Debit: Retained Earnings<br>
+                    Credit: Income Summary
+                </div>
+                <p style="margin-top: 8px; color: #666; font-size: 0.9em;">
+                    Purpose: Transfer net income/loss to Retained Earnings. Income Summary now has $0 balance.
+                </p>
+            </div>
+
+            <div class="closing-step">
+                <h4>Step 4: Close DIVIDENDS to Retained Earnings</h4>
+                <div class="entry">
+                    Debit: Retained Earnings<br>
+                    Credit: Dividends
+                </div>
+                <p style="margin-top: 8px; color: #666; font-size: 0.9em;">
+                    Purpose: Zero out dividends. Dividends have debit balances and reduce Retained Earnings.
+                </p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="score-display" id="scoreDisplay">
+                Questions Answered: 0 | Correct: 0 | Accuracy: 0%
+            </div>
+
+            <div class="mode-selector">
+                <div class="mode-btn active" onclick="switchMode('classification')">
+                    <h3>📋 Mode 1: Classification</h3>
+                    <p>Identify permanent vs temporary accounts</p>
+                </div>
+                <div class="mode-btn" onclick="switchMode('entries')">
+                    <h3>📝 Mode 2: Closing Entries</h3>
+                    <p>Create the 4 closing journal entries</p>
+                </div>
+            </div>
+
+            <!-- Mode 1: Classification -->
+            <div id="classificationMode" class="quiz-section active">
+                <div class="question-section">
+                    <div class="question-title">Classify each account as Permanent or Temporary</div>
+                    <div class="classification-exercise" id="classificationExercise"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-check" onclick="checkClassification()">✓ Check Answers</button>
+                    <button class="btn btn-solution" onclick="showClassificationSolution()">💡 Show Solution</button>
+                    <button class="btn btn-new" onclick="newClassificationQuiz()">🔄 New Set</button>
+                </div>
+
+                <div class="feedback" id="classificationFeedback"></div>
+            </div>
+
+            <!-- Mode 2: Closing Entries -->
+            <div id="entriesMode" class="quiz-section">
+                <div class="scenario-display">
+                    <h3>📊 Year-End Account Balances (before closing):</h3>
+                    <div class="account-list" id="accountList"></div>
+                </div>
+
+                <div class="income-summary-box">
+                    <h4>Income Summary T-Account (for your reference):</h4>
+                    <p><strong>After Step 1 (close revenues):</strong> Credit balance = Total Revenues</p>
+                    <p><strong>After Step 2 (close expenses):</strong> Balance = Revenues - Expenses = Net Income (or Loss)</p>
+                    <p><strong>After Step 3:</strong> Balance = $0 (transferred to Retained Earnings)</p>
+                </div>
+
+                <div class="question-section">
+                    <div class="question-title">Step 1: Close Revenue Accounts to Income Summary</div>
+                    <div class="entry-builder" id="step1Builder"></div>
+                </div>
+
+                <div class="question-section">
+                    <div class="question-title">Step 2: Close Expense Accounts to Income Summary</div>
+                    <div class="entry-builder" id="step2Builder"></div>
+                </div>
+
+                <div class="question-section">
+                    <div class="question-title">Step 3: Close Income Summary to Retained Earnings</div>
+                    <div class="entry-builder" id="step3Builder"></div>
+                </div>
+
+                <div class="question-section">
+                    <div class="question-title">Step 4: Close Dividends to Retained Earnings</div>
+                    <div class="entry-builder" id="step4Builder"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-check" onclick="checkEntries()">✓ Check Entries</button>
+                    <button class="btn btn-solution" onclick="showEntriesSolution()">💡 Show Solution</button>
+                    <button class="btn btn-new" onclick="newEntriesScenario()">🔄 New Scenario</button>
+                </div>
+
+                <div class="feedback" id="entriesFeedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Clear storage
+        localStorage.clear();
+
+        let stats = {
+            total: 0,
+            correct: 0
+        };
+
+        let currentMode = 'classification';
+        let currentScenario = null;
+
+        // Account pools
+        const accountPool = [
+            { name: 'Cash', type: 'permanent', category: 'Asset' },
+            { name: 'Accounts Receivable', type: 'permanent', category: 'Asset' },
+            { name: 'Supplies', type: 'permanent', category: 'Asset' },
+            { name: 'Equipment', type: 'permanent', category: 'Asset' },
+            { name: 'Accumulated Depreciation', type: 'permanent', category: 'Contra-Asset' },
+            { name: 'Accounts Payable', type: 'permanent', category: 'Liability' },
+            { name: 'Notes Payable', type: 'permanent', category: 'Liability' },
+            { name: 'Unearned Revenue', type: 'permanent', category: 'Liability' },
+            { name: 'Common Stock', type: 'permanent', category: 'Equity' },
+            { name: 'Retained Earnings', type: 'permanent', category: 'Equity' },
+            { name: 'Service Revenue', type: 'temporary', category: 'Revenue' },
+            { name: 'Sales Revenue', type: 'temporary', category: 'Revenue' },
+            { name: 'Interest Revenue', type: 'temporary', category: 'Revenue' },
+            { name: 'Rent Expense', type: 'temporary', category: 'Expense' },
+            { name: 'Salaries Expense', type: 'temporary', category: 'Expense' },
+            { name: 'Utilities Expense', type: 'temporary', category: 'Expense' },
+            { name: 'Depreciation Expense', type: 'temporary', category: 'Expense' },
+            { name: 'Supplies Expense', type: 'temporary', category: 'Expense' },
+            { name: 'Insurance Expense', type: 'temporary', category: 'Expense' },
+            { name: 'Advertising Expense', type: 'temporary', category: 'Expense' },
+            { name: 'Interest Expense', type: 'temporary', category: 'Expense' },
+            { name: 'Dividends', type: 'temporary', category: 'Dividends' }
+        ];
+
+        function switchMode(mode) {
+            currentMode = mode;
+
+            // Update button states
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.mode-btn').classList.add('active');
+
+            // Switch sections
+            document.querySelectorAll('.quiz-section').forEach(section => section.classList.remove('active'));
+            if (mode === 'classification') {
+                document.getElementById('classificationMode').classList.add('active');
+                if (!document.getElementById('classificationExercise').innerHTML) {
+                    newClassificationQuiz();
+                }
+            } else {
+                document.getElementById('entriesMode').classList.add('active');
+                if (!currentScenario) {
+                    newEntriesScenario();
+                }
+            }
+        }
+
+        // ============ MODE 1: CLASSIFICATION ============
+
+        function newClassificationQuiz() {
+            // Pick 10 random accounts
+            const shuffled = [...accountPool].sort(() => Math.random() - 0.5);
+            const selected = shuffled.slice(0, 10);
+
+            const container = document.getElementById('classificationExercise');
+            container.innerHTML = '';
+
+            selected.forEach((account, idx) => {
+                const card = document.createElement('div');
+                card.className = 'account-card';
+                card.innerHTML = `
+                    <h4>${account.name}</h4>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="account${idx}" value="permanent" id="perm${idx}">
+                            <label for="perm${idx}">Permanent</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="account${idx}" value="temporary" id="temp${idx}">
+                            <label for="temp${idx}">Temporary</label>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            // Store correct answers
+            container.dataset.answers = JSON.stringify(selected.map(a => a.type));
+
+            // Clear feedback
+            const feedback = document.getElementById('classificationFeedback');
+            feedback.className = 'feedback';
+            feedback.innerHTML = '';
+
+            // Reset card styling
+            document.querySelectorAll('.account-card').forEach(card => {
+                card.classList.remove('correct', 'incorrect');
+            });
+        }
+
+        function checkClassification() {
+            const container = document.getElementById('classificationExercise');
+            const correctAnswers = JSON.parse(container.dataset.answers);
+            const cards = container.querySelectorAll('.account-card');
+
+            let correct = 0;
+            let errors = [];
+
+            cards.forEach((card, idx) => {
+                const selected = document.querySelector(`input[name="account${idx}"]:checked`);
+                const accountName = card.querySelector('h4').textContent;
+
+                card.classList.remove('correct', 'incorrect');
+
+                if (!selected) {
+                    errors.push(`${accountName}: No answer selected`);
+                    card.classList.add('incorrect');
+                } else if (selected.value === correctAnswers[idx]) {
+                    correct++;
+                    card.classList.add('correct');
+                } else {
+                    errors.push(`${accountName}: Should be ${correctAnswers[idx]}`);
+                    card.classList.add('incorrect');
+                }
+            });
+
+            stats.total++;
+
+            const feedback = document.getElementById('classificationFeedback');
+            feedback.className = 'feedback show';
+
+            if (errors.length === 0) {
+                stats.correct++;
+                feedback.classList.add('success');
+                feedback.innerHTML = `
+                    <h4>✓ Perfect! All ${correctAnswers.length} accounts classified correctly!</h4>
+                    <p style="margin-top: 10px;">Remember: Permanent accounts (Assets, Liabilities, Equity) carry forward to next period.
+                    Temporary accounts (Revenues, Expenses, Dividends) are closed to $0.</p>
+                `;
+            } else {
+                feedback.classList.add('error');
+                feedback.innerHTML = `
+                    <h4>Score: ${correct}/${correctAnswers.length} correct</h4>
+                    <ul>${errors.map(e => `<li>${e}</li>`).join('')}</ul>
+                `;
+            }
+
+            updateScore();
+        }
+
+        function showClassificationSolution() {
+            const container = document.getElementById('classificationExercise');
+            const correctAnswers = JSON.parse(container.dataset.answers);
+            const cards = container.querySelectorAll('.account-card');
+
+            cards.forEach((card, idx) => {
+                const correctValue = correctAnswers[idx];
+                const radio = card.querySelector(`input[value="${correctValue}"]`);
+                radio.checked = true;
+                card.classList.add('correct');
+                card.classList.remove('incorrect');
+            });
+
+            const feedback = document.getElementById('classificationFeedback');
+            feedback.className = 'feedback success show';
+            feedback.innerHTML = `
+                <h4>💡 Solution Revealed</h4>
+                <p><strong>Quick Reference:</strong></p>
+                <p>🔵 Permanent: Assets, Liabilities, Equity (except Dividends) - appear on Balance Sheet</p>
+                <p>🔴 Temporary: Revenues, Expenses, Dividends - closed at year-end to $0</p>
+            `;
+        }
+
+        // ============ MODE 2: CLOSING ENTRIES ============
+
+        function newEntriesScenario() {
+            // Generate random balances
+            const revenues = [
+                { name: 'Service Revenue', amount: Math.floor(Math.random() * 40000) + 10000 },
+                { name: 'Sales Revenue', amount: Math.floor(Math.random() * 30000) + 5000 }
+            ];
+
+            const expenses = [
+                { name: 'Rent Expense', amount: Math.floor(Math.random() * 5000) + 1000 },
+                { name: 'Salaries Expense', amount: Math.floor(Math.random() * 15000) + 5000 },
+                { name: 'Utilities Expense', amount: Math.floor(Math.random() * 2000) + 500 },
+                { name: 'Depreciation Expense', amount: Math.floor(Math.random() * 3000) + 500 }
+            ];
+
+            const dividends = Math.floor(Math.random() * 5000) + 1000;
+
+            const totalRevenue = revenues.reduce((sum, r) => sum + r.amount, 0);
+            const totalExpense = expenses.reduce((sum, e) => sum + e.amount, 0);
+            const netIncome = totalRevenue - totalExpense;
+
+            currentScenario = {
+                revenues,
+                expenses,
+                dividends,
+                totalRevenue,
+                totalExpense,
+                netIncome
+            };
+
+            // Display accounts
+            const accountList = document.getElementById('accountList');
+            accountList.innerHTML = '';
+
+            [...revenues, ...expenses, { name: 'Dividends', amount: dividends }].forEach(account => {
+                const item = document.createElement('div');
+                item.className = 'account-item';
+                item.innerHTML = `
+                    <span class="account-name">${account.name}</span>
+                    <span class="account-balance">$${account.amount.toLocaleString()}</span>
+                `;
+                accountList.appendChild(item);
+            });
+
+            // Build entry forms
+            buildStep1();
+            buildStep2();
+            buildStep3();
+            buildStep4();
+
+            // Clear feedback
+            const feedback = document.getElementById('entriesFeedback');
+            feedback.className = 'feedback';
+            feedback.innerHTML = '';
+        }
+
+        function buildStep1() {
+            const container = document.getElementById('step1Builder');
+            const { revenues, totalRevenue } = currentScenario;
+
+            let html = '<h4>Journal Entry:</h4>';
+
+            // Debit lines (one for each revenue)
+            revenues.forEach((rev, idx) => {
+                html += `
+                    <div class="entry-line">
+                        <label>Debit:</label>
+                        <input type="text" id="step1-debit-acct-${idx}" placeholder="Account name">
+                        <input type="number" id="step1-debit-amt-${idx}" placeholder="Amount">
+                    </div>
+                `;
+            });
+
+            // Credit line (Income Summary)
+            html += `
+                <div class="entry-line">
+                    <label>Credit:</label>
+                    <input type="text" id="step1-credit-acct" placeholder="Account name">
+                    <input type="number" id="step1-credit-amt" placeholder="Amount">
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function buildStep2() {
+            const container = document.getElementById('step2Builder');
+            const { expenses } = currentScenario;
+
+            let html = '<h4>Journal Entry:</h4>';
+
+            // Debit line (Income Summary)
+            html += `
+                <div class="entry-line">
+                    <label>Debit:</label>
+                    <input type="text" id="step2-debit-acct" placeholder="Account name">
+                    <input type="number" id="step2-debit-amt" placeholder="Amount">
+                </div>
+            `;
+
+            // Credit lines (one for each expense)
+            expenses.forEach((exp, idx) => {
+                html += `
+                    <div class="entry-line">
+                        <label>Credit:</label>
+                        <input type="text" id="step2-credit-acct-${idx}" placeholder="Account name">
+                        <input type="number" id="step2-credit-amt-${idx}" placeholder="Amount">
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function buildStep3() {
+            const container = document.getElementById('step3Builder');
+            const { netIncome } = currentScenario;
+
+            let html = '<h4>Journal Entry:</h4>';
+
+            if (netIncome > 0) {
+                html += `
+                    <div class="entry-line">
+                        <label>Debit:</label>
+                        <input type="text" id="step3-debit-acct" placeholder="Account name">
+                        <input type="number" id="step3-debit-amt" placeholder="Amount">
+                    </div>
+                    <div class="entry-line">
+                        <label>Credit:</label>
+                        <input type="text" id="step3-credit-acct" placeholder="Account name">
+                        <input type="number" id="step3-credit-amt" placeholder="Amount">
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="entry-line">
+                        <label>Debit:</label>
+                        <input type="text" id="step3-debit-acct" placeholder="Account name">
+                        <input type="number" id="step3-debit-amt" placeholder="Amount">
+                    </div>
+                    <div class="entry-line">
+                        <label>Credit:</label>
+                        <input type="text" id="step3-credit-acct" placeholder="Account name">
+                        <input type="number" id="step3-credit-amt" placeholder="Amount">
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function buildStep4() {
+            const container = document.getElementById('step4Builder');
+
+            const html = `
+                <h4>Journal Entry:</h4>
+                <div class="entry-line">
+                    <label>Debit:</label>
+                    <input type="text" id="step4-debit-acct" placeholder="Account name">
+                    <input type="number" id="step4-debit-amt" placeholder="Amount">
+                </div>
+                <div class="entry-line">
+                    <label>Credit:</label>
+                    <input type="text" id="step4-credit-acct" placeholder="Account name">
+                    <input type="number" id="step4-credit-amt" placeholder="Amount">
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function normalize(str) {
+            return str.toLowerCase().trim().replace(/\s+/g, ' ');
+        }
+
+        function checkEntries() {
+            const { revenues, expenses, dividends, totalRevenue, totalExpense, netIncome } = currentScenario;
+
+            let errors = [];
+            let allCorrect = true;
+
+            // Check Step 1
+            const step1DebitAccts = revenues.map((_, idx) =>
+                normalize(document.getElementById(`step1-debit-acct-${idx}`).value)
+            );
+            const step1DebitAmts = revenues.map((_, idx) =>
+                parseFloat(document.getElementById(`step1-debit-amt-${idx}`).value) || 0
+            );
+            const step1CreditAcct = normalize(document.getElementById('step1-credit-acct').value);
+            const step1CreditAmt = parseFloat(document.getElementById('step1-credit-amt').value) || 0;
+
+            revenues.forEach((rev, idx) => {
+                if (!step1DebitAccts[idx].includes(normalize(rev.name))) {
+                    errors.push(`Step 1: Debit should include ${rev.name}`);
+                    allCorrect = false;
+                }
+                if (step1DebitAmts[idx] !== rev.amount) {
+                    errors.push(`Step 1: ${rev.name} amount should be $${rev.amount.toLocaleString()}`);
+                    allCorrect = false;
+                }
+            });
+
+            if (!step1CreditAcct.includes('income summary')) {
+                errors.push('Step 1: Credit should be Income Summary');
+                allCorrect = false;
+            }
+            if (step1CreditAmt !== totalRevenue) {
+                errors.push(`Step 1: Income Summary credit should be $${totalRevenue.toLocaleString()}`);
+                allCorrect = false;
+            }
+
+            // Check Step 2
+            const step2DebitAcct = normalize(document.getElementById('step2-debit-acct').value);
+            const step2DebitAmt = parseFloat(document.getElementById('step2-debit-amt').value) || 0;
+            const step2CreditAccts = expenses.map((_, idx) =>
+                normalize(document.getElementById(`step2-credit-acct-${idx}`).value)
+            );
+            const step2CreditAmts = expenses.map((_, idx) =>
+                parseFloat(document.getElementById(`step2-credit-amt-${idx}`).value) || 0
+            );
+
+            if (!step2DebitAcct.includes('income summary')) {
+                errors.push('Step 2: Debit should be Income Summary');
+                allCorrect = false;
+            }
+            if (step2DebitAmt !== totalExpense) {
+                errors.push(`Step 2: Income Summary debit should be $${totalExpense.toLocaleString()}`);
+                allCorrect = false;
+            }
+
+            expenses.forEach((exp, idx) => {
+                if (!step2CreditAccts[idx].includes(normalize(exp.name))) {
+                    errors.push(`Step 2: Credit should include ${exp.name}`);
+                    allCorrect = false;
+                }
+                if (step2CreditAmts[idx] !== exp.amount) {
+                    errors.push(`Step 2: ${exp.name} amount should be $${exp.amount.toLocaleString()}`);
+                    allCorrect = false;
+                }
+            });
+
+            // Check Step 3
+            const step3DebitAcct = normalize(document.getElementById('step3-debit-acct').value);
+            const step3DebitAmt = parseFloat(document.getElementById('step3-debit-amt').value) || 0;
+            const step3CreditAcct = normalize(document.getElementById('step3-credit-acct').value);
+            const step3CreditAmt = parseFloat(document.getElementById('step3-credit-amt').value) || 0;
+
+            if (netIncome > 0) {
+                if (!step3DebitAcct.includes('income summary')) {
+                    errors.push('Step 3: Debit should be Income Summary (net income case)');
+                    allCorrect = false;
+                }
+                if (step3DebitAmt !== Math.abs(netIncome)) {
+                    errors.push(`Step 3: Debit amount should be $${Math.abs(netIncome).toLocaleString()}`);
+                    allCorrect = false;
+                }
+                if (!step3CreditAcct.includes('retained earnings')) {
+                    errors.push('Step 3: Credit should be Retained Earnings');
+                    allCorrect = false;
+                }
+                if (step3CreditAmt !== Math.abs(netIncome)) {
+                    errors.push(`Step 3: Credit amount should be $${Math.abs(netIncome).toLocaleString()}`);
+                    allCorrect = false;
+                }
+            } else {
+                if (!step3DebitAcct.includes('retained earnings')) {
+                    errors.push('Step 3: Debit should be Retained Earnings (net loss case)');
+                    allCorrect = false;
+                }
+                if (step3DebitAmt !== Math.abs(netIncome)) {
+                    errors.push(`Step 3: Debit amount should be $${Math.abs(netIncome).toLocaleString()}`);
+                    allCorrect = false;
+                }
+                if (!step3CreditAcct.includes('income summary')) {
+                    errors.push('Step 3: Credit should be Income Summary');
+                    allCorrect = false;
+                }
+                if (step3CreditAmt !== Math.abs(netIncome)) {
+                    errors.push(`Step 3: Credit amount should be $${Math.abs(netIncome).toLocaleString()}`);
+                    allCorrect = false;
+                }
+            }
+
+            // Check Step 4
+            const step4DebitAcct = normalize(document.getElementById('step4-debit-acct').value);
+            const step4DebitAmt = parseFloat(document.getElementById('step4-debit-amt').value) || 0;
+            const step4CreditAcct = normalize(document.getElementById('step4-credit-acct').value);
+            const step4CreditAmt = parseFloat(document.getElementById('step4-credit-amt').value) || 0;
+
+            if (!step4DebitAcct.includes('retained earnings')) {
+                errors.push('Step 4: Debit should be Retained Earnings');
+                allCorrect = false;
+            }
+            if (step4DebitAmt !== dividends) {
+                errors.push(`Step 4: Debit amount should be $${dividends.toLocaleString()}`);
+                allCorrect = false;
+            }
+            if (!step4CreditAcct.includes('dividend')) {
+                errors.push('Step 4: Credit should be Dividends');
+                allCorrect = false;
+            }
+            if (step4CreditAmt !== dividends) {
+                errors.push(`Step 4: Credit amount should be $${dividends.toLocaleString()}`);
+                allCorrect = false;
+            }
+
+            stats.total++;
+
+            const feedback = document.getElementById('entriesFeedback');
+            feedback.className = 'feedback show';
+
+            if (allCorrect) {
+                stats.correct++;
+                feedback.classList.add('success');
+                feedback.innerHTML = `
+                    <h4>✓ Perfect! All 4 closing entries are correct!</h4>
+                    <p style="margin-top: 10px;">
+                        <strong>Summary:</strong><br>
+                        Total Revenues: $${totalRevenue.toLocaleString()}<br>
+                        Total Expenses: $${totalExpense.toLocaleString()}<br>
+                        Net Income: $${netIncome.toLocaleString()}<br>
+                        Dividends: $${dividends.toLocaleString()}<br>
+                        <br>
+                        After closing, all temporary accounts (revenues, expenses, dividends) now have $0 balances,
+                        and Retained Earnings increased by $${(netIncome - dividends).toLocaleString()}.
+                    </p>
+                `;
+            } else {
+                feedback.classList.add('error');
+                feedback.innerHTML = `
+                    <h4>Not quite right. Here's what needs fixing:</h4>
+                    <ul>${errors.map(e => `<li>${e}</li>`).join('')}</ul>
+                `;
+            }
+
+            updateScore();
+        }
+
+        function showEntriesSolution() {
+            const { revenues, expenses, dividends, totalRevenue, totalExpense, netIncome } = currentScenario;
+
+            // Fill Step 1
+            revenues.forEach((rev, idx) => {
+                document.getElementById(`step1-debit-acct-${idx}`).value = rev.name;
+                document.getElementById(`step1-debit-amt-${idx}`).value = rev.amount;
+            });
+            document.getElementById('step1-credit-acct').value = 'Income Summary';
+            document.getElementById('step1-credit-amt').value = totalRevenue;
+
+            // Fill Step 2
+            document.getElementById('step2-debit-acct').value = 'Income Summary';
+            document.getElementById('step2-debit-amt').value = totalExpense;
+            expenses.forEach((exp, idx) => {
+                document.getElementById(`step2-credit-acct-${idx}`).value = exp.name;
+                document.getElementById(`step2-credit-amt-${idx}`).value = exp.amount;
+            });
+
+            // Fill Step 3
+            if (netIncome > 0) {
+                document.getElementById('step3-debit-acct').value = 'Income Summary';
+                document.getElementById('step3-debit-amt').value = netIncome;
+                document.getElementById('step3-credit-acct').value = 'Retained Earnings';
+                document.getElementById('step3-credit-amt').value = netIncome;
+            } else {
+                document.getElementById('step3-debit-acct').value = 'Retained Earnings';
+                document.getElementById('step3-debit-amt').value = Math.abs(netIncome);
+                document.getElementById('step3-credit-acct').value = 'Income Summary';
+                document.getElementById('step3-credit-amt').value = Math.abs(netIncome);
+            }
+
+            // Fill Step 4
+            document.getElementById('step4-debit-acct').value = 'Retained Earnings';
+            document.getElementById('step4-debit-amt').value = dividends;
+            document.getElementById('step4-credit-acct').value = 'Dividends';
+            document.getElementById('step4-credit-amt').value = dividends;
+
+            const feedback = document.getElementById('entriesFeedback');
+            feedback.className = 'feedback success show';
+            feedback.innerHTML = `
+                <h4>💡 Solution Revealed</h4>
+                <p><strong>Remember the closing process:</strong></p>
+                <p>1. Close revenues to Income Summary (debit revenues, credit IS)</p>
+                <p>2. Close expenses to Income Summary (debit IS, credit expenses)</p>
+                <p>3. Close Income Summary to Retained Earnings (transfer net income/loss)</p>
+                <p>4. Close Dividends to Retained Earnings (debit RE, credit Dividends)</p>
+            `;
+        }
+
+        function updateScore() {
+            const accuracy = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
+            document.getElementById('scoreDisplay').textContent =
+                `Questions Answered: ${stats.total} | Correct: ${stats.correct} | Accuracy: ${accuracy}%`;
+        }
+
+        // Initialize
+        newClassificationQuiz();
+    </script>
+</body>
+</html>

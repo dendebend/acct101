@@ -1,0 +1,2138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACCT101 - Final Exam Prep</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1e3a8a 0%, #7c3aed 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #1e3a8a;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-number {
+            background: #1e3a8a;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .choices {
+            margin-left: 20px;
+        }
+
+        .choice {
+            margin: 10px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .choice input[type="radio"] {
+            margin-right: 10px;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+
+        .choice label {
+            cursor: pointer;
+            color: #555;
+        }
+
+        .input-answer {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: 'Courier New', monospace;
+        }
+
+        .input-answer:focus {
+            outline: none;
+            border-color: #1e3a8a;
+        }
+
+        .btn-check {
+            background: #1e3a8a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .btn-check:hover {
+            background: #1e40af;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+            color: #065f46;
+        }
+
+        .feedback.incorrect {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            color: #991b1b;
+        }
+
+        .hint {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            color: #92400e;
+            display: none;
+        }
+
+        .hint.show {
+            display: block;
+        }
+
+        .btn-hint {
+            background: #f59e0b;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .btn-hint:hover {
+            background: #d97706;
+        }
+
+        .final-score {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            min-width: 200px;
+            z-index: 1000;
+        }
+
+        .final-score h3 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+
+        .score-stat {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 1.1em;
+        }
+
+        .score-label {
+            color: #666;
+        }
+
+        .score-value {
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        @media (max-width: 768px) {
+            .final-score {
+                position: static;
+                margin-bottom: 20px;
+            }
+        }
+
+        .tab-navigation {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            border-bottom: 3px solid #e5e7eb;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 20px;
+            background: white;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 1em;
+            font-weight: 600;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            background: #f3f4f6;
+            color: #1e3a8a;
+        }
+
+        .tab-btn.active {
+            color: #1e3a8a;
+            border-bottom-color: #1e3a8a;
+            background: #eff6ff;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .practice-problem {
+            background: #f0fdf4;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #10b981;
+            margin-bottom: 30px;
+        }
+
+        .problem-title {
+            color: #065f46;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .scenario-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px solid #d1fae5;
+        }
+
+        .scenario-item {
+            margin: 8px 0;
+            font-size: 1.05em;
+        }
+
+        .scenario-label {
+            font-weight: 600;
+            color: #047857;
+            display: inline-block;
+            min-width: 200px;
+        }
+
+        .formula-hint {
+            background: #fef3c7;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 4px solid #f59e0b;
+            font-family: 'Courier New', monospace;
+            color: #92400e;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Final Exam Prep</h1>
+        <p class="subtitle">Comprehensive Review - All Units (02A through 05)</p>
+
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="switchTab('quiz')">📝 60-Question Quiz</button>
+            <button class="tab-btn" onclick="switchTab('calculations')">🧮 Account Analysis</button>
+            <button class="tab-btn" onclick="switchTab('transactions')">📋 Transaction Analysis</button>
+            <button class="tab-btn" onclick="switchTab('trial-balance')">⚖️ Trial Balance</button>
+            <button class="tab-btn" onclick="switchTab('stoner')">🌿 Stoner Edition</button>
+        </div>
+
+        <!-- Tab 1: 60-Question Quiz -->
+        <div id="quiz-tab" class="tab-content active">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar">0%</div>
+            </div>
+
+            <div class="final-score">
+                <h3>📊 Your Score</h3>
+                <div class="score-stat">
+                    <span class="score-label">Checked:</span>
+                    <span class="score-value" id="checkedCount">0/60</span>
+                </div>
+                <div class="score-stat">
+                    <span class="score-label">Correct:</span>
+                    <span class="score-value" id="correctCount">0</span>
+                </div>
+                <div class="score-stat">
+                    <span class="score-label">Score:</span>
+                    <span class="score-value" id="scorePercent">0%</span>
+                </div>
+            </div>
+
+        <!-- Unit 02A: Account Types & Accounting Equation -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">1</span>
+                Unit 02A: Account Types & Accounting Equation
+            </div>
+
+            <div class="question" data-answer="d">
+                <div class="question-text">1. Which one of the following is NOT a revenue account?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q1" value="a"><label>a. Service Revenue</label></div>
+                    <div class="choice"><input type="radio" name="q1" value="b"><label>b. Interest Revenue</label></div>
+                    <div class="choice"><input type="radio" name="q1" value="c"><label>c. Sales Revenue</label></div>
+                    <div class="choice"><input type="radio" name="q1" value="d"><label>d. Unearned Revenue</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q1')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint1')">💡 Hint</button>
+                <div class="hint" id="hint1">Unearned Revenue is a LIABILITY - cash received before services are performed.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="a">
+                <div class="question-text">2. Which of the following is NOT an expense account?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q2" value="a"><label>a. Prepaid Expense</label></div>
+                    <div class="choice"><input type="radio" name="q2" value="b"><label>b. Depreciation Expense</label></div>
+                    <div class="choice"><input type="radio" name="q2" value="c"><label>c. Supplies Expense</label></div>
+                    <div class="choice"><input type="radio" name="q2" value="d"><label>d. Cost of Goods Sold</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q2')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint2')">💡 Hint</button>
+                <div class="hint" id="hint2">Prepaid Expense is an ASSET - it's a payment made in advance.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="b">
+                <div class="question-text">3. If total liabilities decreased by $30,000 during a period and stockholders' equity increased by $35,000, what was the change in total assets?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q3" value="a"><label>a. $65,000 increase</label></div>
+                    <div class="choice"><input type="radio" name="q3" value="b"><label>b. $5,000 increase</label></div>
+                    <div class="choice"><input type="radio" name="q3" value="c"><label>c. $5,000 decrease</label></div>
+                    <div class="choice"><input type="radio" name="q3" value="d"><label>d. $65,000 decrease</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q3')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint3')">💡 Hint</button>
+                <div class="hint" id="hint3">Assets = Liabilities + Equity. Change in A = Change in L + Change in E = -30,000 + 35,000</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="a">
+                <div class="question-text">4. A corporation with total stockholders' equity of $75,000 paid a $12,000 business debt. What happened to total stockholders' equity?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q4" value="a"><label>a. Did not change</label></div>
+                    <div class="choice"><input type="radio" name="q4" value="b"><label>b. Increased by $12,000</label></div>
+                    <div class="choice"><input type="radio" name="q4" value="c"><label>c. Decreased by $12,000</label></div>
+                    <div class="choice"><input type="radio" name="q4" value="d"><label>d. Increased to $75,000</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q4')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint4')">💡 Hint</button>
+                <div class="hint" id="hint4">Paying a debt decreases Cash (asset) and Liabilities equally. Equity is unaffected.</div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- Unit 02B: Debits, Credits, Normal Balances -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">2</span>
+                Unit 02B: Debits, Credits & Normal Balances
+            </div>
+
+            <div class="question" data-answer="c">
+                <div class="question-text">5. Accounts are:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q5" value="a"><label>a. Do not reflect money amounts</label></div>
+                    <div class="choice"><input type="radio" name="q5" value="b"><label>b. Are not used by entities that manufacture products</label></div>
+                    <div class="choice"><input type="radio" name="q5" value="c"><label>c. Are records of increases and decreases in individual financial statement items</label></div>
+                    <div class="choice"><input type="radio" name="q5" value="d"><label>d. Are only used by large entities</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q5')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint5')">💡 Hint</button>
+                <div class="hint" id="hint5">Accounts track all changes (increases and decreases) for each financial statement item.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="a">
+                <div class="question-text">6. The left side of an account is always:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q6" value="a"><label>a. The debit side</label></div>
+                    <div class="choice"><input type="radio" name="q6" value="b"><label>b. The credit side</label></div>
+                    <div class="choice"><input type="radio" name="q6" value="c"><label>c. The balance of that account</label></div>
+                    <div class="choice"><input type="radio" name="q6" value="d"><label>d. Carried forward to the next period</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q6')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint6')">💡 Hint</button>
+                <div class="hint" id="hint6">DEbit = LEft side. CREdit = Right side.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="d">
+                <div class="question-text">7. A credit will increase ________, but decrease ________.</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q7" value="a"><label>a. Accounts receivable; accounts payable</label></div>
+                    <div class="choice"><input type="radio" name="q7" value="b"><label>b. Accounts receivable; expenses</label></div>
+                    <div class="choice"><input type="radio" name="q7" value="c"><label>c. Accounts payable; common stock</label></div>
+                    <div class="choice"><input type="radio" name="q7" value="d"><label>d. Common stock; prepaid insurance</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q7')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint7')">💡 Hint</button>
+                <div class="hint" id="hint7">Credits increase LER (Liabilities, Equity, Revenue) and decrease DEA (Dividends, Expenses, Assets).</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="d">
+                <div class="question-text">8. Using the DEALER acronym, which accounts have a DEBIT normal balance?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q8" value="a"><label>a. Assets and liabilities</label></div>
+                    <div class="choice"><input type="radio" name="q8" value="b"><label>b. Liabilities and expenses</label></div>
+                    <div class="choice"><input type="radio" name="q8" value="c"><label>c. Stockholders' equity and revenues</label></div>
+                    <div class="choice"><input type="radio" name="q8" value="d"><label>d. Expenses and assets</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q8')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint8')">💡 Hint</button>
+                <div class="hint" id="hint8">DEALER: DEA = Dividends, Expenses, Assets have debit normal balances.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="b">
+                <div class="question-text">9. Accounts with normal CREDIT balances include:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q9" value="a"><label>a. Assets and liabilities</label></div>
+                    <div class="choice"><input type="radio" name="q9" value="b"><label>b. Liabilities and stockholders' equity</label></div>
+                    <div class="choice"><input type="radio" name="q9" value="c"><label>c. Revenues and assets</label></div>
+                    <div class="choice"><input type="radio" name="q9" value="d"><label>d. Revenues and expenses</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q9')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint9')">💡 Hint</button>
+                <div class="hint" id="hint9">DEALER: LER = Liabilities, Equity, Revenue have credit normal balances.</div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- Unit 03A: Accounting Cycle Steps 1-4 -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">3</span>
+                Unit 03A: Accounting Cycle Steps 1-4, AIS
+            </div>
+
+            <div class="question" data-answer="b">
+                <div class="question-text">10. A list of accounts used by a business is called the:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q10" value="a"><label>a. Journal</label></div>
+                    <div class="choice"><input type="radio" name="q10" value="b"><label>b. Chart of accounts</label></div>
+                    <div class="choice"><input type="radio" name="q10" value="c"><label>c. T chart</label></div>
+                    <div class="choice"><input type="radio" name="q10" value="d"><label>d. Debit listing</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q10')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint10')">💡 Hint</button>
+                <div class="hint" id="hint10">Chart of Accounts = master list of all accounts used by the company.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="c">
+                <div class="question-text">11. Which is NOT true with a double-entry accounting system?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q11" value="a"><label>a. The accounting equation remains in balance</label></div>
+                    <div class="choice"><input type="radio" name="q11" value="b"><label>b. The sum of all debits equals the sum of all credits in each entry</label></div>
+                    <div class="choice"><input type="radio" name="q11" value="c"><label>c. Each business transaction will have two debits</label></div>
+                    <div class="choice"><input type="radio" name="q11" value="d"><label>d. Every transaction affects at least two accounts</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q11')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint11')">💡 Hint</button>
+                <div class="hint" id="hint11">Double-entry means debits = credits, not that every transaction has two debits!</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="d">
+                <div class="question-text">12. What is the appropriate order for a company's general ledger?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q12" value="a"><label>a. Assets, Liabilities, Revenues, Expenses, Equity</label></div>
+                    <div class="choice"><input type="radio" name="q12" value="b"><label>b. Assets, Revenues, Expenses, Liabilities, Equity</label></div>
+                    <div class="choice"><input type="radio" name="q12" value="c"><label>c. Assets, Liabilities, Equity, Expenses, Revenues</label></div>
+                    <div class="choice"><input type="radio" name="q12" value="d"><label>d. Assets, Liabilities, Equity, Revenues, Expenses</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q12')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint12')">💡 Hint</button>
+                <div class="hint" id="hint12">Balance Sheet first (A, L, E), then Income Statement (R, E).</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="c">
+                <div class="question-text">13. The process of initially recording a business transaction is called:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q13" value="a"><label>a. Closing</label></div>
+                    <div class="choice"><input type="radio" name="q13" value="b"><label>b. Posting</label></div>
+                    <div class="choice"><input type="radio" name="q13" value="c"><label>c. Journalizing</label></div>
+                    <div class="choice"><input type="radio" name="q13" value="d"><label>d. Balancing</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q13')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint13')">💡 Hint</button>
+                <div class="hint" id="hint13">Journalizing = making the journal entry initially.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="d">
+                <div class="question-text">14. The procedure of transferring journal entries to ledger accounts is called:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q14" value="a"><label>a. Journalizing</label></div>
+                    <div class="choice"><input type="radio" name="q14" value="b"><label>b. Ledgering</label></div>
+                    <div class="choice"><input type="radio" name="q14" value="c"><label>c. Recording</label></div>
+                    <div class="choice"><input type="radio" name="q14" value="d"><label>d. Posting</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q14')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint14')">💡 Hint</button>
+                <div class="hint" id="hint14">Posting = transferring from journal to ledger.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="c">
+                <div class="question-text">15. Transactions are initially recorded in the:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q15" value="a"><label>a. Ledger</label></div>
+                    <div class="choice"><input type="radio" name="q15" value="b"><label>b. Trial balance</label></div>
+                    <div class="choice"><input type="radio" name="q15" value="c"><label>c. Journal</label></div>
+                    <div class="choice"><input type="radio" name="q15" value="d"><label>d. Balance sheet</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q15')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint15')">💡 Hint</button>
+                <div class="hint" id="hint15">The accounting cycle: Analyze → Journalize → Post → Trial Balance.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="c">
+                <div class="question-text">16. Which contains the selected steps of the accounting cycle in the CORRECT order?<br>
+                1. Journalize  2. Post  3. Analyze  4. Prepare financial statements  5. Trial balance</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q16" value="a"><label>a. 1, 2, 3, 5, 4</label></div>
+                    <div class="choice"><input type="radio" name="q16" value="b"><label>b. 3, 2, 1, 4, 5</label></div>
+                    <div class="choice"><input type="radio" name="q16" value="c"><label>c. 3, 1, 2, 5, 4</label></div>
+                    <div class="choice"><input type="radio" name="q16" value="d"><label>d. 3, 1, 2, 4, 5</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q16')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint16')">💡 Hint</button>
+                <div class="hint" id="hint16">Analyze → Journalize → Post → Trial Balance → Financial Statements.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="c">
+                <div class="question-text">17. Someone who wants to investigate a specific business transaction would refer to the:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q17" value="a"><label>a. General ledger</label></div>
+                    <div class="choice"><input type="radio" name="q17" value="b"><label>b. Chart of accounts</label></div>
+                    <div class="choice"><input type="radio" name="q17" value="c"><label>c. General journal</label></div>
+                    <div class="choice"><input type="radio" name="q17" value="d"><label>d. Trial balance</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q17')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint17')">💡 Hint</button>
+                <div class="hint" id="hint17">Journal shows individual transactions. Ledger shows individual accounts.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="a">
+                <div class="question-text">18. Someone who wants to investigate a specific account would refer to the:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q18" value="a"><label>a. General ledger</label></div>
+                    <div class="choice"><input type="radio" name="q18" value="b"><label>b. Chart of accounts</label></div>
+                    <div class="choice"><input type="radio" name="q18" value="c"><label>c. General journal</label></div>
+                    <div class="choice"><input type="radio" name="q18" value="d"><label>d. Trial balance</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q18')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint18')">💡 Hint</button>
+                <div class="hint" id="hint18">The ledger contains all accounts with their balances.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="c">
+                <div class="question-text">19. Which error will cause a trial balance to be out of balance? An entry to record a payment on account was:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q19" value="a"><label>a. Not posted at all</label></div>
+                    <div class="choice"><input type="radio" name="q19" value="b"><label>b. Posted as debit Cash, credit Accounts Payable</label></div>
+                    <div class="choice"><input type="radio" name="q19" value="c"><label>c. Posted as debit Cash, debit Accounts Payable</label></div>
+                    <div class="choice"><input type="radio" name="q19" value="d"><label>d. Posted as debit Accounts Receivable, credit Cash</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q19')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint19')">💡 Hint</button>
+                <div class="hint" id="hint19">Two debits mean debits ≠ credits, so trial balance won't balance!</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="a">
+                <div class="question-text">20. When a trial balance balances, it indicates that:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q20" value="a"><label>a. Debits equal credits</label></div>
+                    <div class="choice"><input type="radio" name="q20" value="b"><label>b. All transactions have been journalized</label></div>
+                    <div class="choice"><input type="radio" name="q20" value="c"><label>c. The account balances are correct</label></div>
+                    <div class="choice"><input type="radio" name="q20" value="d"><label>d. All journal entries have been posted</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q20')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint20')">💡 Hint</button>
+                <div class="hint" id="hint20">Trial balance only proves debits = credits, not that everything is correct!</div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- Unit 03B: Adjusting Entries -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">4</span>
+                Unit 03B: Adjusting Entries
+            </div>
+
+            <div class="question" data-answer="debit">
+                <div class="question-text">21. When adjusting for supplies used during the period, you would ________ Supplies Expense.</div>
+                <input type="text" class="input-answer" id="q21" placeholder="Type: debit or credit">
+                <button class="btn-check" onclick="checkTextAnswer(this, 'q21', 'debit')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint21')">💡 Hint</button>
+                <div class="hint" id="hint21">Supplies (asset) decreased, Supplies Expense (expense) increased. Expenses increase with debits.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="credit">
+                <div class="question-text">22. When recording depreciation, you would ________ Accumulated Depreciation.</div>
+                <input type="text" class="input-answer" id="q22" placeholder="Type: debit or credit">
+                <button class="btn-check" onclick="checkTextAnswer(this, 'q22', 'credit')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint22')">💡 Hint</button>
+                <div class="hint" id="hint22">Accumulated Depreciation is a contra-asset with a credit balance.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="debit">
+                <div class="question-text">23. To record accrued salaries (earned but not yet paid), you would ________ Salaries Expense.</div>
+                <input type="text" class="input-answer" id="q23" placeholder="Type: debit or credit">
+                <button class="btn-check" onclick="checkTextAnswer(this, 'q23', 'debit')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint23')">💡 Hint</button>
+                <div class="hint" id="hint23">Accrued expense: Debit the expense, Credit the liability (Salaries Payable).</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="credit">
+                <div class="question-text">24. When services are performed for a customer who paid in advance (unearned revenue), you would ________ Service Revenue.</div>
+                <input type="text" class="input-answer" id="q24" placeholder="Type: debit or credit">
+                <button class="btn-check" onclick="checkTextAnswer(this, 'q24', 'credit')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint24')">💡 Hint</button>
+                <div class="hint" id="hint24">Unearned Revenue (liability) → Service Revenue (revenue). Revenue increases with credits.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="debit">
+                <div class="question-text">25. To adjust prepaid insurance that has expired, you would ________ Insurance Expense.</div>
+                <input type="text" class="input-answer" id="q25" placeholder="Type: debit or credit">
+                <button class="btn-check" onclick="checkTextAnswer(this, 'q25', 'debit')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint25')">💡 Hint</button>
+                <div class="hint" id="hint25">Prepaid → Expense adjustments: Debit expense, Credit prepaid (asset).</div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- Unit 04: Financial Statements -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">5</span>
+                Unit 04: Financial Statements
+            </div>
+
+            <div class="question" data-answer="c">
+                <div class="question-text">26. Financial statements are usually prepared in which sequence?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q26" value="a"><label>a. Balance sheet, retained earnings, cash flows, income statement</label></div>
+                    <div class="choice"><input type="radio" name="q26" value="b"><label>b. Balance sheet, cash flows, income statement, retained earnings</label></div>
+                    <div class="choice"><input type="radio" name="q26" value="c"><label>c. Income statement, retained earnings, balance sheet, cash flows</label></div>
+                    <div class="choice"><input type="radio" name="q26" value="d"><label>d. Income statement, balance sheet, retained earnings, cash flows</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q26')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint26')">💡 Hint</button>
+                <div class="hint" id="hint26">I.R.B.C: Income → Retained Earnings → Balance Sheet → Cash Flows.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="d">
+                <div class="question-text">27. Which would NOT appear on the income statement?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q27" value="a"><label>a. Net income</label></div>
+                    <div class="choice"><input type="radio" name="q27" value="b"><label>b. Service revenue</label></div>
+                    <div class="choice"><input type="radio" name="q27" value="c"><label>c. Interest expense</label></div>
+                    <div class="choice"><input type="radio" name="q27" value="d"><label>d. Dividends paid</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q27')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint27')">💡 Hint</button>
+                <div class="hint" id="hint27">Dividends appear on the Retained Earnings statement, not the Income Statement.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="c">
+                <div class="question-text">28. Which would NOT appear on the retained earnings statement?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q28" value="a"><label>a. Net income</label></div>
+                    <div class="choice"><input type="radio" name="q28" value="b"><label>b. Dividends</label></div>
+                    <div class="choice"><input type="radio" name="q28" value="c"><label>c. Service revenue</label></div>
+                    <div class="choice"><input type="radio" name="q28" value="d"><label>d. Beginning retained earnings balance</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q28')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint28')">💡 Hint</button>
+                <div class="hint" id="hint28">Retained Earnings Statement: Beginning RE + Net Income - Dividends = Ending RE.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="a">
+                <div class="question-text">29. A financial statement that reports accounting data at a SPECIFIC DATE is the:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q29" value="a"><label>a. Balance sheet</label></div>
+                    <div class="choice"><input type="radio" name="q29" value="b"><label>b. Retained earnings statement</label></div>
+                    <div class="choice"><input type="radio" name="q29" value="c"><label>c. Income statement</label></div>
+                    <div class="choice"><input type="radio" name="q29" value="d"><label>d. Statement of cash flows</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q29')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint29')">💡 Hint</button>
+                <div class="hint" id="hint29">Balance Sheet = "as of" a specific date. Others = "for the period ended".</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="c">
+                <div class="question-text">30. The ending retained earnings balance appears on:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q30" value="a"><label>a. Income statement and retained earnings statement</label></div>
+                    <div class="choice"><input type="radio" name="q30" value="b"><label>b. Balance sheet only</label></div>
+                    <div class="choice"><input type="radio" name="q30" value="c"><label>c. Both retained earnings statement and balance sheet</label></div>
+                    <div class="choice"><input type="radio" name="q30" value="d"><label>d. Retained earnings statement only</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q30')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint30')">💡 Hint</button>
+                <div class="hint" id="hint30">Ending RE calculated on RE statement, then flows to Balance Sheet.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="b">
+                <div class="question-text">31. Beginning RE = $60,000. Ending RE = $70,000. Dividends = $20,000. What was net income?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q31" value="a"><label>a. $20,000</label></div>
+                    <div class="choice"><input type="radio" name="q31" value="b"><label>b. $30,000</label></div>
+                    <div class="choice"><input type="radio" name="q31" value="c"><label>c. $10,000</label></div>
+                    <div class="choice"><input type="radio" name="q31" value="d"><label>d. $50,000</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q31')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint31')">💡 Hint</button>
+                <div class="hint" id="hint31">Ending RE = Beginning RE + NI - Dividends. So: 70,000 = 60,000 + NI - 20,000.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="b">
+                <div class="question-text">32. Beginning: Assets = $120,000, Equity = $40,000. During year: NI = $90,000, Dividends = $20,000. Ending Assets = $215,000. What are ending liabilities?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q32" value="a"><label>a. $110,000</label></div>
+                    <div class="choice"><input type="radio" name="q32" value="b"><label>b. $105,000</label></div>
+                    <div class="choice"><input type="radio" name="q32" value="c"><label>c. $80,000</label></div>
+                    <div class="choice"><input type="radio" name="q32" value="d"><label>d. $90,000</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q32')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint32')">💡 Hint</button>
+                <div class="hint" id="hint32">Ending Equity = 40,000 + 90,000 - 20,000 = 110,000. L = A - E = 215,000 - 110,000.</div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- Unit 05: Closing Process -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">6</span>
+                Unit 05: Closing Process
+            </div>
+
+            <div class="question" data-answer="temporary">
+                <div class="question-text">33. Revenue accounts are classified as ________ accounts (permanent or temporary).</div>
+                <input type="text" class="input-answer" id="q33" placeholder="Type your answer">
+                <button class="btn-check" onclick="checkTextAnswer(this, 'q33', 'temporary')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint33')">💡 Hint</button>
+                <div class="hint" id="hint33">Revenues, Expenses, and Dividends are temporary (closed at year-end).</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="permanent">
+                <div class="question-text">34. Asset accounts are classified as ________ accounts (permanent or temporary).</div>
+                <input type="text" class="input-answer" id="q34" placeholder="Type your answer">
+                <button class="btn-check" onclick="checkTextAnswer(this, 'q34', 'permanent')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint34')">💡 Hint</button>
+                <div class="hint" id="hint34">Assets, Liabilities, and Equity are permanent (carry forward to next period).</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="b">
+                <div class="question-text">35. Which accounts are closed at year-end?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q35" value="a"><label>a. Assets, Liabilities, Equity</label></div>
+                    <div class="choice"><input type="radio" name="q35" value="b"><label>b. Revenues, Expenses, Dividends</label></div>
+                    <div class="choice"><input type="radio" name="q35" value="c"><label>c. Assets, Revenues, Expenses</label></div>
+                    <div class="choice"><input type="radio" name="q35" value="d"><label>d. Only Revenue and Expense accounts</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q35')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint35')">💡 Hint</button>
+                <div class="hint" id="hint35">All temporary accounts are closed: R, E, D.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="a">
+                <div class="question-text">36. In the first closing entry, revenue accounts are:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q36" value="a"><label>a. Debited</label></div>
+                    <div class="choice"><input type="radio" name="q36" value="b"><label>b. Credited</label></div>
+                    <div class="choice"><input type="radio" name="q36" value="c"><label>c. Not affected</label></div>
+                    <div class="choice"><input type="radio" name="q36" value="d"><label>d. Transferred to Retained Earnings directly</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q36')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint36')">💡 Hint</button>
+                <div class="hint" id="hint36">To close a revenue (credit balance), you debit it to zero.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="b">
+                <div class="question-text">37. In the second closing entry, expense accounts are:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q37" value="a"><label>a. Debited</label></div>
+                    <div class="choice"><input type="radio" name="q37" value="b"><label>b. Credited</label></div>
+                    <div class="choice"><input type="radio" name="q37" value="c"><label>c. Not affected</label></div>
+                    <div class="choice"><input type="radio" name="q37" value="d"><label>d. Transferred to Dividends</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q37')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint37')">💡 Hint</button>
+                <div class="hint" id="hint37">To close an expense (debit balance), you credit it to zero.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="income summary">
+                <div class="question-text">38. Revenue and expense accounts are closed to ________ ________.</div>
+                <input type="text" class="input-answer" id="q38" placeholder="Type your answer (two words)">
+                <button class="btn-check" onclick="checkTextAnswer(this, 'q38', 'income summary')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint38')">💡 Hint</button>
+                <div class="hint" id="hint38">Income Summary is the temporary holding account during closing.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="retained earnings">
+                <div class="question-text">39. Income Summary is closed to ________ ________.</div>
+                <input type="text" class="input-answer" id="q39" placeholder="Type your answer (two words)">
+                <button class="btn-check" onclick="checkTextAnswer(this, 'q39', 'retained earnings')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint39')">💡 Hint</button>
+                <div class="hint" id="hint39">Net income or loss ultimately goes to Retained Earnings.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="d">
+                <div class="question-text">40. The correct order of the 4 closing entries is:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q40" value="a"><label>a. Expenses, Revenues, Dividends, Income Summary</label></div>
+                    <div class="choice"><input type="radio" name="q40" value="b"><label>b. Revenues, Expenses, Retained Earnings, Dividends</label></div>
+                    <div class="choice"><input type="radio" name="q40" value="c"><label>c. Dividends, Revenues, Expenses, Income Summary</label></div>
+                    <div class="choice"><input type="radio" name="q40" value="d"><label>d. Revenues, Expenses, Income Summary, Dividends</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q40')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint40')">💡 Hint</button>
+                <div class="hint" id="hint40">R.E.I.D: Revenues → Expenses → Income Summary → Dividends.</div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- Comprehensive / Mixed Questions -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">7</span>
+                Comprehensive Review Questions
+            </div>
+
+            <div class="question" data-answer="c">
+                <div class="question-text">41. Which transaction will increase BOTH assets and equity?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q41" value="a"><label>a. Paying cash for rent expense</label></div>
+                    <div class="choice"><input type="radio" name="q41" value="b"><label>b. Purchasing equipment on credit</label></div>
+                    <div class="choice"><input type="radio" name="q41" value="c"><label>c. Receiving cash from customers for services provided</label></div>
+                    <div class="choice"><input type="radio" name="q41" value="d"><label>d. Paying off a loan</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q41')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint41')">💡 Hint</button>
+                <div class="hint" id="hint41">Earning revenue increases assets (Cash) and equity (Revenue → RE).</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="b">
+                <div class="question-text">42. Which statement about the accounting equation is TRUE?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q42" value="a"><label>a. Every transaction affects all three elements</label></div>
+                    <div class="choice"><input type="radio" name="q42" value="b"><label>b. The equation must always stay in balance</label></div>
+                    <div class="choice"><input type="radio" name="q42" value="c"><label>c. Assets must always equal liabilities</label></div>
+                    <div class="choice"><input type="radio" name="q42" value="d"><label>d. Equity can never decrease</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q42')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint42')">💡 Hint</button>
+                <div class="hint" id="hint42">A = L + E must ALWAYS balance, every single transaction!</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="a">
+                <div class="question-text">43. Accrual accounting means:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q43" value="a"><label>a. Recording revenues when earned and expenses when incurred</label></div>
+                    <div class="choice"><input type="radio" name="q43" value="b"><label>b. Recording transactions only when cash is received or paid</label></div>
+                    <div class="choice"><input type="radio" name="q43" value="c"><label>c. Adjusting accounts at the end of each day</label></div>
+                    <div class="choice"><input type="radio" name="q43" value="d"><label>d. Closing temporary accounts monthly</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q43')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint43')">💡 Hint</button>
+                <div class="hint" id="hint43">Accrual basis = recognize when earned/incurred, not when cash changes hands.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="d">
+                <div class="question-text">44. Which is a contra-asset account?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q44" value="a"><label>a. Unearned Revenue</label></div>
+                    <div class="choice"><input type="radio" name="q44" value="b"><label>b. Prepaid Insurance</label></div>
+                    <div class="choice"><input type="radio" name="q44" value="c"><label>c. Accounts Payable</label></div>
+                    <div class="choice"><input type="radio" name="q44" value="d"><label>d. Accumulated Depreciation</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q44')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint44')">💡 Hint</button>
+                <div class="hint" id="hint44">Contra-asset has a credit balance and reduces the related asset.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="c">
+                <div class="question-text">45. Book value of an asset equals:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q45" value="a"><label>a. Original cost</label></div>
+                    <div class="choice"><input type="radio" name="q45" value="b"><label>b. Market value</label></div>
+                    <div class="choice"><input type="radio" name="q45" value="c"><label>c. Cost minus accumulated depreciation</label></div>
+                    <div class="choice"><input type="radio" name="q45" value="d"><label>d. Replacement cost</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q45')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint45')">💡 Hint</button>
+                <div class="hint" id="hint45">Book value (carrying value) = Historical cost - Accumulated Depreciation.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="b">
+                <div class="question-text">46. Which account would have a zero balance after closing entries?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q46" value="a"><label>a. Retained Earnings</label></div>
+                    <div class="choice"><input type="radio" name="q46" value="b"><label>b. Service Revenue</label></div>
+                    <div class="choice"><input type="radio" name="q46" value="c"><label>c. Accounts Receivable</label></div>
+                    <div class="choice"><input type="radio" name="q46" value="d"><label>d. Accumulated Depreciation</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q46')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint46')">💡 Hint</button>
+                <div class="hint" id="hint46">All temporary accounts (R, E, D) have zero balance after closing.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="a">
+                <div class="question-text">47. The purpose of adjusting entries is to:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q47" value="a"><label>a. Update accounts to reflect proper amounts at period end</label></div>
+                    <div class="choice"><input type="radio" name="q47" value="b"><label>b. Correct errors in journal entries</label></div>
+                    <div class="choice"><input type="radio" name="q47" value="c"><label>c. Close temporary accounts</label></div>
+                    <div class="choice"><input type="radio" name="q47" value="d"><label>d. Record cash transactions</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q47')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint47')">💡 Hint</button>
+                <div class="hint" id="hint47">Adjusting entries apply accrual accounting - recognize when earned/incurred.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="c">
+                <div class="question-text">48. Dividends are:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q48" value="a"><label>a. An expense on the income statement</label></div>
+                    <div class="choice"><input type="radio" name="q48" value="b"><label>b. A liability until paid</label></div>
+                    <div class="choice"><input type="radio" name="q48" value="c"><label>c. A distribution of earnings to shareholders</label></div>
+                    <div class="choice"><input type="radio" name="q48" value="d"><label>d. Recorded as a credit to Retained Earnings</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q48')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint48')">💡 Hint</button>
+                <div class="hint" id="hint48">Dividends reduce RE but are NOT an expense. They're a distribution to owners.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="d">
+                <div class="question-text">49. Which is recorded with a debit?</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q49" value="a"><label>a. Increase in revenue</label></div>
+                    <div class="choice"><input type="radio" name="q49" value="b"><label>b. Increase in liabilities</label></div>
+                    <div class="choice"><input type="radio" name="q49" value="c"><label>c. Decrease in assets</label></div>
+                    <div class="choice"><input type="radio" name="q49" value="d"><label>d. Increase in expenses</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q49')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint49')">💡 Hint</button>
+                <div class="hint" id="hint49">DEALER: DEA (Dividends, Expenses, Assets) increase with debits.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question" data-answer="a">
+                <div class="question-text">50. The primary purpose of the trial balance is to:</div>
+                <div class="choices">
+                    <div class="choice"><input type="radio" name="q50" value="a"><label>a. Verify that debits equal credits</label></div>
+                    <div class="choice"><input type="radio" name="q50" value="b"><label>b. Prove all transactions were recorded correctly</label></div>
+                    <div class="choice"><input type="radio" name="q50" value="c"><label>c. List all the company's assets</label></div>
+                    <div class="choice"><input type="radio" name="q50" value="d"><label>d. Prepare the income statement</label></div>
+                </div>
+                <button class="btn-check" onclick="checkAnswer(this, 'q50')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint50')">💡 Hint</button>
+                <div class="hint" id="hint50">Trial balance ONLY proves debits = credits, not that everything is correct!</div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- Section 8: Account Analysis (Calculations) -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">8</span>
+                Account Analysis Problems (Calculations)
+            </div>
+
+            <div class="question">
+                <div class="question-text">51. <strong>Accounts Receivable Analysis:</strong><br>
+                Beginning AR = $18,500<br>
+                Sales on Account = $209,000<br>
+                Ending AR = $53,500<br>
+                <br>
+                Calculate: <strong>Collections from Customers</strong></div>
+                <input type="number" class="input-answer" id="q51" placeholder="Enter amount (no $ or commas)">
+                <button class="btn-check" onclick="checkNumericAnswer(this, 'q51', 174000)">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint51')">💡 Hint</button>
+                <div class="hint" id="hint51">Collections = Beginning AR + Sales on Account - Ending AR</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">52. <strong>Accounts Payable Analysis:</strong><br>
+                Beginning AP = $4,300<br>
+                Payments on Account = $21,000<br>
+                Ending AP = $33,300<br>
+                <br>
+                Calculate: <strong>Purchases on Account</strong></div>
+                <input type="number" class="input-answer" id="q52" placeholder="Enter amount (no $ or commas)">
+                <button class="btn-check" onclick="checkNumericAnswer(this, 'q52', 50000)">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint52')">💡 Hint</button>
+                <div class="hint" id="hint52">Purchases = Ending AP - Beginning AP + Payments</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">53. <strong>Cash Analysis:</strong><br>
+                Ending Cash = $5,200<br>
+                Cash Receipts = $9,700<br>
+                Cash Disbursements = $14,000<br>
+                <br>
+                Calculate: <strong>Beginning Cash Balance</strong></div>
+                <input type="number" class="input-answer" id="q53" placeholder="Enter amount (no $ or commas)">
+                <button class="btn-check" onclick="checkNumericAnswer(this, 'q53', 9500)">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint53')">💡 Hint</button>
+                <div class="hint" id="hint53">Beginning Cash = Ending Cash - Receipts + Disbursements</div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- Section 9: Transaction Analysis -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">9</span>
+                Transaction Analysis - Journal Entries
+            </div>
+
+            <div class="question">
+                <div class="question-text">54. <strong>Transaction:</strong> Received $8,000 cash from customers for services provided.<br>
+                <br>
+                <strong>Debit account:</strong></div>
+                <input type="text" class="input-answer" id="q54a" placeholder="Account name">
+                <div class="question-text" style="margin-top: 15px;"><strong>Credit account:</strong></div>
+                <input type="text" class="input-answer" id="q54b" placeholder="Account name">
+                <button class="btn-check" onclick="checkJournalEntry(this, 'q54a', 'q54b', 'cash', 'service revenue')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint54')">💡 Hint</button>
+                <div class="hint" id="hint54">Cash (asset) increases. Service Revenue (revenue) increases. Assets increase with debits, revenues with credits.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">55. <strong>Transaction:</strong> Paid $2,500 cash for rent expense.<br>
+                <br>
+                <strong>Debit account:</strong></div>
+                <input type="text" class="input-answer" id="q55a" placeholder="Account name">
+                <div class="question-text" style="margin-top: 15px;"><strong>Credit account:</strong></div>
+                <input type="text" class="input-answer" id="q55b" placeholder="Account name">
+                <button class="btn-check" onclick="checkJournalEntry(this, 'q55a', 'q55b', 'rent expense', 'cash')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint55')">💡 Hint</button>
+                <div class="hint" id="hint55">Rent Expense (expense) increases. Cash (asset) decreases. Expenses increase with debits, assets decrease with credits.</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">56. <strong>Transaction:</strong> Purchased equipment for $15,000 on credit.<br>
+                <br>
+                <strong>Debit account:</strong></div>
+                <input type="text" class="input-answer" id="q56a" placeholder="Account name">
+                <div class="question-text" style="margin-top: 15px;"><strong>Credit account:</strong></div>
+                <input type="text" class="input-answer" id="q56b" placeholder="Account name">
+                <button class="btn-check" onclick="checkJournalEntry(this, 'q56a', 'q56b', 'equipment', 'accounts payable')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint56')">💡 Hint</button>
+                <div class="hint" id="hint56">Equipment (asset) increases. Accounts Payable (liability) increases. Assets increase with debits, liabilities with credits.</div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- Section 10: Financial Statement Preparation -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">10</span>
+                Financial Statement Line Items
+            </div>
+
+            <div class="question">
+                <div class="question-text">57. <strong>Given:</strong><br>
+                Service Revenue = $85,000<br>
+                Rent Expense = $12,000<br>
+                Salaries Expense = $45,000<br>
+                Utilities Expense = $3,500<br>
+                <br>
+                Calculate: <strong>Net Income</strong></div>
+                <input type="number" class="input-answer" id="q57" placeholder="Enter amount">
+                <button class="btn-check" onclick="checkNumericAnswer(this, 'q57', 24500)">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint57')">💡 Hint</button>
+                <div class="hint" id="hint57">Net Income = Total Revenues - Total Expenses</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">58. <strong>Given:</strong><br>
+                Total Assets = $125,000<br>
+                Total Liabilities = $48,000<br>
+                <br>
+                Calculate: <strong>Total Stockholders' Equity</strong></div>
+                <input type="number" class="input-answer" id="q58" placeholder="Enter amount">
+                <button class="btn-check" onclick="checkNumericAnswer(this, 'q58', 77000)">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint58')">💡 Hint</button>
+                <div class="hint" id="hint58">Assets = Liabilities + Equity, so Equity = Assets - Liabilities</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">59. <strong>Given:</strong><br>
+                Beginning Retained Earnings = $45,000<br>
+                Net Income = $28,000<br>
+                Dividends = $8,000<br>
+                <br>
+                Calculate: <strong>Ending Retained Earnings</strong></div>
+                <input type="number" class="input-answer" id="q59" placeholder="Enter amount">
+                <button class="btn-check" onclick="checkNumericAnswer(this, 'q59', 65000)">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint59')">💡 Hint</button>
+                <div class="hint" id="hint59">Ending RE = Beginning RE + Net Income - Dividends</div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">60. <strong>Given:</strong><br>
+                Beginning RE = $100,000<br>
+                Ending RE = $135,000<br>
+                Net Income = $50,000<br>
+                <br>
+                Calculate: <strong>Dividends Paid</strong></div>
+                <input type="number" class="input-answer" id="q60" placeholder="Enter amount">
+                <button class="btn-check" onclick="checkNumericAnswer(this, 'q60', 15000)">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('hint60')">💡 Hint</button>
+                <div class="hint" id="hint60">Ending RE = Beginning RE + NI - Dividends, so Dividends = Beginning RE + NI - Ending RE</div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        </div>
+        <!-- End Quiz Tab -->
+
+        <!-- Tab 2: Account Analysis (Random Problems) -->
+        <div id="calculations-tab" class="tab-content">
+            <h2 style="color: #1e3a8a; margin-bottom: 20px;">🧮 Account Analysis Practice</h2>
+            <p style="margin-bottom: 30px; color: #666;">Practice AR, AP, and Cash analysis problems with randomly generated values.</p>
+
+            <div class="practice-problem">
+                <div class="problem-title">Accounts Receivable Analysis</div>
+                <div class="scenario-box" id="arScenario"></div>
+                <div class="formula-hint">
+                    Formula: Beginning AR + Sales on Account - Collections = Ending AR<br>
+                    Rearrange: Collections = Beginning AR + Sales on Account - Ending AR
+                </div>
+                <div class="question-text">Calculate: <strong>Collections from Customers</strong></div>
+                <input type="number" class="input-answer" id="arAnswer" placeholder="Enter amount (no $ or commas)">
+                <div class="action-buttons" style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button class="btn btn-check" onclick="checkAR()">Check Answer</button>
+                    <button class="btn btn-solution" onclick="showARSolution()">Show Solution</button>
+                    <button class="btn btn-new" onclick="newARProblem()">New Problem</button>
+                </div>
+                <div class="feedback" id="arFeedback"></div>
+            </div>
+
+            <div class="practice-problem">
+                <div class="problem-title">Accounts Payable Analysis</div>
+                <div class="scenario-box" id="apScenario"></div>
+                <div class="formula-hint">
+                    Formula: Beginning AP + Purchases on Account - Payments = Ending AP<br>
+                    Rearrange: Purchases = Ending AP - Beginning AP + Payments
+                </div>
+                <div class="question-text">Calculate: <strong>Purchases on Account</strong></div>
+                <input type="number" class="input-answer" id="apAnswer" placeholder="Enter amount (no $ or commas)">
+                <div class="action-buttons" style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button class="btn btn-check" onclick="checkAP()">Check Answer</button>
+                    <button class="btn btn-solution" onclick="showAPSolution()">Show Solution</button>
+                    <button class="btn btn-new" onclick="newAPProblem()">New Problem</button>
+                </div>
+                <div class="feedback" id="apFeedback"></div>
+            </div>
+
+            <div class="practice-problem">
+                <div class="problem-title">Cash Analysis</div>
+                <div class="scenario-box" id="cashScenario"></div>
+                <div class="formula-hint">
+                    Formula: Beginning Cash + Cash Receipts - Cash Disbursements = Ending Cash<br>
+                    Rearrange: Beginning Cash = Ending Cash - Cash Receipts + Cash Disbursements
+                </div>
+                <div class="question-text">Calculate: <strong>Beginning Cash Balance</strong></div>
+                <input type="number" class="input-answer" id="cashAnswer" placeholder="Enter amount (no $ or commas)">
+                <div class="action-buttons" style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button class="btn btn-check" onclick="checkCash()">Check Answer</button>
+                    <button class="btn btn-solution" onclick="showCashSolution()">Show Solution</button>
+                    <button class="btn btn-new" onclick="newCashProblem()">New Problem</button>
+                </div>
+                <div class="feedback" id="cashFeedback"></div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Transaction Analysis -->
+        <div id="transactions-tab" class="tab-content">
+            <h2 style="color: #1e3a8a; margin-bottom: 20px;">📋 Transaction Analysis Practice</h2>
+            <p style="margin-bottom: 30px; color: #666;">Analyze transactions and create journal entries.</p>
+
+            <div class="practice-problem" id="transactionProblem">
+                <div class="problem-title">Identify the Accounts</div>
+                <div class="scenario-box">
+                    <strong>Transaction:</strong> <span id="transactionText"></span>
+                </div>
+                <div class="formula-hint">
+                    Remember DEALER: DEA (Dividends, Expenses, Assets) increase with debits.<br>
+                    LER (Liabilities, Equity, Revenue) increase with credits.
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <label style="font-weight: 600; display: block; margin-bottom: 8px;">Debit Account:</label>
+                    <input type="text" class="input-answer" id="transDebit" placeholder="Enter account name" style="width: 100%; max-width: 400px;">
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <label style="font-weight: 600; display: block; margin-bottom: 8px;">Credit Account:</label>
+                    <input type="text" class="input-answer" id="transCredit" placeholder="Enter account name" style="width: 100%; max-width: 400px;">
+                </div>
+
+                <div class="action-buttons" style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button class="btn btn-check" onclick="checkTransaction()">Check Answer</button>
+                    <button class="btn btn-solution" onclick="showTransactionSolution()">Show Solution</button>
+                    <button class="btn btn-new" onclick="newTransactionProblem()">New Transaction</button>
+                </div>
+                <div class="feedback" id="transFeedback"></div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Trial Balance Practice -->
+        <div id="trial-balance-tab" class="tab-content">
+            <h2 style="color: #1e3a8a; margin-bottom: 20px;">⚖️ Trial Balance Practice</h2>
+            <p style="margin-bottom: 30px; color: #666;">Prepare a trial balance and ensure debits equal credits.</p>
+
+            <div class="practice-problem">
+                <div class="problem-title">Prepare the Trial Balance</div>
+                <div class="scenario-box" id="tbAccounts"></div>
+                <div class="formula-hint">
+                    Remember: Total Debits must equal Total Credits!<br>
+                    Use DEALER to determine which side each account goes on.
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <h3 style="margin-bottom: 15px;">Enter Total Debits and Total Credits:</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 500px;">
+                        <div>
+                            <label style="font-weight: 600; display: block; margin-bottom: 8px;">Total Debits:</label>
+                            <input type="number" class="input-answer" id="totalDebits" placeholder="$0">
+                        </div>
+                        <div>
+                            <label style="font-weight: 600; display: block; margin-bottom: 8px;">Total Credits:</label>
+                            <input type="number" class="input-answer" id="totalCredits" placeholder="$0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons" style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button class="btn btn-check" onclick="checkTrialBalance()">Check Answer</button>
+                    <button class="btn btn-solution" onclick="showTBSolution()">Show Solution</button>
+                    <button class="btn btn-new" onclick="newTBProblem()">New Problem</button>
+                </div>
+                <div class="feedback" id="tbFeedback"></div>
+            </div>
+        </div>
+
+
+        <!-- Tab 5: Stoner Edition 🌿 -->
+        <div id="stoner-tab" class="tab-content">
+            <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #10b981 0%, #047857 100%); border-radius: 10px; margin-bottom: 30px;">
+                <h2 style="color: white; margin-bottom: 10px;">🌿 FINAL EXAM PREP - STONER EDITION 🌿</h2>
+                <p style="color: #d1fae5; font-size: 1.1em;">First 10 Questions Re-themed for Green Leaf Dispensary | Units 02A</p>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="stonerProgressBar">0/10 (0%)</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-number">🌿</span>
+                    Unit 02A: Account Types & Accounting Equation (Dispensary Edition)
+                </div>
+
+                <div class="question" data-answer="d">
+                    <div class="question-text">1. Which one of the following is NOT a revenue account for Green Leaf Dispensary?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="stoner-q1" id="sq1a" value="a"><label for="sq1a">Cannabis Sales Revenue</label></div>
+                        <div class="option"><input type="radio" name="stoner-q1" id="sq1b" value="b"><label for="sq1b">Bong Cleaning Service Revenue</label></div>
+                        <div class="option"><input type="radio" name="stoner-q1" id="sq1c" value="c"><label for="sq1c">Edibles Sales Revenue</label></div>
+                        <div class="option"><input type="radio" name="stoner-q1" id="sq1d" value="d"><label for="sq1d">Unearned Revenue from Pre-Orders</label></div>
+                    </div>
+                    <button class="btn-check" onclick="checkStonerQuestion('stoner-q1')">Check Answer</button>
+                    <button class="btn-hint" onclick="toggleHint('sh1')">💡 Hint</button>
+                    <div class="hint" id="sh1">Unearned Revenue is a LIABILITY - cash received BEFORE the dank nugs are delivered.</div>
+                    <div class="feedback" id="stoner-feedback1"></div>
+                </div>
+
+                <div class="question" data-answer="a">
+                    <div class="question-text">2. Which of the following is NOT an expense account for Green Leaf Dispensary?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="stoner-q2" id="sq2a" value="a"><label for="sq2a">Prepaid Rolling Papers</label></div>
+                        <div class="option"><input type="radio" name="stoner-q2" id="sq2b" value="b"><label for="sq2b">Depreciation Expense - Grow Lights</label></div>
+                        <div class="option"><input type="radio" name="stoner-q2" id="sq2c" value="c"><label for="sq2c">Supplies Expense (Baggies & Jars)</label></div>
+                        <div class="option"><input type="radio" name="stoner-q2" id="sq2d" value="d"><label for="sq2d">Cost of Goods Sold - Cannabis Inventory</label></div>
+                    </div>
+                    <button class="btn-check" onclick="checkStonerQuestion('stoner-q2')">Check Answer</button>
+                    <button class="btn-hint" onclick="toggleHint('sh2')">💡 Hint</button>
+                    <div class="hint" id="sh2">Prepaid Rolling Papers is an ASSET - papers bought in advance that haven't been used yet.</div>
+                    <div class="feedback" id="stoner-feedback2"></div>
+                </div>
+
+                <div class="question" data-answer="b">
+                    <div class="question-text">3. Green Leaf Dispensary's total liabilities decreased by $30,000 (paid off grow equipment loans) and stockholders' equity increased by $35,000. The period's change in total assets is:</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="stoner-q3" id="sq3a" value="a"><label for="sq3a">$65,000 increase</label></div>
+                        <div class="option"><input type="radio" name="stoner-q3" id="sq3b" value="b"><label for="sq3b">$5,000 increase</label></div>
+                        <div class="option"><input type="radio" name="stoner-q3" id="sq3c" value="c"><label for="sq3c">$5,000 decrease</label></div>
+                        <div class="option"><input type="radio" name="stoner-q3" id="sq3d" value="d"><label for="sq3d">$65,000 decrease</label></div>
+                    </div>
+                    <button class="btn-check" onclick="checkStonerQuestion('stoner-q3')">Check Answer</button>
+                    <button class="btn-hint" onclick="toggleHint('sh3')">💡 Hint</button>
+                    <div class="hint" id="sh3">A = L + E. If L decreases by 30K and E increases by 35K, then A changes by -30K + 35K = +5K</div>
+                    <div class="feedback" id="stoner-feedback3"></div>
+                </div>
+
+                <div class="question" data-answer="a">
+                    <div class="question-text">4. High Times Cannabis Co. with total stockholders' equity of $75,000 paid a $12,000 debt to their hydroponic supplier. As a result, total stockholders' equity:</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="stoner-q4" id="sq4a" value="a"><label for="sq4a">did not change (Assets down, Liabilities down - equity stays lit! 🔥)</label></div>
+                        <div class="option"><input type="radio" name="stoner-q4" id="sq4b" value="b"><label for="sq4b">increased by $12,000</label></div>
+                        <div class="option"><input type="radio" name="stoner-q4" id="sq4c" value="c"><label for="sq4c">decreased by $12,000</label></div>
+                        <div class="option"><input type="radio" name="stoner-q4" id="sq4d" value="d"><label for="sq4d">increased to $75,000</label></div>
+                    </div>
+                    <button class="btn-check" onclick="checkStonerQuestion('stoner-q4')">Check Answer</button>
+                    <button class="btn-hint" onclick="toggleHint('sh4')">💡 Hint</button>
+                    <div class="hint" id="sh4">Paying a debt: Cash (A) decreases, Liability (L) decreases. A = L + E stays balanced. E doesn't change!</div>
+                    <div class="feedback" id="stoner-feedback4"></div>
+                </div>
+
+                <div class="question" data-answer="d">
+                    <div class="question-text">5. Bud Brothers Dispensary's total assets decreased by $11,000 (sold old vaporizers). Common stock increased by $12,000. Net income from premium strains totaled $8,000. What occurred to total liabilities during the year?</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="stoner-q5" id="sq5a" value="a"><label for="sq5a">$23,000 decrease</label></div>
+                        <div class="option"><input type="radio" name="stoner-q5" id="sq5b" value="b"><label for="sq5b">$1,000 increase</label></div>
+                        <div class="option"><input type="radio" name="stoner-q5" id="sq5c" value="c"><label for="sq5c">$15,000 decrease</label></div>
+                        <div class="option"><input type="radio" name="stoner-q5" id="sq5d" value="d"><label for="sq5d">$31,000 decrease</label></div>
+                    </div>
+                    <button class="btn-check" onclick="checkStonerQuestion('stoner-q5')">Check Answer</button>
+                    <button class="btn-hint" onclick="toggleHint('sh5')">💡 Hint</button>
+                    <div class="hint" id="sh5">A = L + E. E increased by 12K (stock) + 8K (NI) = 20K. A decreased by 11K. So L = A - E = -11K - 20K = -31K decrease</div>
+                    <div class="feedback" id="stoner-feedback5"></div>
+                </div>
+
+                <div class="question" data-answer="c">
+                    <div class="question-text">6. Debits always:</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="stoner-q6" id="sq6a" value="a"><label for="sq6a">increase accounts (like rolling a bigger joint)</label></div>
+                        <div class="option"><input type="radio" name="stoner-q6" id="sq6b" value="b"><label for="sq6b">decrease accounts</label></div>
+                        <div class="option"><input type="radio" name="stoner-q6" id="sq6c" value="c"><label for="sq6c">are on the left side of T-accounts</label></div>
+                        <div class="option"><input type="radio" name="stoner-q6" id="sq6d" value="d"><label for="sq6d">equal credits</label></div>
+                    </div>
+                    <button class="btn-check" onclick="checkStonerQuestion('stoner-q6')">Check Answer</button>
+                    <button class="btn-hint" onclick="toggleHint('sh6')">💡 Hint</button>
+                    <div class="hint" id="sh6">DEbit = LEft, CREdit = Right (even when you're blazed)</div>
+                    <div class="feedback" id="stoner-feedback6"></div>
+                </div>
+
+                <div class="question" data-answer="d">
+                    <div class="question-text">7. Accounts with normal debit balances at a cannabis dispensary include:</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="stoner-q7" id="sq7a" value="a"><label for="sq7a">grow equipment (assets) and loans payable (liabilities)</label></div>
+                        <div class="option"><input type="radio" name="stoner-q7" id="sq7b" value="b"><label for="sq7b">liabilities and rent expense</label></div>
+                        <div class="option"><input type="radio" name="stoner-q7" id="sq7c" value="c"><label for="sq7c">stockholders' equity and cannabis sales revenue</label></div>
+                        <div class="option"><input type="radio" name="stoner-q7" id="sq7d" value="d"><label for="sq7d">electricity expense (grow lights) and cash from edibles sales (assets)</label></div>
+                    </div>
+                    <button class="btn-check" onclick="checkStonerQuestion('stoner-q7')">Check Answer</button>
+                    <button class="btn-hint" onclick="toggleHint('sh7')">💡 Hint</button>
+                    <div class="hint" id="sh7">DEALER: DEA (Dividends, Expenses, Assets) have debit normal balances</div>
+                    <div class="feedback" id="stoner-feedback7"></div>
+                </div>
+
+                <div class="question" data-answer="b">
+                    <div class="question-text">8. Accounts with normal credit balances at a cannabis business include:</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="stoner-q8" id="sq8a" value="a"><label for="sq8a">cannabis inventory (assets) and notes payable to seed suppliers</label></div>
+                        <div class="option"><input type="radio" name="stoner-q8" id="sq8b" value="b"><label for="sq8b">loans payable (liabilities) and stockholders' equity</label></div>
+                        <div class="option"><input type="radio" name="stoner-q8" id="sq8c" value="c"><label for="sq8c">weed sales revenue and cash</label></div>
+                        <div class="option"><input type="radio" name="stoner-q8" id="sq8d" value="d"><label for="sq8d">revenues from bong sales and trimming expenses</label></div>
+                    </div>
+                    <button class="btn-check" onclick="checkStonerQuestion('stoner-q8')">Check Answer</button>
+                    <button class="btn-hint" onclick="toggleHint('sh8')">💡 Hint</button>
+                    <div class="hint" id="sh8">DEALER: LER (Liabilities, Equity, Revenue) have credit normal balances</div>
+                    <div class="feedback" id="stoner-feedback8"></div>
+                </div>
+
+                <div class="question" data-answer="d">
+                    <div class="question-text">9. A credit will increase ________, but decrease ________.</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="stoner-q9" id="sq9a" value="a"><label for="sq9a">accounts receivable from customers who bought weed on credit; accounts payable</label></div>
+                        <div class="option"><input type="radio" name="stoner-q9" id="sq9b" value="b"><label for="sq9b">accounts receivable; electricity expense for grow lights</label></div>
+                        <div class="option"><input type="radio" name="stoner-q9" id="sq9c" value="c"><label for="sq9c">accounts payable; common stock</label></div>
+                        <div class="option"><input type="radio" name="stoner-q9" id="sq9d" value="d"><label for="sq9d">common stock; prepaid insurance on the grow house</label></div>
+                    </div>
+                    <button class="btn-check" onclick="checkStonerQuestion('stoner-q9')">Check Answer</button>
+                    <button class="btn-hint" onclick="toggleHint('sh9')">💡 Hint</button>
+                    <div class="hint" id="sh9">Credits increase LER (Liabilities, Equity, Revenue) and decrease DEA (Dividends, Expenses, Assets)</div>
+                    <div class="feedback" id="stoner-feedback9"></div>
+                </div>
+
+                <div class="question" data-answer="a">
+                    <div class="question-text">10. A credit will reduce ________, but increase ________.</div>
+                    <div class="options">
+                        <div class="option"><input type="radio" name="stoner-q10" id="sq10a" value="a"><label for="sq10a">accounts receivable from cannabis customers; accounts payable to bong suppliers</label></div>
+                        <div class="option"><input type="radio" name="stoner-q10" id="sq10b" value="b"><label for="sq10b">utilities expense (grow house electricity); accounts receivable</label></div>
+                        <div class="option"><input type="radio" name="stoner-q10" id="sq10c" value="c"><label for="sq10c">accounts payable; common stock</label></div>
+                        <div class="option"><input type="radio" name="stoner-q10" id="sq10d" value="d"><label for="sq10d">common stock; prepaid rent on the dispensary</label></div>
+                    </div>
+                    <button class="btn-check" onclick="checkStonerQuestion('stoner-q10')">Check Answer</button>
+                    <button class="btn-hint" onclick="toggleHint('sh10')">💡 Hint</button>
+                    <div class="hint" id="sh10">Same as previous - credits reduce assets (like A/R) and increase liabilities (like A/P)</div>
+                    <div class="feedback" id="stoner-feedback10"></div>
+                </div>
+
+                <p style="text-align: center; padding: 30px; background: #fef3c7; border-radius: 10px; margin-top: 30px; color: #92400e; border: 2px dashed #f59e0b;">
+                    <strong>📝 Questions 11-60 coming in next update!</strong><br>
+                    <span style="font-size: 0.9em;">These first 10 cover the fundamentals - master these and you're off to a great start! 🌿</span>
+                </p>
+            </div>
+
+            <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: white; border-radius: 10px; margin-top: 40px;">
+                <h3>🌿 You got this! 🌿</h3>
+                <p>Study hard, ace that final, and remember: A = L + E (Assets = Liabilities + Equity)</p>
+                <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.9;">
+                    Remember the DEALER mnemonic:<br>
+                    <strong>D</strong>ividends, <strong>E</strong>xpenses, <strong>A</strong>ssets = Debit normal balance<br>
+                    <strong>L</strong>iabilities, <strong>E</strong>quity, <strong>R</strong>evenue = Credit normal balance
+                </p>
+            </div>
+        </div></div>
+
+    </div>
+
+    <script>
+        // Clear storage
+        localStorage.clear();
+
+        let checkedQuestions = new Set();
+        let correctQuestions = new Set();
+
+        function checkAnswer(button, questionName) {
+            const question = button.closest('.question');
+            const correctAnswer = question.dataset.answer;
+            const selected = document.querySelector(`input[name="${questionName}"]:checked`);
+            const feedback = question.querySelector('.feedback');
+
+            if (!selected) {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '⚠️ Please select an answer first!';
+                return;
+            }
+
+            checkedQuestions.add(questionName);
+
+            if (selected.value === correctAnswer) {
+                feedback.className = 'feedback show correct';
+                feedback.textContent = '✓ Correct! Well done!';
+                correctQuestions.add(questionName);
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = `✗ Incorrect. The correct answer is ${correctAnswer.toUpperCase()}.`;
+                correctQuestions.delete(questionName);
+            }
+
+            updateScore();
+        }
+
+        function checkTextAnswer(button, questionId, correctAnswer) {
+            const question = button.closest('.question');
+            const input = document.getElementById(questionId);
+            const userAnswer = input.value.trim().toLowerCase();
+            const feedback = question.querySelector('.feedback');
+
+            if (!userAnswer) {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '⚠️ Please enter an answer first!';
+                return;
+            }
+
+            checkedQuestions.add(questionId);
+
+            if (userAnswer === correctAnswer.toLowerCase()) {
+                feedback.className = 'feedback show correct';
+                feedback.textContent = '✓ Correct! Well done!';
+                correctQuestions.add(questionId);
+                input.classList.add('correct');
+                input.classList.remove('incorrect');
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = `✗ Incorrect. The correct answer is: ${correctAnswer}`;
+                correctQuestions.delete(questionId);
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+            }
+
+            updateScore();
+        }
+
+        function toggleHint(hintId) {
+            const hint = document.getElementById(hintId);
+            hint.classList.toggle('show');
+        }
+
+        function checkNumericAnswer(button, questionId, correctAnswer) {
+            const question = button.closest('.question');
+            const input = document.getElementById(questionId);
+            const userAnswer = parseFloat(input.value);
+            const feedback = question.querySelector('.feedback');
+
+            if (isNaN(userAnswer)) {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '⚠️ Please enter a numeric answer!';
+                return;
+            }
+
+            checkedQuestions.add(questionId);
+
+            if (userAnswer === correctAnswer) {
+                feedback.className = 'feedback show correct';
+                feedback.textContent = `✓ Correct! The answer is $${correctAnswer.toLocaleString()}`;
+                correctQuestions.add(questionId);
+                input.classList.add('correct');
+                input.classList.remove('incorrect');
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = `✗ Incorrect. You entered $${userAnswer.toLocaleString()}, but the correct answer is $${correctAnswer.toLocaleString()}`;
+                correctQuestions.delete(questionId);
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+            }
+
+            updateScore();
+        }
+
+        function checkJournalEntry(button, debitInputId, creditInputId, correctDebit, correctCredit) {
+            const question = button.closest('.question');
+            const debitInput = document.getElementById(debitInputId);
+            const creditInput = document.getElementById(creditInputId);
+            const userDebit = debitInput.value.trim().toLowerCase();
+            const userCredit = creditInput.value.trim().toLowerCase();
+            const feedback = question.querySelector('.feedback');
+
+            if (!userDebit || !userCredit) {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '⚠️ Please fill in both accounts!';
+                return;
+            }
+
+            const questionId = debitInputId + '_' + creditInputId;
+            checkedQuestions.add(questionId);
+
+            const debitCorrect = userDebit === correctDebit.toLowerCase();
+            const creditCorrect = userCredit === correctCredit.toLowerCase();
+
+            if (debitCorrect && creditCorrect) {
+                feedback.className = 'feedback show correct';
+                feedback.textContent = '✓ Correct! Well done!';
+                correctQuestions.add(questionId);
+                debitInput.classList.add('correct');
+                debitInput.classList.remove('incorrect');
+                creditInput.classList.add('correct');
+                creditInput.classList.remove('incorrect');
+            } else {
+                let errorMsg = '✗ Incorrect. ';
+                if (!debitCorrect) errorMsg += `Debit should be: ${correctDebit}. `;
+                if (!creditCorrect) errorMsg += `Credit should be: ${correctCredit}.`;
+
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = errorMsg;
+                correctQuestions.delete(questionId);
+
+                debitInput.classList.toggle('correct', debitCorrect);
+                debitInput.classList.toggle('incorrect', !debitCorrect);
+                creditInput.classList.toggle('correct', creditCorrect);
+                creditInput.classList.toggle('incorrect', !creditCorrect);
+            }
+
+            updateScore();
+        }
+
+        function updateScore() {
+            const checked = checkedQuestions.size;
+            const correct = correctQuestions.size;
+            const percent = checked > 0 ? Math.round((correct / checked) * 100) : 0;
+
+            document.getElementById('checkedCount').textContent = `${checked}/60`;
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('scorePercent').textContent = `${percent}%`;
+
+            const progressBar = document.getElementById('progressBar');
+            const progressPercent = Math.round((checked / 60) * 100);
+            progressBar.style.width = progressPercent + '%';
+            progressBar.textContent = progressPercent + '%';
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            event.target.classList.add('active');
+
+            // Initialize tab content if needed
+            if (tabName === 'calculations' && !problems.ar) {
+                newARProblem();
+                newAPProblem();
+                newCashProblem();
+            } else if (tabName === 'transactions' && !currentTransaction) {
+                newTransactionProblem();
+            } else if (tabName === 'trial-balance' && !currentTB) {
+                newTBProblem();
+            }
+        }
+
+        // Account Analysis Problems
+        let problems = { ar: null, ap: null, cash: null };
+
+        function fmt(num) {
+            return num.toLocaleString();
+        }
+
+        function newARProblem() {
+            const beginAR = Math.floor(Math.random() * 30000) + 10000;
+            const sales = Math.floor(Math.random() * 250000) + 150000;
+            const endAR = Math.floor(Math.random() * 60000) + 30000;
+            problems.ar = { beginAR, sales, endAR, answer: beginAR + sales - endAR };
+
+            document.getElementById('arScenario').innerHTML = `
+                <div class="scenario-item"><span class="scenario-label">Beginning AR:</span> $${fmt(beginAR)}</div>
+                <div class="scenario-item"><span class="scenario-label">Sales on Account:</span> $${fmt(sales)}</div>
+                <div class="scenario-item"><span class="scenario-label">Ending AR:</span> $${fmt(endAR)}</div>
+            `;
+            document.getElementById('arAnswer').value = '';
+            document.getElementById('arAnswer').classList.remove('correct', 'incorrect');
+            document.getElementById('arFeedback').className = 'feedback';
+            document.getElementById('arFeedback').innerHTML = '';
+        }
+
+        function checkAR() {
+            const userAnswer = parseFloat(document.getElementById('arAnswer').value);
+            const input = document.getElementById('arAnswer');
+            const feedback = document.getElementById('arFeedback');
+
+            if (isNaN(userAnswer)) {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '⚠️ Please enter a numeric answer!';
+                return;
+            }
+
+            if (userAnswer === problems.ar.answer) {
+                input.classList.add('correct');
+                input.classList.remove('incorrect');
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `✓ Correct! Collections = $${fmt(problems.ar.answer)}<br><br>Work: $${fmt(problems.ar.beginAR)} + $${fmt(problems.ar.sales)} - $${fmt(problems.ar.endAR)} = $${fmt(problems.ar.answer)}`;
+            } else {
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = `✗ Incorrect. You entered $${fmt(userAnswer)}, but the correct answer is $${fmt(problems.ar.answer)}`;
+            }
+        }
+
+        function showARSolution() {
+            document.getElementById('arAnswer').value = problems.ar.answer;
+            document.getElementById('arAnswer').classList.add('correct');
+            document.getElementById('arFeedback').className = 'feedback show correct';
+            document.getElementById('arFeedback').innerHTML = `
+                💡 Solution: Collections = Beginning AR + Sales - Ending AR<br>
+                = $${fmt(problems.ar.beginAR)} + $${fmt(problems.ar.sales)} - $${fmt(problems.ar.endAR)}<br>
+                = $${fmt(problems.ar.answer)}
+            `;
+        }
+
+        function newAPProblem() {
+            const beginAP = Math.floor(Math.random() * 8000) + 2000;
+            const payments = Math.floor(Math.random() * 30000) + 15000;
+            const endAP = Math.floor(Math.random() * 40000) + 20000;
+            problems.ap = { beginAP, payments, endAP, answer: endAP - beginAP + payments };
+
+            document.getElementById('apScenario').innerHTML = `
+                <div class="scenario-item"><span class="scenario-label">Beginning AP:</span> $${fmt(beginAP)}</div>
+                <div class="scenario-item"><span class="scenario-label">Payments:</span> $${fmt(payments)}</div>
+                <div class="scenario-item"><span class="scenario-label">Ending AP:</span> $${fmt(endAP)}</div>
+            `;
+            document.getElementById('apAnswer').value = '';
+            document.getElementById('apAnswer').classList.remove('correct', 'incorrect');
+            document.getElementById('apFeedback').className = 'feedback';
+            document.getElementById('apFeedback').innerHTML = '';
+        }
+
+        function checkAP() {
+            const userAnswer = parseFloat(document.getElementById('apAnswer').value);
+            const input = document.getElementById('apAnswer');
+            const feedback = document.getElementById('apFeedback');
+
+            if (isNaN(userAnswer)) {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '⚠️ Please enter a numeric answer!';
+                return;
+            }
+
+            if (userAnswer === problems.ap.answer) {
+                input.classList.add('correct');
+                input.classList.remove('incorrect');
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `✓ Correct! Purchases = $${fmt(problems.ap.answer)}<br><br>Work: $${fmt(problems.ap.endAP)} - $${fmt(problems.ap.beginAP)} + $${fmt(problems.ap.payments)} = $${fmt(problems.ap.answer)}`;
+            } else {
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = `✗ Incorrect. You entered $${fmt(userAnswer)}, but the correct answer is $${fmt(problems.ap.answer)}`;
+            }
+        }
+
+        function showAPSolution() {
+            document.getElementById('apAnswer').value = problems.ap.answer;
+            document.getElementById('apAnswer').classList.add('correct');
+            document.getElementById('apFeedback').className = 'feedback show correct';
+            document.getElementById('apFeedback').innerHTML = `
+                💡 Solution: Purchases = Ending AP - Beginning AP + Payments<br>
+                = $${fmt(problems.ap.endAP)} - $${fmt(problems.ap.beginAP)} + $${fmt(problems.ap.payments)}<br>
+                = $${fmt(problems.ap.answer)}
+            `;
+        }
+
+        function newCashProblem() {
+            const endCash = Math.floor(Math.random() * 15000) + 3000;
+            const receipts = Math.floor(Math.random() * 20000) + 5000;
+            const disbursements = Math.floor(Math.random() * 25000) + 10000;
+            problems.cash = { endCash, receipts, disbursements, answer: endCash - receipts + disbursements };
+
+            document.getElementById('cashScenario').innerHTML = `
+                <div class="scenario-item"><span class="scenario-label">Ending Cash:</span> $${fmt(endCash)}</div>
+                <div class="scenario-item"><span class="scenario-label">Cash Receipts:</span> $${fmt(receipts)}</div>
+                <div class="scenario-item"><span class="scenario-label">Cash Disbursements:</span> $${fmt(disbursements)}</div>
+            `;
+            document.getElementById('cashAnswer').value = '';
+            document.getElementById('cashAnswer').classList.remove('correct', 'incorrect');
+            document.getElementById('cashFeedback').className = 'feedback';
+            document.getElementById('cashFeedback').innerHTML = '';
+        }
+
+        function checkCash() {
+            const userAnswer = parseFloat(document.getElementById('cashAnswer').value);
+            const input = document.getElementById('cashAnswer');
+            const feedback = document.getElementById('cashFeedback');
+
+            if (isNaN(userAnswer)) {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '⚠️ Please enter a numeric answer!';
+                return;
+            }
+
+            if (userAnswer === problems.cash.answer) {
+                input.classList.add('correct');
+                input.classList.remove('incorrect');
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `✓ Correct! Beginning Cash = $${fmt(problems.cash.answer)}<br><br>Work: $${fmt(problems.cash.endCash)} - $${fmt(problems.cash.receipts)} + $${fmt(problems.cash.disbursements)} = $${fmt(problems.cash.answer)}`;
+            } else {
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = `✗ Incorrect. You entered $${fmt(userAnswer)}, but the correct answer is $${fmt(problems.cash.answer)}`;
+            }
+        }
+
+        function showCashSolution() {
+            document.getElementById('cashAnswer').value = problems.cash.answer;
+            document.getElementById('cashAnswer').classList.add('correct');
+            document.getElementById('cashFeedback').className = 'feedback show correct';
+            document.getElementById('cashFeedback').innerHTML = `
+                💡 Solution: Beginning Cash = Ending Cash - Receipts + Disbursements<br>
+                = $${fmt(problems.cash.endCash)} - $${fmt(problems.cash.receipts)} + $${fmt(problems.cash.disbursements)}<br>
+                = $${fmt(problems.cash.answer)}
+            `;
+        }
+
+        // Transaction Analysis
+        let currentTransaction = null;
+        const transactionPool = [
+            { text: 'Received $5,000 cash for services provided', debit: 'cash', credit: 'service revenue' },
+            { text: 'Paid $1,200 cash for rent expense', debit: 'rent expense', credit: 'cash' },
+            { text: 'Purchased equipment for $10,000 on credit', debit: 'equipment', credit: 'accounts payable' },
+            { text: 'Owner invested $20,000 cash into business', debit: 'cash', credit: 'capital' },
+            { text: 'Paid $3,000 to reduce accounts payable', debit: 'accounts payable', credit: 'cash' },
+            { text: 'Provided services on account for $2,500', debit: 'accounts receivable', credit: 'service revenue' },
+            { text: 'Paid $800 cash for utilities', debit: 'utilities expense', credit: 'cash' },
+            { text: 'Collected $1,500 from customers on account', debit: 'cash', credit: 'accounts receivable' },
+            { text: 'Owner withdrew $2,000 cash', debit: 'dividends', credit: 'cash' },
+            { text: 'Purchased $500 supplies on credit', debit: 'supplies', credit: 'accounts payable' }
+        ];
+
+        function newTransactionProblem() {
+            currentTransaction = transactionPool[Math.floor(Math.random() * transactionPool.length)];
+            document.getElementById('transactionText').textContent = currentTransaction.text;
+            document.getElementById('transDebit').value = '';
+            document.getElementById('transCredit').value = '';
+            document.getElementById('transDebit').classList.remove('correct', 'incorrect');
+            document.getElementById('transCredit').classList.remove('correct', 'incorrect');
+            document.getElementById('transFeedback').className = 'feedback';
+            document.getElementById('transFeedback').innerHTML = '';
+        }
+
+        function checkTransaction() {
+            const userDebit = document.getElementById('transDebit').value.trim().toLowerCase();
+            const userCredit = document.getElementById('transCredit').value.trim().toLowerCase();
+            const feedback = document.getElementById('transFeedback');
+
+            if (!userDebit || !userCredit) {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '⚠️ Please fill in both accounts!';
+                return;
+            }
+
+            const debitMatch = userDebit.includes(currentTransaction.debit) || currentTransaction.debit.includes(userDebit);
+            const creditMatch = userCredit.includes(currentTransaction.credit) || currentTransaction.credit.includes(userCredit);
+
+            const debitInput = document.getElementById('transDebit');
+            const creditInput = document.getElementById('transCredit');
+
+            debitInput.classList.toggle('correct', debitMatch);
+            debitInput.classList.toggle('incorrect', !debitMatch);
+            creditInput.classList.toggle('correct', creditMatch);
+            creditInput.classList.toggle('incorrect', !creditMatch);
+
+            if (debitMatch && creditMatch) {
+                feedback.className = 'feedback show correct';
+                feedback.textContent = '✓ Correct! Well done!';
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.innerHTML = `✗ Incorrect.<br>Debit: ${currentTransaction.debit}<br>Credit: ${currentTransaction.credit}`;
+            }
+        }
+
+        function showTransactionSolution() {
+            document.getElementById('transDebit').value = currentTransaction.debit;
+            document.getElementById('transCredit').value = currentTransaction.credit;
+            document.getElementById('transDebit').classList.add('correct');
+            document.getElementById('transCredit').classList.add('correct');
+            document.getElementById('transFeedback').className = 'feedback show correct';
+            document.getElementById('transFeedback').innerHTML = `💡 Solution:<br>Debit: ${currentTransaction.debit}<br>Credit: ${currentTransaction.credit}`;
+        }
+
+        // Trial Balance
+        let currentTB = null;
+
+        function newTBProblem() {
+            const accounts = [
+                { name: 'Cash', type: 'debit', amount: Math.floor(Math.random() * 50000) + 10000 },
+                { name: 'Accounts Receivable', type: 'debit', amount: Math.floor(Math.random() * 30000) + 5000 },
+                { name: 'Supplies', type: 'debit', amount: Math.floor(Math.random() * 3000) + 500 },
+                { name: 'Equipment', type: 'debit', amount: Math.floor(Math.random() * 40000) + 15000 },
+                { name: 'Accounts Payable', type: 'credit', amount: Math.floor(Math.random() * 15000) + 5000 },
+                { name: 'Notes Payable', type: 'credit', amount: Math.floor(Math.random() * 25000) + 10000 },
+                { name: 'Common Stock', type: 'credit', amount: Math.floor(Math.random() * 30000) + 20000 },
+                { name: 'Service Revenue', type: 'credit', amount: Math.floor(Math.random() * 60000) + 30000 },
+                { name: 'Rent Expense', type: 'debit', amount: Math.floor(Math.random() * 5000) + 1000 },
+                { name: 'Salaries Expense', type: 'debit', amount: Math.floor(Math.random() * 15000) + 5000 }
+            ];
+
+            const totalDebits = accounts.filter(a => a.type === 'debit').reduce((sum, a) => sum + a.amount, 0);
+            const totalCredits = accounts.filter(a => a.type === 'credit').reduce((sum, a) => sum + a.amount, 0);
+
+            currentTB = { accounts, totalDebits, totalCredits };
+
+            let html = '<h3 style="margin-bottom: 15px;">Account Balances:</h3><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">';
+            accounts.forEach(acc => {
+                html += `<div style="padding: 8px; background: white; border-radius: 4px;">
+                    <strong>${acc.name}:</strong> $${fmt(acc.amount)}
+                </div>`;
+            });
+            html += '</div>';
+
+            document.getElementById('tbAccounts').innerHTML = html;
+            document.getElementById('totalDebits').value = '';
+            document.getElementById('totalCredits').value = '';
+            document.getElementById('totalDebits').classList.remove('correct', 'incorrect');
+            document.getElementById('totalCredits').classList.remove('correct', 'incorrect');
+            document.getElementById('tbFeedback').className = 'feedback';
+            document.getElementById('tbFeedback').innerHTML = '';
+        }
+
+        function checkTrialBalance() {
+            const userDebits = parseFloat(document.getElementById('totalDebits').value);
+            const userCredits = parseFloat(document.getElementById('totalCredits').value);
+            const feedback = document.getElementById('tbFeedback');
+
+            if (isNaN(userDebits) || isNaN(userCredits)) {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '⚠️ Please enter both amounts!';
+                return;
+            }
+
+            const debitInput = document.getElementById('totalDebits');
+            const creditInput = document.getElementById('totalCredits');
+
+            const debitsCorrect = userDebits === currentTB.totalDebits;
+            const creditsCorrect = userCredits === currentTB.totalCredits;
+
+            debitInput.classList.toggle('correct', debitsCorrect);
+            debitInput.classList.toggle('incorrect', !debitsCorrect);
+            creditInput.classList.toggle('correct', creditsCorrect);
+            creditInput.classList.toggle('incorrect', !creditsCorrect);
+
+            if (debitsCorrect && creditsCorrect) {
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `✓ Correct! Total Debits = Total Credits = $${fmt(currentTB.totalDebits)}<br>Trial Balance is balanced!`;
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.innerHTML = `✗ Incorrect.<br>Correct Total Debits: $${fmt(currentTB.totalDebits)}<br>Correct Total Credits: $${fmt(currentTB.totalCredits)}`;
+            }
+        }
+
+        function showTBSolution() {
+            document.getElementById('totalDebits').value = currentTB.totalDebits;
+            document.getElementById('totalCredits').value = currentTB.totalCredits;
+            document.getElementById('totalDebits').classList.add('correct');
+            document.getElementById('totalCredits').classList.add('correct');
+
+            let html = '💡 Solution:<br><br><strong>DEBIT Accounts:</strong><ul style="margin-left: 20px;">';
+            currentTB.accounts.filter(a => a.type === 'debit').forEach(acc => {
+                html += `<li>${acc.name}: $${fmt(acc.amount)}</li>`;
+            });
+            html += `</ul><strong>Total Debits: $${fmt(currentTB.totalDebits)}</strong><br><br>`;
+
+            html += '<strong>CREDIT Accounts:</strong><ul style="margin-left: 20px;">';
+            currentTB.accounts.filter(a => a.type === 'credit').forEach(acc => {
+                html += `<li>${acc.name}: $${fmt(acc.amount)}</li>`;
+            });
+            html += `</ul><strong>Total Credits: $${fmt(currentTB.totalCredits)}</strong>`;
+
+            document.getElementById('tbFeedback').className = 'feedback show correct';
+            document.getElementById('tbFeedback').innerHTML = html;
+        }
+
+        // Stoner Tab Functions
+        const stonerAnswers = {
+            'stoner-q1': 'd',
+            'stoner-q2': 'a',
+            'stoner-q3': 'b',
+            'stoner-q4': 'a',
+            'stoner-q5': 'd',
+            'stoner-q6': 'c',
+            'stoner-q7': 'd',
+            'stoner-q8': 'b',
+            'stoner-q9': 'd',
+            'stoner-q10': 'a'
+        };
+
+        let stonerChecked = new Set();
+        let stonerCorrect = new Set();
+
+        function checkStonerQuestion(qName) {
+            const question = document.querySelector(`input[name="${qName}"]`).closest('.question');
+            const selected = document.querySelector(`input[name="${qName}"]:checked`);
+            const qNum = qName.replace('stoner-q', '');
+            const feedback = document.getElementById(`stoner-feedback${qNum}`);
+
+            if (!selected) {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '⚠️ Yo, select an answer first, dude!';
+                return;
+            }
+
+            stonerChecked.add(qName);
+            const correctAnswer = stonerAnswers[qName];
+
+            const correctMessages = [
+                '✓ Correct! Nice work, stoner! 🌿',
+                '✓ That\'s it! You\'re on fire! 🔥',
+                '✓ Nailed it! Higher learning at its finest! 🌿',
+                '✓ Correct! Your accounting game is lit! 💯',
+                '✓ Boom! That\'s the right answer, my dude! 🎯'
+            ];
+
+            const incorrectMessages = [
+                `✗ Nah bro. The correct answer was ${correctAnswer.toUpperCase()}. Don't worry, even Snoop Dogg gets questions wrong sometimes.`,
+                `✗ Not quite, homie. The answer is ${correctAnswer.toUpperCase()}. Take another hit at the books! 📚`,
+                `✗ Incorrect. The right answer was ${correctAnswer.toUpperCase()}. You got this next time! 💪`,
+                `✗ Oops! The answer is ${correctAnswer.toUpperCase()}. Don't let this harsh your mellow! 🌿`,
+                `✗ Wrong answer, but hey, we all gotta learn! It's ${correctAnswer.toUpperCase()}. Keep going! ✨`
+            ];
+
+            if (selected.value === correctAnswer) {
+                feedback.className = 'feedback show correct';
+                feedback.textContent = correctMessages[Math.floor(Math.random() * correctMessages.length)];
+                stonerCorrect.add(qName);
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = incorrectMessages[Math.floor(Math.random() * incorrectMessages.length)];
+                stonerCorrect.delete(qName);
+            }
+
+            updateStonerProgress();
+        }
+
+        function updateStonerProgress() {
+            const progressBar = document.getElementById('stonerProgressBar');
+            if (progressBar) {
+                const percentage = Math.round((stonerChecked.size / 10) * 100);
+                progressBar.style.width = percentage + '%';
+                progressBar.textContent = `${stonerChecked.size}/10 (${percentage}%)`;
+            }
+        }
+
+    </script>
+</body>
+</html>
