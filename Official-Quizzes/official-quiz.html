@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACCT101 Mock Quiz V2 - Official Questions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-number {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.05em;
+        }
+
+        .options {
+            margin-left: 10px;
+        }
+
+        .option {
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #f8f9fa;
+        }
+
+        .option:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .option label {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .input-group input {
+            width: 150px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .hint-btn {
+            background: #ffc107;
+            color: #333;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+            margin-right: 10px;
+            transition: background 0.3s;
+        }
+
+        .hint-btn:hover {
+            background: #ffca2c;
+        }
+
+        .check-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .check-btn:hover {
+            background: #218838;
+        }
+
+        .button-group {
+            margin-top: 10px;
+        }
+
+        .hint {
+            display: none;
+            margin-top: 10px;
+            padding: 12px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+            color: #856404;
+        }
+
+        .hint.show {
+            display: block;
+        }
+
+        .feedback {
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 6px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+            display: block;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .results h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .results .score {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .equation-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #667eea;
+        }
+
+        .inline-input {
+            width: 120px;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ACCT101 Mock Quiz V2</h1>
+        <p class="subtitle">ULTIMATE Edition - All Official Quiz Questions (37 Questions) | Units 02A-04</p>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar">0/37 (0%)</div>
+        </div>
+
+        <!-- SECTION 1: Unit 02A - 5 Account Types, The Accounting Equation -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">1</span>
+                Unit 02A: 5 Account Types & The Accounting Equation
+            </div>
+
+            <div class="question">
+                <div class="question-text">1. Which one of the following is NOT a revenue account?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1a" value="a">
+                        <label for="q1a">Service Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1b" value="b">
+                        <label for="q1b">Interest Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1c" value="c">
+                        <label for="q1c">Sales Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1d" value="d">
+                        <label for="q1d">Unearned Revenue</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint1')">Show Hint</button>
+                <div class="hint" id="hint1">Unearned Revenue is a LIABILITY - money received BEFORE services are performed.</div>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">2. Which of the following is NOT an expense account?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2a" value="a">
+                        <label for="q2a">Prepaid Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2b" value="b">
+                        <label for="q2b">Depreciation Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2c" value="c">
+                        <label for="q2c">Supplies Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2d" value="d">
+                        <label for="q2d">Cost of Goods Sold</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint2')">Show Hint</button>
+                <div class="hint" id="hint2">Prepaid Expense is an ASSET - expense paid in advance that hasn't been used yet.</div>
+                <div class="feedback" id="feedback2"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">3. If total liabilities decreased by $30,000 during a period and stockholders' equity increased by $35,000 during the same period, the amount and direction of the period's change in total assets is a:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q3" id="q3a" value="a">
+                        <label for="q3a">$65,000 increase</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" id="q3b" value="b">
+                        <label for="q3b">$5,000 increase</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" id="q3c" value="c">
+                        <label for="q3c">$5,000 decrease</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" id="q3d" value="d">
+                        <label for="q3d">$65,000 decrease</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint3')">Show Hint</button>
+                <div class="hint" id="hint3">A = L + E. If L decreases by 30K and E increases by 35K, then A changes by -30K + 35K = +5K</div>
+                <div class="feedback" id="feedback3"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">4. A corporation with total stockholders' equity of $75,000 paid a $12,000 business debt. As a result of this transaction, total stockholders' equity:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4a" value="a">
+                        <label for="q4a">did not change</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4b" value="b">
+                        <label for="q4b">increased by $12,000</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4c" value="c">
+                        <label for="q4c">decreased by $12,000</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4d" value="d">
+                        <label for="q4d">increased to $75,000</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint4')">Show Hint</button>
+                <div class="hint" id="hint4">Paying a debt: Cash (A) decreases, Liability (L) decreases. A = L + E stays balanced. E doesn't change!</div>
+                <div class="feedback" id="feedback4"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">5. Tatum Enterprises' total assets decreased by $11,000 during the year. Its common stock increased by $12,000 during the same period. Net income totaled $8,000 during the year. What occurred to the company's total liabilities during the year?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5a" value="a">
+                        <label for="q5a">$23,000 decrease</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5b" value="b">
+                        <label for="q5b">$1,000 increase</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5c" value="c">
+                        <label for="q5c">$15,000 decrease</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5d" value="d">
+                        <label for="q5d">$31,000 decrease</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint5')">Show Hint</button>
+                <div class="hint" id="hint5">A = L + E. E increased by 12K (stock) + 8K (NI) = 20K. A decreased by 11K. So L = A - E = -11K - 20K = -31K decrease</div>
+                <div class="feedback" id="feedback5"></div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: Unit 02B - Debits and Credits, Normal Balances -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">2</span>
+                Unit 02B: Debits, Credits & Normal Balances
+            </div>
+
+            <div class="question">
+                <div class="question-text">6. Accounts:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6a" value="a">
+                        <label for="q6a">do not reflect money amounts</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6b" value="b">
+                        <label for="q6b">are not used by entities that manufacture products</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6c" value="c">
+                        <label for="q6c">are records of increases and decreases in individual financial statement items</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6d" value="d">
+                        <label for="q6d">are only used by large entities with many transactions</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback6"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">7. The left side of an account is always:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7a" value="a">
+                        <label for="q7a">the debit side</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7b" value="b">
+                        <label for="q7b">the credit side</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7c" value="c">
+                        <label for="q7c">the balance of that account</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7d" value="d">
+                        <label for="q7d">carried forward to the next accounting period</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint7')">Show Hint</button>
+                <div class="hint" id="hint7">Remember: DEbit = LEft, CREdit = Right</div>
+                <div class="feedback" id="feedback7"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">8. A credit will increase ________, but decrease ________.</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q8" id="q8a" value="a">
+                        <label for="q8a">accounts receivable; accounts payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q8" id="q8b" value="b">
+                        <label for="q8b">accounts receivable; expenses</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q8" id="q8c" value="c">
+                        <label for="q8c">accounts payable; common stock</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q8" id="q8d" value="d">
+                        <label for="q8d">common stock; prepaid insurance</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint8')">Show Hint</button>
+                <div class="hint" id="hint8">Credits increase LER (Liabilities, Equity, Revenue) and decrease DEA (Dividends, Expenses, Assets)</div>
+                <div class="feedback" id="feedback8"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">9. A credit will reduce ________, but increase ________.</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9a" value="a">
+                        <label for="q9a">accounts receivable; accounts payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9b" value="b">
+                        <label for="q9b">utilities expense; accounts receivable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9c" value="c">
+                        <label for="q9c">accounts payable; common stock</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9d" value="d">
+                        <label for="q9d">common stock; prepaid insurance</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint9')">Show Hint</button>
+                <div class="hint" id="hint9">Same as previous - credits reduce assets (like A/R) and increase liabilities (like A/P)</div>
+                <div class="feedback" id="feedback9"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">10. Accounts with normal debit balances include:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10a" value="a">
+                        <label for="q10a">assets and liabilities</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10b" value="b">
+                        <label for="q10b">liabilities and expenses</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10c" value="c">
+                        <label for="q10c">stockholders' equity and revenues</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10d" value="d">
+                        <label for="q10d">expenses and assets</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint10')">Show Hint</button>
+                <div class="hint" id="hint10">DEALER: DEA (Dividends, Expenses, Assets) have debit normal balances</div>
+                <div class="feedback" id="feedback10"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">11. Accounts with normal credit balances include:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q11" id="q11a" value="a">
+                        <label for="q11a">assets and liabilities</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q11" id="q11b" value="b">
+                        <label for="q11b">liabilities and stockholders' equity</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q11" id="q11c" value="c">
+                        <label for="q11c">revenues and assets</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q11" id="q11d" value="d">
+                        <label for="q11d">revenues and expenses</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint11')">Show Hint</button>
+                <div class="hint" id="hint11">DEALER: LER (Liabilities, Equity, Revenue) have credit normal balances</div>
+                <div class="feedback" id="feedback11"></div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: Unit 03A - Steps 1-4, AIS -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">3</span>
+                Unit 03A: Accounting Information System & Steps 1-4
+            </div>
+
+            <div class="question">
+                <div class="question-text">12. A list of accounts used by a business is called the:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12a" value="a">
+                        <label for="q12a">Journal</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12b" value="b">
+                        <label for="q12b">chart of accounts</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12c" value="c">
+                        <label for="q12c">T chart</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12d" value="d">
+                        <label for="q12d">debit listing</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback12"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">13. Which of the following is NOT true with a double-entry accounting system?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q13" id="q13a" value="a">
+                        <label for="q13a">The accounting equation remains in balance</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q13" id="q13b" value="b">
+                        <label for="q13b">The sum of all debits is always equal to the sum of all credits in each journal entry</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q13" id="q13c" value="c">
+                        <label for="q13c">Each business transaction will have two debits</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q13" id="q13d" value="d">
+                        <label for="q13d">Every transaction affects at least two accounts</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint13')">Show Hint</button>
+                <div class="hint" id="hint13">Look for what's FALSE. Not every transaction has two debits - debits must equal credits!</div>
+                <div class="feedback" id="feedback13"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">14. What is the appropriate order for a company's general ledger?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q14" id="q14a" value="a">
+                        <label for="q14a">assets, liabilities, revenues, expenses, stockholders' equity</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q14" id="q14b" value="b">
+                        <label for="q14b">assets, revenues, expenses, liabilities, stockholders' equity</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q14" id="q14c" value="c">
+                        <label for="q14c">assets, liabilities, stockholders' equity, expenses, revenues</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q14" id="q14d" value="d">
+                        <label for="q14d">assets, liabilities, stockholders' equity, revenues, expenses</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint14')">Show Hint</button>
+                <div class="hint" id="hint14">Balance Sheet accounts first (A, L, E), then Income Statement accounts (R, E)</div>
+                <div class="feedback" id="feedback14"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">15. The process of initially recording a business transaction is called:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15a" value="a">
+                        <label for="q15a">closing</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15b" value="b">
+                        <label for="q15b">posting</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15c" value="c">
+                        <label for="q15c">journalizing</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15d" value="d">
+                        <label for="q15d">balancing</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback15"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">16. Which of the following is NOT a part of a complete journal entry?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q16" id="q16a" value="a">
+                        <label for="q16a">The accounts and amounts to be debited and credited</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q16" id="q16b" value="b">
+                        <label for="q16b">The balance of each account affected by the transaction</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q16" id="q16c" value="c">
+                        <label for="q16c">The date of the transaction</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q16" id="q16d" value="d">
+                        <label for="q16d">A brief explanation of the transaction</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint16')">Show Hint</button>
+                <div class="hint" id="hint16">Journal entries don't show account balances - those are in the LEDGER!</div>
+                <div class="feedback" id="feedback16"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">17. The procedure of transferring journal entries to ledger accounts is called:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q17" id="q17a" value="a">
+                        <label for="q17a">journalizing</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q17" id="q17b" value="b">
+                        <label for="q17b">ledgering</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q17" id="q17c" value="c">
+                        <label for="q17c">recording</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q17" id="q17d" value="d">
+                        <label for="q17d">posting</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback17"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">18. Transactions are initially recorded in the:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q18" id="q18a" value="a">
+                        <label for="q18a">ledger</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q18" id="q18b" value="b">
+                        <label for="q18b">trial balance</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q18" id="q18c" value="c">
+                        <label for="q18c">journal</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q18" id="q18d" value="d">
+                        <label for="q18d">balance sheet</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback18"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">19. Which one of the following contains the selected steps of the accounting cycle in the correct order?<br>1. Journalize the transactions<br>2. Post transactions to ledger accounts<br>3. Analyze transactions<br>4. Prepare financial statements<br>5. Prepare a trial balance</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q19" id="q19a" value="a">
+                        <label for="q19a">1, 2, 3, 5, 4</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q19" id="q19b" value="b">
+                        <label for="q19b">3, 2, 1, 4, 5</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q19" id="q19c" value="c">
+                        <label for="q19c">3, 1, 2, 5, 4</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q19" id="q19d" value="d">
+                        <label for="q19d">3, 1, 2, 4, 5</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint19')">Show Hint</button>
+                <div class="hint" id="hint19">Analyze → Journalize → Post → Trial Balance → Financial Statements</div>
+                <div class="feedback" id="feedback19"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">20. Someone who wants to investigate the merits of a specific business transaction would refer to the:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q20" id="q20a" value="a">
+                        <label for="q20a">general ledger</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q20" id="q20b" value="b">
+                        <label for="q20b">chart of accounts</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q20" id="q20c" value="c">
+                        <label for="q20c">general journal</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q20" id="q20d" value="d">
+                        <label for="q20d">trial balance</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint20')">Show Hint</button>
+                <div class="hint" id="hint20">Journal = chronological record of transactions. Ledger = activity by account.</div>
+                <div class="feedback" id="feedback20"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">21. Someone who wants to investigate the merits of a specific account would refer to the:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q21" id="q21a" value="a">
+                        <label for="q21a">general ledger</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q21" id="q21b" value="b">
+                        <label for="q21b">chart of accounts</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q21" id="q21c" value="c">
+                        <label for="q21c">general journal</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q21" id="q21d" value="d">
+                        <label for="q21d">trial balance</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback21"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">22. Someone who wants to get an overview of the financial elements of an organization would refer to the:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q22" id="q22a" value="a">
+                        <label for="q22a">general ledger</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q22" id="q22b" value="b">
+                        <label for="q22b">chart of accounts</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q22" id="q22c" value="c">
+                        <label for="q22c">general journal</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q22" id="q22d" value="d">
+                        <label for="q22d">trial balance</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint22')">Show Hint</button>
+                <div class="hint" id="hint22">Chart of Accounts = master list of all accounts used by the company</div>
+                <div class="feedback" id="feedback22"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">23. Which of the following errors will cause a trial balance to be out of balance? An entry to record a payment on account was:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q23" id="q23a" value="a">
+                        <label for="q23a">not posted at all</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q23" id="q23b" value="b">
+                        <label for="q23b">posted as a debit to Cash and a credit to Accounts Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q23" id="q23c" value="c">
+                        <label for="q23c">posted as a debit to Cash and a debit to Accounts Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q23" id="q23d" value="d">
+                        <label for="q23d">posted as a debit to Accounts Receivable and a credit to Cash</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint23')">Show Hint</button>
+                <div class="hint" id="hint23">Two debits (or two credits) don't balance! Debits must equal credits.</div>
+                <div class="feedback" id="feedback23"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">24. When a trial balance balances, it is an indication that:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q24" id="q24a" value="a">
+                        <label for="q24a">debits equal credits</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q24" id="q24b" value="b">
+                        <label for="q24b">all transactions have been journalized</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q24" id="q24c" value="c">
+                        <label for="q24c">the account balances are correct</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q24" id="q24d" value="d">
+                        <label for="q24d">all journal entries have been posted</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback24"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">25. Accounts Receivable was $18,500 at the beginning of the month. Sales on account totaled $209,000 during the month. If Accounts Receivable was $53,500 at the end of the month, how much were customer collections during the month?</div>
+                <div class="equation-box">
+                    <div class="input-group">
+                        <label for="q25-input">Customer Collections = $</label>
+                        <input type="number" id="q25-input" class="inline-input" placeholder="0">
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint25')">Show Hint</button>
+                <div class="hint" id="hint25">Beginning A/R + Sales - Collections = Ending A/R. So: 18,500 + 209,000 - Collections = 53,500</div>
+                <div class="feedback" id="feedback25"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">26. Accounts Payable was $4,300 at the beginning of the month. Payments on account totaled $21,000 during the month. If Accounts Payable was $33,300 at the end of the month, how much were purchases on account during the month?</div>
+                <div class="equation-box">
+                    <div class="input-group">
+                        <label for="q26-input">Purchases on Account = $</label>
+                        <input type="number" id="q26-input" class="inline-input" placeholder="0">
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint26')">Show Hint</button>
+                <div class="hint" id="hint26">Beginning A/P + Purchases - Payments = Ending A/P. So: 4,300 + Purchases - 21,000 = 33,300</div>
+                <div class="feedback" id="feedback26"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">27. Cash amounted to $5,200 at the end of the month. Cash receipts and cash disbursements were $9,700 and $14,000, respectively, during the month. What is the balance of cash at the beginning of the month?</div>
+                <div class="equation-box">
+                    <div class="input-group">
+                        <label for="q27-input">Beginning Cash = $</label>
+                        <input type="number" id="q27-input" class="inline-input" placeholder="0">
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint27')">Show Hint</button>
+                <div class="hint" id="hint27">Beginning Cash + Receipts - Disbursements = Ending Cash. So: Beginning + 9,700 - 14,000 = 5,200</div>
+                <div class="feedback" id="feedback27"></div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: Unit 04 - Financial Statements -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">4</span>
+                Unit 04: Financial Statements
+            </div>
+
+            <div class="question">
+                <div class="question-text">28. The financial statements are usually prepared in which of the following sequences?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q28" id="q28a" value="a">
+                        <label for="q28a">Balance sheet, retained earnings statement, statement of cash flows, and income statement</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q28" id="q28b" value="b">
+                        <label for="q28b">Balance sheet, statement of cash flows, income statement and retained earnings statement</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q28" id="q28c" value="c">
+                        <label for="q28c">Income statement, retained earnings statement, balance sheet, and statement of cash flows</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q28" id="q28d" value="d">
+                        <label for="q28d">Income statement, balance sheet, retained earnings statement, and statement of cash flows</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint28')">Show Hint</button>
+                <div class="hint" id="hint28">Income Statement first (get NI) → Retained Earnings (uses NI) → Balance Sheet (uses ending RE) → Cash Flows</div>
+                <div class="feedback" id="feedback28"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">29. Which of the following would NOT appear on the income statement?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q29" id="q29a" value="a">
+                        <label for="q29a">Net income</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q29" id="q29b" value="b">
+                        <label for="q29b">Service revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q29" id="q29c" value="c">
+                        <label for="q29c">Interest expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q29" id="q29d" value="d">
+                        <label for="q29d">Dividends paid</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint29')">Show Hint</button>
+                <div class="hint" id="hint29">Dividends are NOT an expense! They go on the Retained Earnings statement.</div>
+                <div class="feedback" id="feedback29"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">30. Which of the following would NOT appear on the retained earnings statement?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q30" id="q30a" value="a">
+                        <label for="q30a">Net income</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q30" id="q30b" value="b">
+                        <label for="q30b">Dividends</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q30" id="q30c" value="c">
+                        <label for="q30c">Service revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q30" id="q30d" value="d">
+                        <label for="q30d">Beginning retained earning balance</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint30')">Show Hint</button>
+                <div class="hint" id="hint30">RE Statement shows: Beginning RE + Net Income - Dividends = Ending RE. Service Revenue is on Income Statement!</div>
+                <div class="feedback" id="feedback30"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">31. Which one of the following is NOT the correct date format for the respective financial statement?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q31" id="q31a" value="a">
+                        <label for="q31a">A balance sheet as of May 31, 20XX</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q31" id="q31b" value="b">
+                        <label for="q31b">A statement of retained earnings as of May 31, 20XX</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q31" id="q31c" value="c">
+                        <label for="q31c">An income statement for the month ended May 31, 20XX</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q31" id="q31d" value="d">
+                        <label for="q31d">A statement of cash flows for the month ended May 31, 20XX</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint31')">Show Hint</button>
+                <div class="hint" id="hint31">Balance Sheet = "as of" (point in time). Income Statement, RE, Cash Flows = "for the period ended" (period of time)</div>
+                <div class="feedback" id="feedback31"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">32. The ending retained earnings balance appears on:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q32" id="q32a" value="a">
+                        <label for="q32a">The income statement and the retained earnings statement</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q32" id="q32b" value="b">
+                        <label for="q32b">The balance sheet only</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q32" id="q32c" value="c">
+                        <label for="q32c">Both the retained earnings statement and the balance sheet</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q32" id="q32d" value="d">
+                        <label for="q32d">The retained earnings statement only</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback32"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">33. A financial statement that reports accounting data at a specific date is the:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q33" id="q33a" value="a">
+                        <label for="q33a">balance sheet</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q33" id="q33b" value="b">
+                        <label for="q33b">retained earnings statement</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q33" id="q33c" value="c">
+                        <label for="q33c">income statement</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q33" id="q33d" value="d">
+                        <label for="q33d">statement of cash flows</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback33"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">34. Which one of the following statements is true concerning the interrelationships of financial statements?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q34" id="q34a" value="a">
+                        <label for="q34a">Net income on the income statement equals the cash balance at the end of the period on the balance sheet</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q34" id="q34b" value="b">
+                        <label for="q34b">The ending balance of retained earnings on the statement of retained earnings is equal to net income on the income statement</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q34" id="q34c" value="c">
+                        <label for="q34c">The amount of net income on the income statement is added to the beginning retained earnings balance on the statement of retained earnings</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q34" id="q34d" value="d">
+                        <label for="q34d">The amount of cash used during the period on the statement of cash flows is equal to total expenses on the income statement</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint34')">Show Hint</button>
+                <div class="hint" id="hint34">Net Income from Income Statement flows to RE Statement: Beginning RE + NI - Dividends = Ending RE</div>
+                <div class="feedback" id="feedback34"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">35. The Retained Earnings account had a beginning balance of $60,000 and an ending balance of $70,000. If $20,000 of dividends were declared and paid during the period, net income must have been:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q35" id="q35a" value="a">
+                        <label for="q35a">$20,000</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q35" id="q35b" value="b">
+                        <label for="q35b">$30,000</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q35" id="q35c" value="c">
+                        <label for="q35c">$10,000</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q35" id="q35d" value="d">
+                        <label for="q35d">$50,000</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint35')">Show Hint</button>
+                <div class="hint" id="hint35">60,000 + NI - 20,000 = 70,000. Solve for NI!</div>
+                <div class="feedback" id="feedback35"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">36. Saira's Maid Service began the year with total assets of $120,000 and stockholders' equity of $40,000. During the year the company earned $90,000 in net income and paid $20,000 in dividends. Total assets at the end of the year were $215,000. Total liabilities at the end of the year were:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q36" id="q36a" value="a">
+                        <label for="q36a">$110,000</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q36" id="q36b" value="b">
+                        <label for="q36b">$105,000</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q36" id="q36c" value="c">
+                        <label for="q36c">$80,000</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q36" id="q36d" value="d">
+                        <label for="q36d">$90,000</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint36')">Show Hint</button>
+                <div class="hint" id="hint36">Ending E = 40,000 + 90,000 - 20,000 = 110,000. A = L + E, so 215,000 = L + 110,000</div>
+                <div class="feedback" id="feedback36"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">37. Barken Company's records show: Beginning RE = $400,000, Ending RE = $500,000, Total Revenues = $670,000, Total Dividends = $40,000. Total expenses for January were:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q37" id="q37a" value="a">
+                        <label for="q37a">$740,000</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q37" id="q37b" value="b">
+                        <label for="q37b">$770,000</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q37" id="q37c" value="c">
+                        <label for="q37c">$570,000</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q37" id="q37d" value="d">
+                        <label for="q37d">$530,000</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint37')">Show Hint</button>
+                <div class="hint" id="hint37">First find NI: 400,000 + NI - 40,000 = 500,000, so NI = 140,000. Then: Revenue - Expenses = NI, so 670,000 - Expenses = 140,000</div>
+                <div class="feedback" id="feedback37"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Answer key - will build as we add questions
+        const answers = {
+            // Unit 02A
+            q1: 'd',  // Unearned Revenue is not a revenue account
+            q2: 'a',  // Prepaid Expense is not an expense account
+            q3: 'b',  // $5,000 increase
+            q4: 'a',  // did not change
+            q5: 'd',  // $31,000 decrease
+
+            // Unit 02B
+            q6: 'c',   // Rent Expense - debit normal balance
+            q7: 'b',   // Accounts Payable - credit
+            q8: 'a',   // Service Revenue - credit
+            q9: 'd',   // Cash - debit
+            q10: 'b',  // Notes Payable - credit
+            q11: 'd',  // Equipment - debit
+
+            // Unit 03A
+            q12: 'c',  // general ledger to see all transactions
+            q13: 'a',  // trial balance
+            q14: 'b',  // journal
+            q15: 'd',  // May 19: DR Accounts Receivable 5,000; CR Service Revenue 5,000
+            q16: 'a',  // May 24: DR Cash 4,000; CR Accounts Receivable 4,000
+            q17: 'c',  // May 28: DR Salaries Expense 3,500; CR Cash 3,500
+            q18: 'd',  // May 30: DR Dividends 2,000; CR Cash 2,000
+            q19: 'b',  // July 12: DR Cash 8,500; CR Service Revenue 8,500
+            q20: 'c',  // July 15: DR Salaries Expense 4,300; CR Cash 4,300
+            q21: 'a',  // July 22: DR Accounts Receivable 6,200; CR Service Revenue 6,200
+            q22: 'd',  // July 25: DR Cash 3,100; CR Accounts Receivable 3,100
+            q23: 'a',  // July 28: DR Rent Expense 2,100; CR Cash 2,100
+            q24: 'c',  // August 20: Accounts Receivable $14,200 debit
+            q25: '8600',  // September Cash ending balance
+            q26: '6700',  // October Accounts Receivable ending
+            q27: '8300',  // November Accounts Payable ending
+
+            // Unit 04
+            q28: 'd',  // net income formula
+            q29: 'b',  // ending RE formula
+            q30: 'a',  // total assets formula
+            q31: 'c',  // $38,000 net income
+            q32: 'a',  // $12,000 net income
+            q33: 'b',  // $69,000 net income
+            q34: 'd',  // $203,000 ending RE
+            q35: 'c',  // $129,000 ending RE
+            q36: 'b',  // $800,000 total assets
+            q37: 'b',  // $530,000 total expenses
+        };
+
+        const checkedQuestions = new Set();
+
+        function toggleHint(hintId) {
+            const hint = document.getElementById(hintId);
+            hint.classList.toggle('show');
+        }
+
+        function checkQuestion(qNum) {
+            const feedback = document.getElementById(`feedback${qNum.replace('q', '')}`);
+            const wasChecked = checkedQuestions.has(qNum);
+
+            // Check if this is a multiple choice question (radio button)
+            const selected = document.querySelector(`input[name="${qNum}"]:checked`);
+
+            // Check if this is a numeric input question
+            const numericInput = document.getElementById(`${qNum}answer`);
+
+            if (selected) {
+                // Multiple choice question
+                if (selected.value === answers[qNum]) {
+                    feedback.className = 'feedback correct';
+                    feedback.innerHTML = '✓ Correct!';
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = `✗ Incorrect. The correct answer was ${answers[qNum].toUpperCase()}.`;
+                }
+            } else if (numericInput) {
+                // Numeric input question
+                const userAnswer = numericInput.value.trim();
+                if (!userAnswer) {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please enter an answer first.';
+                    return;
+                }
+
+                if (userAnswer === answers[qNum]) {
+                    feedback.className = 'feedback correct';
+                    feedback.innerHTML = '✓ Correct!';
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = `✗ Incorrect. The correct answer was $${answers[qNum]}.`;
+                }
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = '✗ Please select an answer first.';
+                return;
+            }
+
+            if (!wasChecked) {
+                checkedQuestions.add(qNum);
+                updateProgress();
+            }
+        }
+
+        function updateProgress() {
+            const totalQuestions = 37;  // Will be 37 when complete
+            const percentage = Math.round((checkedQuestions.size / totalQuestions) * 100);
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = `${checkedQuestions.size}/${totalQuestions} (${percentage}%)`;
+        }
+
+        function randomizeQuestions() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                const questions = Array.from(section.querySelectorAll('.question'));
+                for (let i = questions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [questions[i], questions[j]] = [questions[j], questions[i]];
+                }
+                questions.forEach(question => section.appendChild(question));
+            });
+        }
+
+        function addCheckButtons() {
+            const questions = document.querySelectorAll('.question');
+            let displayNumber = 1;
+
+            questions.forEach((question) => {
+                let qId = null;
+                const radioInput = question.querySelector('input[type="radio"]');
+                if (radioInput) qId = radioInput.name;
+
+                if (!qId) {
+                    const feedback = question.querySelector('.feedback');
+                    if (feedback && feedback.id) {
+                        qId = 'q' + feedback.id.replace('feedback', '');
+                    }
+                }
+
+                if (!qId) return;
+
+                const questionText = question.querySelector('.question-text');
+                if (questionText) {
+                    const originalText = questionText.textContent;
+                    questionText.textContent = `${displayNumber}. ${originalText.replace(/^\d+\.\s*/, '')}`;
+                }
+
+                let buttonGroup = question.querySelector('.button-group');
+                if (!buttonGroup) {
+                    buttonGroup = document.createElement('div');
+                    buttonGroup.className = 'button-group';
+                    const feedback = question.querySelector('.feedback');
+                    if (feedback) {
+                        feedback.parentNode.insertBefore(buttonGroup, feedback);
+                    } else {
+                        question.appendChild(buttonGroup);
+                    }
+                }
+
+                const hintBtn = question.querySelector('.hint-btn');
+                if (hintBtn && !buttonGroup.contains(hintBtn)) {
+                    buttonGroup.appendChild(hintBtn);
+                }
+
+                if (!buttonGroup.querySelector('.check-btn')) {
+                    const checkBtn = document.createElement('button');
+                    checkBtn.className = 'check-btn';
+                    checkBtn.textContent = 'Check Answer';
+                    checkBtn.onclick = () => checkQuestion(qId);
+                    buttonGroup.appendChild(checkBtn);
+                }
+
+                displayNumber++;
+            });
+        }
+
+        window.addEventListener('load', function() {
+            localStorage.clear();
+            randomizeQuestions();
+            addCheckButtons();
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACCT101 - Scenario-Based Account Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 25px;
+            font-size: 1.05em;
+        }
+
+        .progress-container {
+            background: #e5e7eb;
+            border-radius: 10px;
+            height: 30px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #1f2937;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3b82f6;
+        }
+
+        .section-title.easy {
+            border-bottom-color: #10b981;
+        }
+
+        .section-title.medium {
+            border-bottom-color: #f59e0b;
+        }
+
+        .section-title.hard {
+            border-bottom-color: #ef4444;
+        }
+
+        .question {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+        }
+
+        .question-text {
+            font-size: 1.05em;
+            color: #1f2937;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .scenario {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-style: italic;
+            color: #78350f;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            font-size: 1em;
+            color: #374151;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .hint-btn, .check-btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.2s ease;
+        }
+
+        .hint-btn {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .hint-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .check-btn {
+            background: #10b981;
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        .hint {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: none;
+            color: #1e40af;
+            line-height: 1.5;
+        }
+
+        .hint.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.correct {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+            color: #065f46;
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback.incorrect {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            color: #991b1b;
+            display: block;
+            animation: shake 0.3s ease;
+        }
+
+        .explanation {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 0.95em;
+        }
+
+        .explanation strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 200px; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .question-text {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scenario-Based Account Quiz</h1>
+        <p class="subtitle">Master identifying accounts in real business transactions!</p>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">0/30 (0%)</div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title easy">Easy - Basic Transactions</h2>
+
+            <div class="question">
+                <div class="question-text">1. The company pays $2,000 cash for rent for the current month.</div>
+                <div class="scenario">Which account is DEBITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1a" value="a">
+                        <label for="q1a">Rent Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1b" value="b">
+                        <label for="q1b">Prepaid Rent</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1c" value="c">
+                        <label for="q1c">Rent Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1d" value="d">
+                        <label for="q1d">Accounts Payable</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint1')">Show Hint</button>
+                <div class="hint" id="hint1">Since the rent is for the CURRENT month, it's an expense that has been incurred and should be recorded now.</div>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">2. The company purchases office equipment for $5,000 cash.</div>
+                <div class="scenario">Which account is DEBITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2a" value="a">
+                        <label for="q2a">Equipment Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2b" value="b">
+                        <label for="q2b">Equipment</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2c" value="c">
+                        <label for="q2c">Office Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2d" value="d">
+                        <label for="q2d">Cash</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint2')">Show Hint</button>
+                <div class="hint" id="hint2">Equipment is a long-term asset that will be used for multiple years, not a one-time expense.</div>
+                <div class="feedback" id="feedback2"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">3. The company provides services to a customer and receives $3,000 cash immediately.</div>
+                <div class="scenario">Which account is CREDITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q3" id="q3a" value="a">
+                        <label for="q3a">Accounts Receivable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" id="q3b" value="b">
+                        <label for="q3b">Unearned Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" id="q3c" value="c">
+                        <label for="q3c">Service Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q3" id="q3d" value="d">
+                        <label for="q3d">Cash</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint3')">Show Hint</button>
+                <div class="hint" id="hint3">The service has been performed (completed), so revenue has been earned.</div>
+                <div class="feedback" id="feedback3"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">4. The company pays $1,500 cash for employee salaries for work completed this month.</div>
+                <div class="scenario">Which account is DEBITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4a" value="a">
+                        <label for="q4a">Salaries Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4b" value="b">
+                        <label for="q4b">Salaries Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4c" value="c">
+                        <label for="q4c">Prepaid Salaries</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4d" value="d">
+                        <label for="q4d">Cash</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint4')">Show Hint</button>
+                <div class="hint" id="hint4">Since work was completed this month and we're paying now, this is a current expense.</div>
+                <div class="feedback" id="feedback4"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">5. The company borrows $10,000 from the bank and signs a promissory note.</div>
+                <div class="scenario">Which account is CREDITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5a" value="a">
+                        <label for="q5a">Cash</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5b" value="b">
+                        <label for="q5b">Notes Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5c" value="c">
+                        <label for="q5c">Notes Receivable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5d" value="d">
+                        <label for="q5d">Interest Expense</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint5')">Show Hint</button>
+                <div class="hint" id="hint5">A promissory note is a formal written promise to pay. Since the company owes money, this is a liability.</div>
+                <div class="feedback" id="feedback5"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">6. The company pays $800 cash for utilities for the current month.</div>
+                <div class="scenario">Which account is DEBITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6a" value="a">
+                        <label for="q6a">Utilities Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6b" value="b">
+                        <label for="q6b">Utilities Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6c" value="c">
+                        <label for="q6c">Prepaid Utilities</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6d" value="d">
+                        <label for="q6d">Cash</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint6')">Show Hint</button>
+                <div class="hint" id="hint6">Current month usage = current expense.</div>
+                <div class="feedback" id="feedback6"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">7. The company purchases supplies for $500 cash.</div>
+                <div class="scenario">Which account is DEBITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7a" value="a">
+                        <label for="q7a">Supplies Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7b" value="b">
+                        <label for="q7b">Supplies</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7c" value="c">
+                        <label for="q7c">Inventory</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7d" value="d">
+                        <label for="q7d">Office Expense</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint7')">Show Hint</button>
+                <div class="hint" id="hint7">When supplies are purchased, they're recorded as an asset. They become an expense when used.</div>
+                <div class="feedback" id="feedback7"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">8. The company pays $600 cash for advertising in the current month.</div>
+                <div class="scenario">Which account is DEBITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q8" id="q8a" value="a">
+                        <label for="q8a">Prepaid Advertising</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q8" id="q8b" value="b">
+                        <label for="q8b">Advertising Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q8" id="q8c" value="c">
+                        <label for="q8c">Advertising Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q8" id="q8d" value="d">
+                        <label for="q8d">Cash</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint8')">Show Hint</button>
+                <div class="hint" id="hint8">Since the advertising benefit is received in the current month, it's a current expense.</div>
+                <div class="feedback" id="feedback8"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title medium">Medium - Common Tricky Scenarios</h2>
+
+            <div class="question">
+                <div class="question-text">9. The company provides services to a customer for $4,000 on account (customer will pay later).</div>
+                <div class="scenario">Which account is DEBITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9a" value="a">
+                        <label for="q9a">Cash</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9b" value="b">
+                        <label for="q9b">Accounts Receivable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9c" value="c">
+                        <label for="q9c">Service Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9d" value="d">
+                        <label for="q9d">Unearned Revenue</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint9')">Show Hint</button>
+                <div class="hint" id="hint9">"On account" means the customer owes money - the company has a receivable.</div>
+                <div class="feedback" id="feedback9"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">10. The company pays $3,600 cash for a 12-month insurance policy starting next month.</div>
+                <div class="scenario">Which account is DEBITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10a" value="a">
+                        <label for="q10a">Insurance Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10b" value="b">
+                        <label for="q10b">Prepaid Insurance</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10c" value="c">
+                        <label for="q10c">Insurance Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10d" value="d">
+                        <label for="q10d">Cash</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint10')">Show Hint</button>
+                <div class="hint" id="hint10">Paid in advance for FUTURE coverage = Prepaid (asset). It becomes an expense as coverage is used each month.</div>
+                <div class="feedback" id="feedback10"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">11. The company purchases inventory for $2,000 on account (will pay the supplier later).</div>
+                <div class="scenario">Which account is CREDITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q11" id="q11a" value="a">
+                        <label for="q11a">Cash</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q11" id="q11b" value="b">
+                        <label for="q11b">Accounts Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q11" id="q11c" value="c">
+                        <label for="q11c">Notes Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q11" id="q11d" value="d">
+                        <label for="q11d">Accounts Receivable</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint11')">Show Hint</button>
+                <div class="hint" id="hint11">"On account" when purchasing = the company owes money to the supplier (a payable).</div>
+                <div class="feedback" id="feedback11"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">12. Employees worked this month but will be paid next month. The company owes $2,500 in salaries.</div>
+                <div class="scenario">Which account is CREDITED in the adjusting entry?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12a" value="a">
+                        <label for="q12a">Cash</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12b" value="b">
+                        <label for="q12b">Salaries Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12c" value="c">
+                        <label for="q12c">Salaries Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12d" value="d">
+                        <label for="q12d">Prepaid Salaries</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint12')">Show Hint</button>
+                <div class="hint" id="hint12">Work done but not yet paid = accrued expense = a payable (liability).</div>
+                <div class="feedback" id="feedback12"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">13. The company collects $1,200 cash from a customer who owed money.</div>
+                <div class="scenario">Which account is CREDITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q13" id="q13a" value="a">
+                        <label for="q13a">Service Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q13" id="q13b" value="b">
+                        <label for="q13b">Accounts Receivable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q13" id="q13c" value="c">
+                        <label for="q13c">Unearned Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q13" id="q13d" value="d">
+                        <label for="q13d">Cash</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint13')">Show Hint</button>
+                <div class="hint" id="hint13">Collecting money owed reduces the receivable. This is NOT new revenue - revenue was recorded earlier.</div>
+                <div class="feedback" id="feedback13"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">14. The company pays $1,800 to a supplier for inventory purchased last month on account.</div>
+                <div class="scenario">Which account is DEBITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q14" id="q14a" value="a">
+                        <label for="q14a">Inventory</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q14" id="q14b" value="b">
+                        <label for="q14b">Inventory Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q14" id="q14c" value="c">
+                        <label for="q14c">Accounts Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q14" id="q14d" value="d">
+                        <label for="q14d">Cash</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint14')">Show Hint</button>
+                <div class="hint" id="hint14">Paying off what you owe reduces the payable. The inventory was already recorded last month.</div>
+                <div class="feedback" id="feedback14"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">15. The company used $200 of supplies that were purchased last month.</div>
+                <div class="scenario">Which account is DEBITED in the adjusting entry?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15a" value="a">
+                        <label for="q15a">Supplies</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15b" value="b">
+                        <label for="q15b">Supplies Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15c" value="c">
+                        <label for="q15c">Cash</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15d" value="d">
+                        <label for="q15d">Accounts Payable</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint15')">Show Hint</button>
+                <div class="hint" id="hint15">Using supplies converts the asset (Supplies) into an expense (Supplies Expense).</div>
+                <div class="feedback" id="feedback15"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">16. The company earns $900 of interest on a note receivable but will collect the cash next month.</div>
+                <div class="scenario">Which account is DEBITED in the adjusting entry?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q16" id="q16a" value="a">
+                        <label for="q16a">Cash</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q16" id="q16b" value="b">
+                        <label for="q16b">Interest Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q16" id="q16c" value="c">
+                        <label for="q16c">Interest Receivable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q16" id="q16d" value="d">
+                        <label for="q16d">Notes Receivable</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint16')">Show Hint</button>
+                <div class="hint" id="hint16">Interest earned but not yet collected = Interest Receivable (asset). Revenue is still recognized now.</div>
+                <div class="feedback" id="feedback16"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">17. The company owes $300 interest on a note payable but will pay it next month.</div>
+                <div class="scenario">Which account is CREDITED in the adjusting entry?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q17" id="q17a" value="a">
+                        <label for="q17a">Cash</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q17" id="q17b" value="b">
+                        <label for="q17b">Interest Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q17" id="q17c" value="c">
+                        <label for="q17c">Interest Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q17" id="q17d" value="d">
+                        <label for="q17d">Notes Payable</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint17')">Show Hint</button>
+                <div class="hint" id="hint17">Interest incurred but not yet paid = Interest Payable (liability). Expense is still recognized now.</div>
+                <div class="feedback" id="feedback17"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">18. One month of the prepaid insurance policy (from question 10) has now been used.</div>
+                <div class="scenario">Which account is CREDITED in the adjusting entry?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q18" id="q18a" value="a">
+                        <label for="q18a">Insurance Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q18" id="q18b" value="b">
+                        <label for="q18b">Prepaid Insurance</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q18" id="q18c" value="c">
+                        <label for="q18c">Cash</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q18" id="q18d" value="d">
+                        <label for="q18d">Insurance Payable</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint18')">Show Hint</button>
+                <div class="hint" id="hint18">Using up prepaid coverage converts the asset (Prepaid Insurance) into expense (Insurance Expense).</div>
+                <div class="feedback" id="feedback18"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">19. The company pays a $5,000 dividend to shareholders.</div>
+                <div class="scenario">Which account is DEBITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q19" id="q19a" value="a">
+                        <label for="q19a">Dividends Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q19" id="q19b" value="b">
+                        <label for="q19b">Dividends</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q19" id="q19c" value="c">
+                        <label for="q19c">Retained Earnings</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q19" id="q19d" value="d">
+                        <label for="q19d">Common Stock</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint19')">Show Hint</button>
+                <div class="hint" id="hint19">Dividends are NOT an expense! They're a distribution of equity. Use the "Dividends" equity account.</div>
+                <div class="feedback" id="feedback19"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">20. The company purchases land for $50,000 by paying $10,000 cash and signing a note payable for the rest.</div>
+                <div class="scenario">In addition to Land (DR) and Cash (CR), which other account is involved?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q20" id="q20a" value="a">
+                        <label for="q20a">Notes Payable (CR $40,000)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q20" id="q20b" value="b">
+                        <label for="q20b">Accounts Payable (CR $40,000)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q20" id="q20c" value="c">
+                        <label for="q20c">Land Payable (CR $40,000)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q20" id="q20d" value="d">
+                        <label for="q20d">Mortgage Payable (CR $40,000)</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint20')">Show Hint</button>
+                <div class="hint" id="hint20">A note payable is a formal written promise to pay. This is different from an informal account payable.</div>
+                <div class="feedback" id="feedback20"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title hard">Hard - The Tricky "Gotcha" Accounts</h2>
+
+            <div class="question">
+                <div class="question-text">21. The company receives $6,000 cash from a customer for services to be performed over the next 6 months.</div>
+                <div class="scenario">Which account is CREDITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q21" id="q21a" value="a">
+                        <label for="q21a">Service Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q21" id="q21b" value="b">
+                        <label for="q21b">Unearned Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q21" id="q21c" value="c">
+                        <label for="q21c">Accounts Receivable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q21" id="q21d" value="d">
+                        <label for="q21d">Deferred Revenue Expense</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint21')">Show Hint</button>
+                <div class="hint" id="hint21">Cash received BEFORE service performed = liability (we owe the service). "Unearned" means not yet earned.</div>
+                <div class="feedback" id="feedback21"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">22. Equipment with an original cost of $20,000 has been used for one year. Annual depreciation is $2,000.</div>
+                <div class="scenario">Which account is CREDITED in the adjusting entry?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q22" id="q22a" value="a">
+                        <label for="q22a">Equipment</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q22" id="q22b" value="b">
+                        <label for="q22b">Depreciation Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q22" id="q22c" value="c">
+                        <label for="q22c">Accumulated Depreciation</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q22" id="q22d" value="d">
+                        <label for="q22d">Cash</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint22')">Show Hint</button>
+                <div class="hint" id="hint22">We don't reduce Equipment directly! Accumulated Depreciation is a contra-asset that tracks total depreciation over time.</div>
+                <div class="feedback" id="feedback22"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">23. The company estimates that $500 of accounts receivable will not be collected.</div>
+                <div class="scenario">Which account is CREDITED in the adjusting entry?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q23" id="q23a" value="a">
+                        <label for="q23a">Accounts Receivable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q23" id="q23b" value="b">
+                        <label for="q23b">Bad Debt Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q23" id="q23c" value="c">
+                        <label for="q23c">Allowance for Doubtful Accounts</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q23" id="q23d" value="d">
+                        <label for="q23d">Cash</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint23')">Show Hint</button>
+                <div class="hint" id="hint23">We use a contra-asset account (Allowance for Doubtful Accounts) instead of directly reducing AR when estimating.</div>
+                <div class="feedback" id="feedback23"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">24. One month has passed and the company earned $1,000 of the revenue that was previously unearned (from question 21).</div>
+                <div class="scenario">Which account is DEBITED in the adjusting entry?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q24" id="q24a" value="a">
+                        <label for="q24a">Cash</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q24" id="q24b" value="b">
+                        <label for="q24b">Service Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q24" id="q24c" value="c">
+                        <label for="q24c">Unearned Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q24" id="q24d" value="d">
+                        <label for="q24d">Accounts Receivable</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint24')">Show Hint</button>
+                <div class="hint" id="hint24">Converting unearned revenue to earned revenue means reducing the liability and recognizing revenue.</div>
+                <div class="feedback" id="feedback24"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">25. The company buys back 100 shares of its own stock for $2,000 cash.</div>
+                <div class="scenario">Which account is DEBITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q25" id="q25a" value="a">
+                        <label for="q25a">Common Stock</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q25" id="q25b" value="b">
+                        <label for="q25b">Treasury Stock</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q25" id="q25c" value="c">
+                        <label for="q25c">Stock Investment</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q25" id="q25d" value="d">
+                        <label for="q25d">Retained Earnings</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint25')">Show Hint</button>
+                <div class="hint" id="hint25">Treasury Stock is a contra-equity account for a company's own shares that it reacquired.</div>
+                <div class="feedback" id="feedback25"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">26. The company issues a $30,000 long-term bond to investors.</div>
+                <div class="scenario">Which account is CREDITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q26" id="q26a" value="a">
+                        <label for="q26a">Notes Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q26" id="q26b" value="b">
+                        <label for="q26b">Bonds Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q26" id="q26c" value="c">
+                        <label for="q26c">Long-Term Debt</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q26" id="q26d" value="d">
+                        <label for="q26d">Bond Revenue</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint26')">Show Hint</button>
+                <div class="hint" id="hint26">Bonds are a specific type of long-term liability with their own account name.</div>
+                <div class="feedback" id="feedback26"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">27. The company acquires a patent (intangible asset) for $15,000 cash.</div>
+                <div class="scenario">Which account is DEBITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q27" id="q27a" value="a">
+                        <label for="q27a">Patent Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q27" id="q27b" value="b">
+                        <label for="q27b">Patents</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q27" id="q27c" value="c">
+                        <label for="q27c">Intangible Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q27" id="q27d" value="d">
+                        <label for="q27d">Goodwill</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint27')">Show Hint</button>
+                <div class="hint" id="hint27">Patents are intangible assets. Like equipment, they're assets when purchased, not expenses.</div>
+                <div class="feedback" id="feedback27"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">28. The company pays $4,000 for rent covering the next 4 months.</div>
+                <div class="scenario">Which account is DEBITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q28" id="q28a" value="a">
+                        <label for="q28a">Rent Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q28" id="q28b" value="b">
+                        <label for="q28b">Prepaid Rent</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q28" id="q28c" value="c">
+                        <label for="q28c">Rent Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q28" id="q28d" value="d">
+                        <label for="q28d">Deferred Rent</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint28')">Show Hint</button>
+                <div class="hint" id="hint28">Paid in advance for FUTURE rent = Prepaid Rent (asset). Compare to question 1 where rent was for the CURRENT month.</div>
+                <div class="feedback" id="feedback28"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">29. The company records amortization of $500 on the patent from question 27.</div>
+                <div class="scenario">Which account is CREDITED in the adjusting entry?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q29" id="q29a" value="a">
+                        <label for="q29a">Patents</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q29" id="q29b" value="b">
+                        <label for="q29b">Accumulated Amortization</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q29" id="q29c" value="c">
+                        <label for="q29c">Amortization Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q29" id="q29d" value="d">
+                        <label for="q29d">Cash</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint29')">Show Hint</button>
+                <div class="hint" id="hint29">For intangibles, we typically credit the asset directly (Patents) rather than using a contra-asset.</div>
+                <div class="feedback" id="feedback29"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">30. The company owner invests an additional $25,000 cash into the business in exchange for common stock.</div>
+                <div class="scenario">Which account is CREDITED in this transaction?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q30" id="q30a" value="a">
+                        <label for="q30a">Owner Investment Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q30" id="q30b" value="b">
+                        <label for="q30b">Common Stock</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q30" id="q30c" value="c">
+                        <label for="q30c">Retained Earnings</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q30" id="q30d" value="d">
+                        <label for="q30d">Capital Revenue</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint30')">Show Hint</button>
+                <div class="hint" id="hint30">Owner investments are NOT revenue! They increase equity through the Common Stock account.</div>
+                <div class="feedback" id="feedback30"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const answers = {
+            // Easy
+            q1: 'a',   // Rent Expense
+            q2: 'b',   // Equipment
+            q3: 'c',   // Service Revenue
+            q4: 'b',   // Salaries Expense
+            q5: 'b',   // Notes Payable
+            q6: 'a',   // Utilities Expense
+            q7: 'b',   // Supplies
+            q8: 'b',   // Advertising Expense
+
+            // Medium
+            q9: 'b',   // Accounts Receivable
+            q10: 'b',  // Prepaid Insurance
+            q11: 'b',  // Accounts Payable
+            q12: 'c',  // Salaries Payable
+            q13: 'b',  // Accounts Receivable
+            q14: 'c',  // Accounts Payable
+            q15: 'b',  // Supplies Expense
+            q16: 'c',  // Interest Receivable
+            q17: 'c',  // Interest Payable
+            q18: 'b',  // Prepaid Insurance
+            q19: 'b',  // Dividends
+            q20: 'a',  // Notes Payable
+
+            // Hard
+            q21: 'b',  // Unearned Revenue
+            q22: 'c',  // Accumulated Depreciation
+            q23: 'c',  // Allowance for Doubtful Accounts
+            q24: 'c',  // Unearned Revenue
+            q25: 'b',  // Treasury Stock
+            q26: 'b',  // Bonds Payable
+            q27: 'b',  // Patents
+            q28: 'b',  // Prepaid Rent
+            q29: 'a',  // Patents (credited directly)
+            q30: 'b',  // Common Stock
+        };
+
+        const explanations = {
+            q1: {
+                why: "Rent Expense is correct because the rent is for the CURRENT month - it's been incurred and should be expensed now.",
+                mistake: "Prepaid Rent would only be used if paying for FUTURE months' rent."
+            },
+            q2: {
+                why: "Equipment is an asset account. Equipment will be used for multiple years, so it's capitalized as an asset.",
+                mistake: "There's no such thing as 'Equipment Expense' - equipment is depreciated over time through Depreciation Expense."
+            },
+            q3: {
+                why: "Service Revenue is correct because the service has been COMPLETED (earned). Revenue is recognized when earned.",
+                mistake: "Unearned Revenue would only apply if cash was received BEFORE the service was performed."
+            },
+            q4: {
+                why: "Salaries Expense is correct because the work was completed THIS month and we're paying now.",
+                mistake: "Salaries Payable would only be used if the work was done but we HAVEN'T paid yet (accrued expense)."
+            },
+            q5: {
+                why: "Notes Payable is a liability for formal promissory notes. The company owes money and must repay it.",
+                mistake: "Notes Receivable is when someone owes YOU money (an asset)."
+            },
+            q6: {
+                why: "Utilities Expense is correct for current month usage that's being paid now.",
+                mistake: "Prepaid Utilities would be for paying in advance, Utilities Payable for usage not yet paid."
+            },
+            q7: {
+                why: "Supplies is an asset when purchased. Supplies become Supplies Expense only when USED.",
+                mistake: "We don't expense supplies until they're actually consumed/used."
+            },
+            q8: {
+                why: "Advertising Expense is correct because the benefit is received in the current month.",
+                mistake: "Prepaid Advertising would only apply if paying for future advertising campaigns."
+            },
+            q9: {
+                why: "Accounts Receivable is debited when services are performed 'on account' - the customer owes money.",
+                mistake: "Cash would only be debited if payment was received immediately. Service Revenue is credited, not debited."
+            },
+            q10: {
+                why: "Prepaid Insurance is an asset because payment is made in advance for FUTURE coverage (12 months).",
+                mistake: "Insurance Expense would only be recorded as each month's coverage is used up."
+            },
+            q11: {
+                why: "Accounts Payable is credited when purchasing 'on account' - the company owes money to the supplier.",
+                mistake: "Cash would only be credited if paying immediately. Notes Payable is for formal promissory notes."
+            },
+            q12: {
+                why: "Salaries Payable is a liability for work completed but not yet paid. This is an accrued expense.",
+                mistake: "Cash isn't involved yet since payment hasn't been made. Salaries Expense is debited, not credited."
+            },
+            q13: {
+                why: "Accounts Receivable is credited (reduced) when collecting cash that was previously owed.",
+                mistake: "Service Revenue was already recorded when the service was performed. This is just collecting what's owed."
+            },
+            q14: {
+                why: "Accounts Payable is debited (reduced) when paying off what you owe to suppliers.",
+                mistake: "Inventory was already recorded last month when purchased. This just reduces the liability."
+            },
+            q15: {
+                why: "Supplies Expense is debited when supplies are USED. The asset (Supplies) is converted to expense.",
+                mistake: "Supplies (asset) is credited, not debited. Cash isn't involved - supplies were purchased earlier."
+            },
+            q16: {
+                why: "Interest Receivable is an asset for interest EARNED but not yet COLLECTED. Revenue is recognized now.",
+                mistake: "Cash isn't involved yet - collection happens next month. Interest Revenue is credited, not debited."
+            },
+            q17: {
+                why: "Interest Payable is a liability for interest INCURRED but not yet PAID. Expense is recognized now.",
+                mistake: "Cash isn't involved yet - payment happens next month. Interest Expense is debited, not credited."
+            },
+            q18: {
+                why: "Prepaid Insurance is credited (reduced) as coverage is used up month by month.",
+                mistake: "Insurance Expense is debited, not credited. Cash was already reduced when the policy was purchased."
+            },
+            q19: {
+                why: "Dividends is an equity account, NOT an expense! Dividends distribute profits to shareholders.",
+                mistake: "This is a super common error - dividends reduce equity but are NOT expenses on the income statement."
+            },
+            q20: {
+                why: "Notes Payable is correct for the $40,000 financed portion. A note is a formal written promise to pay.",
+                mistake: "Accounts Payable is for informal credit. Mortgage Payable is specific to real estate financing."
+            },
+            q21: {
+                why: "Unearned Revenue is a LIABILITY because cash is received BEFORE the service is performed. The company owes a service.",
+                mistake: "Service Revenue would only be recorded when the service is actually PERFORMED and earned."
+            },
+            q22: {
+                why: "Accumulated Depreciation is a contra-asset that accumulates total depreciation over the asset's life.",
+                mistake: "We DON'T reduce Equipment directly! We use Accumulated Depreciation to track cumulative depreciation."
+            },
+            q23: {
+                why: "Allowance for Doubtful Accounts is a contra-asset used when ESTIMATING uncollectible amounts.",
+                mistake: "We don't reduce Accounts Receivable directly until we know WHICH specific account is uncollectible."
+            },
+            q24: {
+                why: "Unearned Revenue is debited (reduced) as the service is performed and revenue is earned.",
+                mistake: "Cash was already received in the original transaction. Service Revenue is credited, not debited."
+            },
+            q25: {
+                why: "Treasury Stock is a contra-equity account for a company's own shares that it bought back.",
+                mistake: "We don't reduce Common Stock when buying back shares. Treasury Stock has a debit balance (unusual for equity!)."
+            },
+            q26: {
+                why: "Bonds Payable is the specific liability account for bonds issued to investors.",
+                mistake: "While bonds are long-term debt, we use the specific account name 'Bonds Payable', not generic names."
+            },
+            q27: {
+                why: "Patents is an intangible asset account. Like equipment, patents are assets when acquired.",
+                mistake: "Patents aren't expensed immediately - they're amortized over their useful life."
+            },
+            q28: {
+                why: "Prepaid Rent is an asset for rent paid in advance for FUTURE months (next 4 months).",
+                mistake: "Rent Expense would only apply if the rent was for the CURRENT month. Compare to question 1!"
+            },
+            q29: {
+                why: "Patents is credited directly when recording amortization of intangible assets.",
+                mistake: "Unlike depreciation (which uses Accumulated Depreciation), we typically credit the intangible asset directly."
+            },
+            q30: {
+                why: "Common Stock is increased when owners invest in exchange for stock. This is NOT revenue!",
+                mistake: "Owner investments increase equity but are NOT revenue. Revenue comes from operations, not financing."
+            }
+        };
+
+        const checkedQuestions = new Set();
+
+        function toggleHint(hintId) {
+            const hint = document.getElementById(hintId);
+            hint.classList.toggle('show');
+        }
+
+        function checkQuestion(qNum) {
+            const feedback = document.getElementById(`feedback${qNum.replace('q', '')}`);
+            const wasChecked = checkedQuestions.has(qNum);
+
+            const selected = document.querySelector(`input[name="${qNum}"]:checked`);
+
+            if (!selected) {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = '✗ Please select an answer first.';
+                return;
+            }
+
+            if (selected.value === answers[qNum]) {
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = '✓ Correct! Well done!';
+            } else {
+                const explanation = explanations[qNum];
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `
+                    ✗ Incorrect.
+                    <div class="explanation">
+                        <strong>Why the correct answer:</strong>
+                        ${explanation.why}
+                        <br><br>
+                        <strong>Common mistake:</strong>
+                        ${explanation.mistake}
+                    </div>
+                `;
+            }
+
+            if (!wasChecked) {
+                checkedQuestions.add(qNum);
+                updateProgress();
+            }
+        }
+
+        function updateProgress() {
+            const totalQuestions = 30;
+            const percentage = Math.round((checkedQuestions.size / totalQuestions) * 100);
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = `${checkedQuestions.size}/${totalQuestions} (${percentage}%)`;
+        }
+
+        function randomizeQuestions() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                const questions = Array.from(section.querySelectorAll('.question'));
+                for (let i = questions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [questions[i], questions[j]] = [questions[j], questions[i]];
+                }
+                questions.forEach(question => section.appendChild(question));
+            });
+        }
+
+        function addCheckButtons() {
+            const questions = document.querySelectorAll('.question');
+            let displayNumber = 1;
+
+            questions.forEach((question) => {
+                let qId = null;
+                const radioInput = question.querySelector('input[type="radio"]');
+                if (radioInput) qId = radioInput.name;
+
+                if (!qId) {
+                    const feedback = question.querySelector('.feedback');
+                    if (feedback && feedback.id) {
+                        qId = 'q' + feedback.id.replace('feedback', '');
+                    }
+                }
+
+                if (!qId) return;
+
+                const questionText = question.querySelector('.question-text');
+                if (questionText) {
+                    const originalText = questionText.textContent;
+                    questionText.textContent = `${displayNumber}. ${originalText.replace(/^\d+\.\s*/, '')}`;
+                }
+
+                let buttonGroup = question.querySelector('.button-group');
+                if (!buttonGroup) {
+                    buttonGroup = document.createElement('div');
+                    buttonGroup.className = 'button-group';
+                    const feedback = question.querySelector('.feedback');
+                    if (feedback) {
+                        feedback.parentNode.insertBefore(buttonGroup, feedback);
+                    } else {
+                        question.appendChild(buttonGroup);
+                    }
+                }
+
+                const hintBtn = question.querySelector('.hint-btn');
+                if (hintBtn && !buttonGroup.contains(hintBtn)) {
+                    buttonGroup.appendChild(hintBtn);
+                }
+
+                if (!buttonGroup.querySelector('.check-btn')) {
+                    const checkBtn = document.createElement('button');
+                    checkBtn.className = 'check-btn';
+                    checkBtn.textContent = 'Check Answer';
+                    checkBtn.onclick = () => checkQuestion(qId);
+                    buttonGroup.appendChild(checkBtn);
+                }
+
+                displayNumber++;
+            });
+        }
+
+        window.addEventListener('load', function() {
+            localStorage.clear();
+            randomizeQuestions();
+            addCheckButtons();
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

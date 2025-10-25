@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACCT101 Mock Quiz - Exam Prep</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-number {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.05em;
+        }
+
+        .options {
+            margin-left: 10px;
+        }
+
+        .option {
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #f8f9fa;
+        }
+
+        .option:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .option label {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .input-group input {
+            width: 150px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .t-account {
+            display: inline-block;
+            border: 2px solid #333;
+            margin: 15px;
+            min-width: 250px;
+        }
+
+        .t-account-title {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            background: #f0f0f0;
+            border-bottom: 2px solid #333;
+        }
+
+        .t-account-body {
+            display: flex;
+            min-height: 150px;
+        }
+
+        .t-account-left, .t-account-right {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .t-account-left {
+            border-right: 2px solid #333;
+        }
+
+        .t-account-input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .ledger-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .ledger-table th, .ledger-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .ledger-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .ledger-table input {
+            width: 90%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .feedback {
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 6px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+            display: block;
+        }
+
+        .feedback.partial {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+            display: block;
+        }
+
+        .results {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .results h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .results .score {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .hint-btn {
+            background: #ffc107;
+            color: #333;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+            margin-right: 10px;
+            transition: background 0.3s;
+        }
+
+        .hint-btn:hover {
+            background: #ffca2c;
+        }
+
+        .check-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .check-btn:hover {
+            background: #218838;
+        }
+
+        .check-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .button-group {
+            margin-top: 10px;
+        }
+
+        .hint {
+            display: none;
+            margin-top: 10px;
+            padding: 12px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+            color: #856404;
+        }
+
+        .hint.show {
+            display: block;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .submit-btn, .hint-btn {
+                display: none;
+            }
+        }
+
+        .equation-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #667eea;
+        }
+
+        .equation-display {
+            font-size: 1.3em;
+            text-align: center;
+            margin: 15px 0;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .inline-input {
+            width: 100px;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ACCT101 Mock Quiz</h1>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar">0%</div>
+        </div>
+
+        <!-- SECTION 1: Account Types and Accounting Equation -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">1</span>
+                Unit 02A: Account Types & Accounting Equation
+            </div>
+
+            <div class="question">
+                <div class="question-text">1. Which of the following is an Asset account?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1a" value="a">
+                        <label for="q1a">Accounts Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1b" value="b">
+                        <label for="q1b">Cash</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1c" value="c">
+                        <label for="q1c">Service Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q1" id="q1d" value="d">
+                        <label for="q1d">Common Stock</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint1')">Show Hint</button>
+                <div class="hint" id="hint1">Remember: Assets are resources owned by the company. Think about what the company possesses.</div>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">2. The accounting equation is:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2a" value="a">
+                        <label for="q2a">Assets = Liabilities - Equity</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2b" value="b">
+                        <label for="q2b">Assets + Liabilities = Equity</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2c" value="c">
+                        <label for="q2c">Assets = Liabilities + Equity</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q2" id="q2d" value="d">
+                        <label for="q2d">Assets + Equity = Liabilities</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback2"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">3. If Assets are $50,000 and Liabilities are $20,000, what is Equity?</div>
+                <div class="equation-box">
+                    <div class="equation-display">
+                        $50,000 = $20,000 + Equity
+                    </div>
+                    <div class="input-group">
+                        <label for="q3-input">Equity = $</label>
+                        <input type="number" id="q3-input" class="inline-input" placeholder="0">
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint3')">Show Hint</button>
+                <div class="hint" id="hint3">Use the accounting equation: A = L + E. Rearrange to solve for E.</div>
+                <div class="feedback" id="feedback3"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">4. Which account type represents money owed to creditors?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4a" value="a">
+                        <label for="q4a">Assets</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4b" value="b">
+                        <label for="q4b">Liabilities</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4c" value="c">
+                        <label for="q4c">Equity</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q4" id="q4d" value="d">
+                        <label for="q4d">Revenue</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback4"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">5. Rent Expense is what type of account?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5a" value="a">
+                        <label for="q5a">Asset</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5b" value="b">
+                        <label for="q5b">Liability</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5c" value="c">
+                        <label for="q5c">Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q5" id="q5d" value="d">
+                        <label for="q5d">Expense</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback5"></div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: Debits and Credits -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">2</span>
+                Unit 02B: Debits, Credits & Normal Balances
+            </div>
+
+            <div class="question">
+                <div class="question-text">6. A debit refers to:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6a" value="a">
+                        <label for="q6a">The right side of an account</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6b" value="b">
+                        <label for="q6b">The left side of an account</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6c" value="c">
+                        <label for="q6c">A decrease in an account</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q6" id="q6d" value="d">
+                        <label for="q6d">An increase in liabilities</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback6"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">7. Using the DEALER acronym, which accounts have a DEBIT normal balance?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7a" value="a">
+                        <label for="q7a">Dividends, Expenses, Assets</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7b" value="b">
+                        <label for="q7b">Liabilities, Equity, Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7c" value="c">
+                        <label for="q7c">Assets, Revenue, Expenses</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q7" id="q7d" value="d">
+                        <label for="q7d">All accounts have debit balances</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint7')">Show Hint</button>
+                <div class="hint" id="hint7">DEALER: Dividends, Expenses, Assets = Left (debit) | Liabilities, Equity, Revenue = Right (credit)</div>
+                <div class="feedback" id="feedback7"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">8. Complete this T-Account for Cash (an Asset account):</div>
+                <div class="t-account">
+                    <div class="t-account-title">Cash</div>
+                    <div class="t-account-body">
+                        <div class="t-account-left">
+                            <label style="font-weight: bold; margin-bottom: 10px;">Left side is called:</label>
+                            <input type="text" class="t-account-input" id="q8-left" placeholder="Debit or Credit?">
+                        </div>
+                        <div class="t-account-right">
+                            <label style="font-weight: bold; margin-bottom: 10px;">Right side is called:</label>
+                            <input type="text" class="t-account-input" id="q8-right" placeholder="Debit or Credit?">
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="q8-normal">What is the normal balance for Cash?</label>
+                    <input type="text" id="q8-normal" placeholder="Debit or Credit?">
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint8')">Show Hint</button>
+                <div class="hint" id="hint8">Remember: Debit = Left, Credit = Right. Assets have debit normal balances.</div>
+                <div class="feedback" id="feedback8"></div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: Accounting Information System -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">3</span>
+                Unit 03A: Accounting Information System
+            </div>
+
+            <div class="question">
+                <div class="question-text">9. If one wanted to see all transactions in chronological order, one would go to the:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9a" value="a">
+                        <label for="q9a">General Ledger</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9b" value="b">
+                        <label for="q9b">Journal</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9c" value="c">
+                        <label for="q9c">Trial Balance</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q9" id="q9d" value="d">
+                        <label for="q9d">Balance Sheet</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback9"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">10. If one wanted to see all activity for a specific account (like Cash), one would go to the:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10a" value="a">
+                        <label for="q10a">Journal</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10b" value="b">
+                        <label for="q10b">General Ledger</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10c" value="c">
+                        <label for="q10c">Income Statement</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q10" id="q10d" value="d">
+                        <label for="q10d">Trial Balance</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback10"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">11. Record this transaction: The company received $5,000 cash from customers for services provided.</div>
+                <table class="ledger-table">
+                    <thead>
+                        <tr>
+                            <th>Account</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" id="q11-account1" placeholder="Account name"></td>
+                            <td><input type="number" id="q11-debit1" placeholder="Amount"></td>
+                            <td><input type="number" id="q11-credit1" placeholder="Amount"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="q11-account2" placeholder="Account name"></td>
+                            <td><input type="number" id="q11-debit2" placeholder="Amount"></td>
+                            <td><input type="number" id="q11-credit2" placeholder="Amount"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="hint-btn" onclick="toggleHint('hint11')">Show Hint</button>
+                <div class="hint" id="hint11">Cash increases (debit) and Service Revenue increases (credit). Debits must equal credits!</div>
+                <div class="feedback" id="feedback11"></div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: Financial Statements -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">4</span>
+                Unit 04: Financial Statements
+            </div>
+
+            <div class="question">
+                <div class="question-text">12. The formula for the Income Statement is:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12a" value="a">
+                        <label for="q12a">Assets = Liabilities + Equity</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12b" value="b">
+                        <label for="q12b">Revenue - Expenses = Net Income</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12c" value="c">
+                        <label for="q12c">Beginning RE + Net Income - Dividends = Ending RE</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q12" id="q12d" value="d">
+                        <label for="q12d">Cash In - Cash Out = Net Cash</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback12"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">13. Calculate Net Income: Revenue = $25,000, Expenses = $18,000</div>
+                <div class="equation-box">
+                    <div class="equation-display">
+                        Net Income = Revenue - Expenses
+                    </div>
+                    <div class="input-group">
+                        <label for="q13-input">Net Income = $</label>
+                        <input type="number" id="q13-input" class="inline-input" placeholder="0">
+                    </div>
+                </div>
+                <div class="feedback" id="feedback13"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">14. Calculate Ending Retained Earnings: Beginning RE = $10,000, Net Income = $7,000, Dividends = $2,000</div>
+                <div class="equation-box">
+                    <div class="equation-display">
+                        Ending RE = Beginning RE + Net Income - Dividends
+                    </div>
+                    <div class="input-group">
+                        <label for="q14-input">Ending Retained Earnings = $</label>
+                        <input type="number" id="q14-input" class="inline-input" placeholder="0">
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint14')">Show Hint</button>
+                <div class="hint" id="hint14">Formula: Ending RE = Beginning RE + Net Income - Dividends</div>
+                <div class="feedback" id="feedback14"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">15. Which financial statement shows the company's financial position at a specific point in time?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15a" value="a">
+                        <label for="q15a">Income Statement</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15b" value="b">
+                        <label for="q15b">Statement of Retained Earnings</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15c" value="c">
+                        <label for="q15c">Balance Sheet</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q15" id="q15d" value="d">
+                        <label for="q15d">Cash Flow Statement</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback15"></div>
+            </div>
+        </div>
+
+        <!-- SECTION 5: Adjusting Entries - 6 Types -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">5</span>
+                Unit 03B: The 6 Types of Adjusting Entries
+            </div>
+
+            <div class="question">
+                <div class="question-text">16. Which of the following is one of the 6 types of adjusting entries?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q16" id="q16a" value="a">
+                        <label for="q16a">Prepaid Expenses</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q16" id="q16b" value="b">
+                        <label for="q16b">Cash Receipts</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q16" id="q16c" value="c">
+                        <label for="q16c">Accounts Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q16" id="q16d" value="d">
+                        <label for="q16d">Common Stock</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint16')">Show Hint</button>
+                <div class="hint" id="hint16">The 6 types are: Prepaid Expenses, Depreciation, Unearned Revenue, Accrued Revenue, Accrued Expenses, Supplies</div>
+                <div class="feedback" id="feedback16"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">17. On January 1, you paid $12,000 for a one-year insurance policy. On December 31, what adjusting entry is needed?</div>
+                <table class="ledger-table">
+                    <thead>
+                        <tr>
+                            <th>Account</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" id="q17-account1" placeholder="Account name"></td>
+                            <td><input type="number" id="q17-debit1" placeholder="Amount"></td>
+                            <td><input type="number" id="q17-credit1" placeholder="Amount"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="q17-account2" placeholder="Account name"></td>
+                            <td><input type="number" id="q17-debit2" placeholder="Amount"></td>
+                            <td><input type="number" id="q17-credit2" placeholder="Amount"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="hint-btn" onclick="toggleHint('hint17')">Show Hint</button>
+                <div class="hint" id="hint17">By year-end, the insurance has been used (expense). Move it from Prepaid Insurance (asset) to Insurance Expense.</div>
+                <div class="feedback" id="feedback17"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">18. A company received $6,000 on November 1 for services to be provided over the next 6 months. By December 31 (2 months later), what is the adjusting entry?</div>
+                <div class="equation-box">
+                    <p style="margin-bottom: 10px;"><strong>Amount earned in 2 months:</strong> $6,000 × (2/6) = ?</p>
+                    <div class="input-group">
+                        <label for="q18-amount">Amount to recognize as revenue: $</label>
+                        <input type="number" id="q18-amount" class="inline-input" placeholder="0">
+                    </div>
+                </div>
+                <p style="margin-top: 15px; font-weight: 600;">Record the adjusting entry:</p>
+                <table class="ledger-table">
+                    <thead>
+                        <tr>
+                            <th>Account</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" id="q18-account1" placeholder="Account name"></td>
+                            <td><input type="number" id="q18-debit1" placeholder="Amount"></td>
+                            <td><input type="number" id="q18-credit1" placeholder="Amount"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="q18-account2" placeholder="Account name"></td>
+                            <td><input type="number" id="q18-debit2" placeholder="Amount"></td>
+                            <td><input type="number" id="q18-credit2" placeholder="Amount"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="hint-btn" onclick="toggleHint('hint18')">Show Hint</button>
+                <div class="hint" id="hint18">This is unearned revenue becoming earned. Debit Unearned Revenue, Credit Service Revenue.</div>
+                <div class="feedback" id="feedback18"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">19. Equipment was purchased for $30,000 with a useful life of 5 years and no salvage value. What is the annual depreciation expense?</div>
+                <div class="equation-box">
+                    <div class="equation-display">
+                        Straight-Line Depreciation = (Cost - Salvage Value) / Useful Life
+                    </div>
+                    <div class="input-group">
+                        <label for="q19-input">Annual Depreciation Expense = $</label>
+                        <input type="number" id="q19-input" class="inline-input" placeholder="0">
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint19')">Show Hint</button>
+                <div class="hint" id="hint19">Formula: ($30,000 - $0) / 5 years</div>
+                <div class="feedback" id="feedback19"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">20. The adjusting entry for depreciation includes:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q20" id="q20a" value="a">
+                        <label for="q20a">Debit Depreciation Expense, Credit Equipment</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q20" id="q20b" value="b">
+                        <label for="q20b">Debit Depreciation Expense, Credit Accumulated Depreciation</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q20" id="q20c" value="c">
+                        <label for="q20c">Debit Equipment, Credit Accumulated Depreciation</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q20" id="q20d" value="d">
+                        <label for="q20d">Debit Accumulated Depreciation, Credit Depreciation Expense</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint20')">Show Hint</button>
+                <div class="hint" id="hint20">We never credit Equipment directly. We use a contra-asset account called Accumulated Depreciation.</div>
+                <div class="feedback" id="feedback20"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">21. On December 31, employees have earned $4,500 in wages that will be paid next month. What is the adjusting entry?</div>
+                <table class="ledger-table">
+                    <thead>
+                        <tr>
+                            <th>Account</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" id="q21-account1" placeholder="Account name"></td>
+                            <td><input type="number" id="q21-debit1" placeholder="Amount"></td>
+                            <td><input type="number" id="q21-credit1" placeholder="Amount"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="q21-account2" placeholder="Account name"></td>
+                            <td><input type="number" id="q21-debit2" placeholder="Amount"></td>
+                            <td><input type="number" id="q21-credit2" placeholder="Amount"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="hint-btn" onclick="toggleHint('hint21')">Show Hint</button>
+                <div class="hint" id="hint21">This is accrued expense. Debit Wages Expense, Credit Wages Payable.</div>
+                <div class="feedback" id="feedback21"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">22. On December 31, the company has earned $3,000 in revenue that has not yet been billed to customers. What type of adjustment is this?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q22" id="q22a" value="a">
+                        <label for="q22a">Prepaid Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q22" id="q22b" value="b">
+                        <label for="q22b">Unearned Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q22" id="q22c" value="c">
+                        <label for="q22c">Accrued Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q22" id="q22d" value="d">
+                        <label for="q22d">Accrued Expense</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint22')">Show Hint</button>
+                <div class="hint" id="hint22">Revenue has been earned but not yet received or billed = Accrued Revenue (Accounts Receivable).</div>
+                <div class="feedback" id="feedback22"></div>
+            </div>
+        </div>
+
+        <!-- SECTION 6: Interest Calculations -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">6</span>
+                Interest Calculations
+            </div>
+
+            <div class="question">
+                <div class="question-text">23. A company borrowed $10,000 at 6% annual interest on October 1. How much interest expense should be accrued by December 31 (3 months)?</div>
+                <div class="equation-box">
+                    <div class="equation-display">
+                        Interest = Principal × Rate × Time
+                    </div>
+                    <div class="equation-display" style="font-size: 1em; margin-top: 10px;">
+                        Interest = $10,000 × 6% × (3/12)
+                    </div>
+                    <div class="input-group">
+                        <label for="q23-input">Interest Expense = $</label>
+                        <input type="number" id="q23-input" class="inline-input" placeholder="0">
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint23')">Show Hint</button>
+                <div class="hint" id="hint23">Convert 6% to 0.06. Time is 3 months out of 12 months = 3/12 or 0.25</div>
+                <div class="feedback" id="feedback23"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">24. The adjusting entry to record accrued interest expense would be:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q24" id="q24a" value="a">
+                        <label for="q24a">Debit Interest Expense, Credit Cash</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q24" id="q24b" value="b">
+                        <label for="q24b">Debit Interest Payable, Credit Interest Expense</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q24" id="q24c" value="c">
+                        <label for="q24c">Debit Interest Expense, Credit Interest Payable</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q24" id="q24d" value="d">
+                        <label for="q24d">Debit Cash, Credit Interest Expense</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint24')">Show Hint</button>
+                <div class="hint" id="hint24">It's accrued (not yet paid). Expense increases (debit), liability increases (credit Interest Payable).</div>
+                <div class="feedback" id="feedback24"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">25. You loaned $20,000 to another company at 9% annual interest on July 1. How much interest revenue should be recognized by December 31 (6 months)?</div>
+                <div class="equation-box">
+                    <div class="input-group">
+                        <label for="q25-input">Interest Revenue = $</label>
+                        <input type="number" id="q25-input" class="inline-input" placeholder="0">
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint25')">Show Hint</button>
+                <div class="hint" id="hint25">Formula: $20,000 × 9% × (6/12). Note: This is revenue, not expense!</div>
+                <div class="feedback" id="feedback25"></div>
+            </div>
+        </div>
+
+        <!-- SECTION 7: Accounting Acronyms -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">7</span>
+                Accounting Acronyms & Organizations
+            </div>
+
+            <div class="question">
+                <div class="question-text">26. What does GAAP stand for?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q26" id="q26a" value="a">
+                        <label for="q26a">Generally Accepted Accounting Principles</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q26" id="q26b" value="b">
+                        <label for="q26b">General Accounting and Auditing Procedures</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q26" id="q26c" value="c">
+                        <label for="q26c">Government Approved Accounting Practices</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q26" id="q26d" value="d">
+                        <label for="q26d">Global Accounting Assessment Program</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback26"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">27. FASB stands for:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q27" id="q27a" value="a">
+                        <label for="q27a">Federal Accounting Standards Board</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q27" id="q27b" value="b">
+                        <label for="q27b">Financial Accounting Standards Board</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q27" id="q27c" value="c">
+                        <label for="q27c">Finance and Accounting Security Bureau</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q27" id="q27d" value="d">
+                        <label for="q27d">First Accounting Standards Bank</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint27')">Show Hint</button>
+                <div class="hint" id="hint27">FASB is the private-sector organization that establishes GAAP in the United States.</div>
+                <div class="feedback" id="feedback27"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">28. The DEALER acronym helps remember:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q28" id="q28a" value="a">
+                        <label for="q28a">The order of financial statements</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q28" id="q28b" value="b">
+                        <label for="q28b">Which accounts have debit vs credit normal balances</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q28" id="q28c" value="c">
+                        <label for="q28c">The 6 types of adjusting entries</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q28" id="q28d" value="d">
+                        <label for="q28d">The accounting cycle steps</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback28"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">29. SEC stands for:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q29" id="q29a" value="a">
+                        <label for="q29a">Securities and Exchange Commission</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q29" id="q29b" value="b">
+                        <label for="q29b">Standard Economic Committee</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q29" id="q29c" value="c">
+                        <label for="q29c">State Examination Council</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q29" id="q29d" value="d">
+                        <label for="q29d">System Efficiency Commission</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint29')">Show Hint</button>
+                <div class="hint" id="hint29">This is the government agency that regulates public companies and securities markets.</div>
+                <div class="feedback" id="feedback29"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">30. In the DEALER acronym, what do the letters stand for?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q30" id="q30a" value="a">
+                        <label for="q30a">Debits-Expenses-Assets-Liabilities-Equity-Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q30" id="q30b" value="b">
+                        <label for="q30b">Dividends-Expenses-Assets-Liabilities-Equity-Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q30" id="q30c" value="c">
+                        <label for="q30c">Depreciation-Equipment-Assets-Loans-Equity-Receipts</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q30" id="q30d" value="d">
+                        <label for="q30d">Debit-Entry-Account-Ledger-Expense-Record</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint30')">Show Hint</button>
+                <div class="hint" id="hint30">DEA (Debit normal balance) | LER (Credit normal balance)</div>
+                <div class="feedback" id="feedback30"></div>
+            </div>
+        </div>
+
+        <!-- SECTION 8: Unearned vs Earned Revenue -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">8</span>
+                Unearned vs Earned Revenue Concepts
+            </div>
+
+            <div class="question">
+                <div class="question-text">31. Unearned Revenue is classified as a:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q31" id="q31a" value="a">
+                        <label for="q31a">Asset</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q31" id="q31b" value="b">
+                        <label for="q31b">Liability</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q31" id="q31c" value="c">
+                        <label for="q31c">Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q31" id="q31d" value="d">
+                        <label for="q31d">Expense</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint31')">Show Hint</button>
+                <div class="hint" id="hint31">Unearned Revenue is cash received before services are performed. It's an obligation (liability).</div>
+                <div class="feedback" id="feedback31"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">32. When cash is initially received for services to be performed later, the entry is:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q32" id="q32a" value="a">
+                        <label for="q32a">Debit Cash, Credit Service Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q32" id="q32b" value="b">
+                        <label for="q32b">Debit Cash, Credit Unearned Revenue</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q32" id="q32c" value="c">
+                        <label for="q32c">Debit Unearned Revenue, Credit Cash</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q32" id="q32d" value="d">
+                        <label for="q32d">Debit Service Revenue, Credit Cash</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback32"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">33. A magazine subscription company receives $120 for a 12-month subscription on March 1. How much revenue should be recognized by May 31 (3 months later)?</div>
+                <div class="equation-box">
+                    <div class="input-group">
+                        <label for="q33-input">Revenue Earned = $</label>
+                        <input type="number" id="q33-input" class="inline-input" placeholder="0">
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint33')">Show Hint</button>
+                <div class="hint" id="hint33">$120 / 12 months = $10 per month. For 3 months: $10 × 3</div>
+                <div class="feedback" id="feedback33"></div>
+            </div>
+        </div>
+
+        <!-- SECTION 9: The Closing Process -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">9</span>
+                Unit 05: The Closing Process
+            </div>
+
+            <div class="question">
+                <div class="question-text">34. Which accounts are temporary accounts that get closed at year-end?</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q34" id="q34a" value="a">
+                        <label for="q34a">Assets, Liabilities, Equity</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q34" id="q34b" value="b">
+                        <label for="q34b">Revenue, Expenses, Dividends</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q34" id="q34c" value="c">
+                        <label for="q34c">Cash, Accounts Receivable, Inventory</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q34" id="q34d" value="d">
+                        <label for="q34d">All accounts are temporary</label>
+                    </div>
+                </div>
+                <button class="hint-btn" onclick="toggleHint('hint34')">Show Hint</button>
+                <div class="hint" id="hint34">Temporary accounts reset to zero each period. Permanent accounts carry balances forward.</div>
+                <div class="feedback" id="feedback34"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">35. Permanent accounts include:</div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="q35" id="q35a" value="a">
+                        <label for="q35a">Revenue and Expenses</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q35" id="q35b" value="b">
+                        <label for="q35b">Assets, Liabilities, and Equity</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q35" id="q35c" value="c">
+                        <label for="q35c">Only Revenue accounts</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="q35" id="q35d" value="d">
+                        <label for="q35d">Dividends only</label>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback35"></div>
+            </div>
+        </div>
+
+        <button class="submit-btn" onclick="gradeQuiz()">Submit Quiz</button>
+
+        <div class="results" id="results">
+            <h2>Quiz Results</h2>
+            <div class="score" id="finalScore">0%</div>
+            <p id="scoreMessage"></p>
+            <p style="margin-top: 20px;">Review your answers above to see what you got right and wrong!</p>
+        </div>
+    </div>
+
+    <script>
+        // Answer key
+        const answers = {
+            q1: 'b',  // Cash is an asset
+            q2: 'c',  // A = L + E
+            q3: 30000, // 50000 - 20000 = 30000
+            q4: 'b',  // Liabilities
+            q5: 'd',  // Expense
+            q6: 'b',  // Left side
+            q7: 'a',  // DEA = Debit
+            q8: {left: 'debit', right: 'credit', normal: 'debit'},
+            q9: 'b',  // Journal
+            q10: 'b', // General Ledger
+            q11: {account1: 'cash', debit1: 5000, credit1: 0, account2: 'service revenue', debit2: 0, credit2: 5000},
+            q12: 'b', // R - E = NI
+            q13: 7000, // 25000 - 18000
+            q14: 15000, // 10000 + 7000 - 2000
+            q15: 'c', // Balance Sheet
+            q16: 'a', // Prepaid Expenses
+            q17: {account1: 'insurance expense', debit1: 12000, credit1: 0, account2: 'prepaid insurance', debit2: 0, credit2: 12000},
+            q18: {amount: 2000, account1: 'unearned revenue', debit1: 2000, credit1: 0, account2: 'service revenue', debit2: 0, credit2: 2000},
+            q19: 6000, // 30000 / 5
+            q20: 'b', // Debit Depreciation Expense, Credit Accumulated Depreciation
+            q21: {account1: 'wages expense', debit1: 4500, credit1: 0, account2: 'wages payable', debit2: 0, credit2: 4500},
+            q22: 'c', // Accrued Revenue
+            q23: 150,  // 10000 * 0.06 * 3/12 = 150
+            q24: 'c', // Debit Interest Expense, Credit Interest Payable
+            q25: 900,  // 20000 * 0.09 * 6/12 = 900
+            q26: 'a', // Generally Accepted Accounting Principles
+            q27: 'b', // Financial Accounting Standards Board
+            q28: 'b', // Normal balances
+            q29: 'a', // Securities and Exchange Commission
+            q30: 'b', // Dividends-Expenses-Assets-Liabilities-Equity-Revenue
+            q31: 'b', // Liability
+            q32: 'b', // Debit Cash, Credit Unearned Revenue
+            q33: 30,   // 120 / 12 * 3 = 30
+            q34: 'b', // Revenue, Expenses, Dividends
+            q35: 'b'  // Assets, Liabilities, Equity
+        };
+
+        // Track checked questions
+        const checkedQuestions = new Set();
+
+        function toggleHint(hintId) {
+            const hint = document.getElementById(hintId);
+            hint.classList.toggle('show');
+        }
+
+        // Check individual question
+        function checkQuestion(qNum) {
+            const feedback = document.getElementById(`feedback${qNum.replace('q', '')}`);
+            let isCorrect = false;
+
+            // Track if this was previously checked
+            const wasChecked = checkedQuestions.has(qNum);
+
+            // Multiple choice questions
+            const multipleChoice = ['q1', 'q2', 'q4', 'q5', 'q6', 'q7', 'q9', 'q10', 'q12', 'q15', 'q16', 'q20', 'q22', 'q24', 'q26', 'q27', 'q28', 'q29', 'q30', 'q31', 'q32', 'q34', 'q35'];
+
+            if (multipleChoice.includes(qNum)) {
+                const selected = document.querySelector(`input[name="${qNum}"]:checked`);
+                if (selected) {
+                    if (selected.value === answers[qNum]) {
+                        isCorrect = true;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Correct!';
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.innerHTML = `✗ Incorrect. The correct answer was ${answers[qNum].toUpperCase()}.`;
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please select an answer first.';
+                    return;
+                }
+            }
+            // Numeric questions
+            else if (qNum === 'q3') {
+                const value = parseInt(document.getElementById('q3-input').value);
+                if (value) {
+                    if (value === answers.q3) {
+                        isCorrect = true;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Correct! $30,000';
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.innerHTML = `✗ Incorrect. $50,000 - $20,000 = $30,000`;
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please provide an answer first.';
+                    return;
+                }
+            }
+            else if (qNum === 'q13') {
+                const value = parseInt(document.getElementById('q13-input').value);
+                if (value) {
+                    if (value === answers.q13) {
+                        isCorrect = true;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Correct! Net Income = $7,000';
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.innerHTML = `✗ Incorrect. $25,000 - $18,000 = $7,000`;
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please provide an answer first.';
+                    return;
+                }
+            }
+            else if (qNum === 'q14') {
+                const value = parseInt(document.getElementById('q14-input').value);
+                if (value) {
+                    if (value === answers.q14) {
+                        isCorrect = true;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Correct! Ending RE = $15,000';
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.innerHTML = `✗ Incorrect. $10,000 + $7,000 - $2,000 = $15,000`;
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please provide an answer first.';
+                    return;
+                }
+            }
+            else if (qNum === 'q19') {
+                const value = parseInt(document.getElementById('q19-input').value);
+                if (value) {
+                    if (value === answers.q19) {
+                        isCorrect = true;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Correct! $6,000 per year';
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.innerHTML = `✗ Incorrect. ($30,000 - $0) / 5 years = $6,000`;
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please provide an answer first.';
+                    return;
+                }
+            }
+            else if (qNum === 'q23') {
+                const value = parseInt(document.getElementById('q23-input').value);
+                if (value) {
+                    if (value === answers.q23) {
+                        isCorrect = true;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Correct! $150';
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.innerHTML = `✗ Incorrect. $10,000 × 6% × (3/12) = $150`;
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please provide an answer first.';
+                    return;
+                }
+            }
+            else if (qNum === 'q25') {
+                const value = parseInt(document.getElementById('q25-input').value);
+                if (value) {
+                    if (value === answers.q25) {
+                        isCorrect = true;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Correct! $900';
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.innerHTML = `✗ Incorrect. $20,000 × 9% × (6/12) = $900`;
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please provide an answer first.';
+                    return;
+                }
+            }
+            else if (qNum === 'q33') {
+                const value = parseInt(document.getElementById('q33-input').value);
+                if (value) {
+                    if (value === answers.q33) {
+                        isCorrect = true;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Correct! $30';
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.innerHTML = `✗ Incorrect. $120 / 12 × 3 = $30`;
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please provide an answer first.';
+                    return;
+                }
+            }
+            // T-account (q8)
+            else if (qNum === 'q8') {
+                const left = normalizeText(document.getElementById('q8-left').value);
+                const right = normalizeText(document.getElementById('q8-right').value);
+                const normal = normalizeText(document.getElementById('q8-normal').value);
+
+                if (left || right || normal) {
+                    let correct = 0;
+                    if (left === 'debit') correct++;
+                    if (right === 'credit') correct++;
+                    if (normal === 'debit') correct++;
+
+                    if (correct === 3) {
+                        isCorrect = true;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Perfect! Left = Debit, Right = Credit, Normal = Debit';
+                    } else {
+                        feedback.className = 'feedback partial';
+                        feedback.innerHTML = `⚠ Partially correct (${correct}/3). Left = Debit, Right = Credit, Normal = Debit`;
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please provide answers first.';
+                    return;
+                }
+            }
+            // Journal entries (q11, q17, q18, q21)
+            else if (qNum === 'q11') {
+                const account1 = normalizeText(document.getElementById('q11-account1').value);
+                const debit1 = parseInt(document.getElementById('q11-debit1').value) || 0;
+                const credit1 = parseInt(document.getElementById('q11-credit1').value) || 0;
+                const account2 = normalizeText(document.getElementById('q11-account2').value);
+                const debit2 = parseInt(document.getElementById('q11-debit2').value) || 0;
+                const credit2 = parseInt(document.getElementById('q11-credit2').value) || 0;
+
+                if (account1 || account2) {
+                    let correct = 0;
+                    if (account1 === 'cash' && debit1 === 5000 && credit1 === 0) correct += 2;
+                    if ((account2.includes('service') || account2.includes('revenue')) && debit2 === 0 && credit2 === 5000) correct += 2;
+
+                    if (correct === 4) {
+                        isCorrect = true;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Perfect! Cash (Debit $5,000) | Service Revenue (Credit $5,000)';
+                    } else {
+                        feedback.className = 'feedback partial';
+                        feedback.innerHTML = `⚠ Partially correct. Should be: Cash (Debit $5,000) | Service Revenue (Credit $5,000)`;
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please provide answers first.';
+                    return;
+                }
+            }
+            else if (qNum === 'q17') {
+                const account1 = normalizeText(document.getElementById('q17-account1').value);
+                const debit1 = parseInt(document.getElementById('q17-debit1').value) || 0;
+                const credit1 = parseInt(document.getElementById('q17-credit1').value) || 0;
+                const account2 = normalizeText(document.getElementById('q17-account2').value);
+                const debit2 = parseInt(document.getElementById('q17-debit2').value) || 0;
+                const credit2 = parseInt(document.getElementById('q17-credit2').value) || 0;
+
+                if (account1 || account2) {
+                    let correct = 0;
+                    if ((account1.includes('insurance') && account1.includes('expense')) && debit1 === 12000 && credit1 === 0) correct += 2;
+                    if ((account2.includes('prepaid') && account2.includes('insurance')) && debit2 === 0 && credit2 === 12000) correct += 2;
+
+                    if (correct === 4) {
+                        isCorrect = true;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Perfect! Insurance Expense (Debit $12,000) | Prepaid Insurance (Credit $12,000)';
+                    } else {
+                        feedback.className = 'feedback partial';
+                        feedback.innerHTML = `⚠ Partially correct. Should be: Insurance Expense (Debit $12,000) | Prepaid Insurance (Credit $12,000)`;
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please provide answers first.';
+                    return;
+                }
+            }
+            else if (qNum === 'q18') {
+                const amount = parseInt(document.getElementById('q18-amount').value) || 0;
+                const account1 = normalizeText(document.getElementById('q18-account1').value);
+                const debit1 = parseInt(document.getElementById('q18-debit1').value) || 0;
+                const credit1 = parseInt(document.getElementById('q18-credit1').value) || 0;
+                const account2 = normalizeText(document.getElementById('q18-account2').value);
+                const debit2 = parseInt(document.getElementById('q18-debit2').value) || 0;
+                const credit2 = parseInt(document.getElementById('q18-credit2').value) || 0;
+
+                if (amount || account1 || account2) {
+                    let correct = 0;
+                    if (amount === 2000) correct += 1;
+                    if ((account1.includes('unearned') && account1.includes('revenue')) && debit1 === 2000 && credit1 === 0) correct += 2;
+                    if ((account2.includes('service') || account2.includes('revenue')) && debit2 === 0 && credit2 === 2000) correct += 2;
+
+                    if (correct === 5) {
+                        isCorrect = true;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Perfect! Amount = $2,000 | Unearned Revenue (Debit $2,000) | Service Revenue (Credit $2,000)';
+                    } else {
+                        feedback.className = 'feedback partial';
+                        feedback.innerHTML = '⚠ Partially correct. Amount = $2,000. Entry: Unearned Revenue (Debit $2,000) | Service Revenue (Credit $2,000)';
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please provide answers first.';
+                    return;
+                }
+            }
+            else if (qNum === 'q21') {
+                const account1 = normalizeText(document.getElementById('q21-account1').value);
+                const debit1 = parseInt(document.getElementById('q21-debit1').value) || 0;
+                const credit1 = parseInt(document.getElementById('q21-credit1').value) || 0;
+                const account2 = normalizeText(document.getElementById('q21-account2').value);
+                const debit2 = parseInt(document.getElementById('q21-debit2').value) || 0;
+                const credit2 = parseInt(document.getElementById('q21-credit2').value) || 0;
+
+                if (account1 || account2) {
+                    let correct = 0;
+                    if ((account1.includes('wage') || account1.includes('salary')) && account1.includes('expense') && debit1 === 4500 && credit1 === 0) correct += 2;
+                    if ((account2.includes('wage') || account2.includes('salary')) && account2.includes('payable') && debit2 === 0 && credit2 === 4500) correct += 2;
+
+                    if (correct === 4) {
+                        isCorrect = true;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Perfect! Wages Expense (Debit $4,500) | Wages Payable (Credit $4,500)';
+                    } else {
+                        feedback.className = 'feedback partial';
+                        feedback.innerHTML = '⚠ Partially correct. Should be: Wages Expense (Debit $4,500) | Wages Payable (Credit $4,500)';
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ Please provide answers first.';
+                    return;
+                }
+            }
+
+            // Mark as checked and update progress (only if first time checking)
+            if (!wasChecked) {
+                checkedQuestions.add(qNum);
+                updateProgress();
+            }
+        }
+
+        function updateProgress() {
+            const totalQuestions = 35;
+            const percentage = Math.round((checkedQuestions.size / totalQuestions) * 100);
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = `${checkedQuestions.size}/${totalQuestions} (${percentage}%)`;
+        }
+
+        function normalizeText(text) {
+            if (!text) return '';
+            return text.toString().toLowerCase().trim().replace(/[^a-z0-9]/g, '');
+        }
+
+        function gradeQuiz() {
+            let totalQuestions = 35;
+            let correctAnswers = 0;
+            let answeredQuestions = 0;
+
+            // Grade multiple choice questions
+            const multipleChoice = [1, 2, 4, 5, 6, 7, 9, 10, 12, 15, 16, 20, 22, 24, 26, 27, 28, 29, 30, 31, 32, 34, 35];
+            multipleChoice.forEach(qNum => {
+                const selected = document.querySelector(`input[name="q${qNum}"]:checked`);
+                const feedback = document.getElementById(`feedback${qNum}`);
+
+                if (selected) {
+                    answeredQuestions++;
+                    if (selected.value === answers[`q${qNum}`]) {
+                        correctAnswers++;
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '✓ Correct!';
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.innerHTML = `✗ Incorrect. The correct answer was ${answers[`q${qNum}`].toUpperCase()}.`;
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '✗ No answer selected.';
+                }
+            });
+
+            // Grade Q3 (numeric)
+            const q3Value = parseInt(document.getElementById('q3-input').value);
+            const feedback3 = document.getElementById('feedback3');
+            if (q3Value) {
+                answeredQuestions++;
+                if (q3Value === answers.q3) {
+                    correctAnswers++;
+                    feedback3.className = 'feedback correct';
+                    feedback3.innerHTML = '✓ Correct! $30,000';
+                } else {
+                    feedback3.className = 'feedback incorrect';
+                    feedback3.innerHTML = `✗ Incorrect. The correct answer is $30,000 (Assets - Liabilities = $50,000 - $20,000 = $30,000)`;
+                }
+            } else {
+                feedback3.className = 'feedback incorrect';
+                feedback3.innerHTML = '✗ No answer provided.';
+            }
+
+            // Grade Q8 (T-account)
+            const q8Left = normalizeText(document.getElementById('q8-left').value);
+            const q8Right = normalizeText(document.getElementById('q8-right').value);
+            const q8Normal = normalizeText(document.getElementById('q8-normal').value);
+            const feedback8 = document.getElementById('feedback8');
+
+            let q8Correct = 0;
+            if (q8Left === 'debit') q8Correct++;
+            if (q8Right === 'credit') q8Correct++;
+            if (q8Normal === 'debit') q8Correct++;
+
+            if (q8Left || q8Right || q8Normal) answeredQuestions++;
+
+            if (q8Correct === 3) {
+                correctAnswers++;
+                feedback8.className = 'feedback correct';
+                feedback8.innerHTML = '✓ Perfect! Left = Debit, Right = Credit, Normal Balance = Debit';
+            } else if (q8Correct > 0) {
+                correctAnswers += 0.5;
+                feedback8.className = 'feedback partial';
+                feedback8.innerHTML = `⚠ Partially correct (${q8Correct}/3). Left side = Debit, Right side = Credit, Normal Balance for Cash (Asset) = Debit`;
+            } else {
+                feedback8.className = 'feedback incorrect';
+                feedback8.innerHTML = '✗ Incorrect. Left side = Debit, Right side = Credit, Normal Balance for Cash = Debit';
+            }
+
+            // Grade Q11 (journal entry)
+            const q11Account1 = normalizeText(document.getElementById('q11-account1').value);
+            const q11Debit1 = parseInt(document.getElementById('q11-debit1').value) || 0;
+            const q11Credit1 = parseInt(document.getElementById('q11-credit1').value) || 0;
+            const q11Account2 = normalizeText(document.getElementById('q11-account2').value);
+            const q11Debit2 = parseInt(document.getElementById('q11-debit2').value) || 0;
+            const q11Credit2 = parseInt(document.getElementById('q11-credit2').value) || 0;
+            const feedback11 = document.getElementById('feedback11');
+
+            let q11Correct = 0;
+            if (q11Account1 === 'cash' && q11Debit1 === 5000 && q11Credit1 === 0) q11Correct += 2;
+            if ((q11Account2.includes('service') || q11Account2.includes('revenue')) && q11Debit2 === 0 && q11Credit2 === 5000) q11Correct += 2;
+
+            if (q11Account1 || q11Account2) answeredQuestions++;
+
+            if (q11Correct === 4) {
+                correctAnswers++;
+                feedback11.className = 'feedback correct';
+                feedback11.innerHTML = '✓ Perfect! Cash (Debit $5,000) and Service Revenue (Credit $5,000)';
+            } else if (q11Correct > 0) {
+                correctAnswers += 0.5;
+                feedback11.className = 'feedback partial';
+                feedback11.innerHTML = `⚠ Partially correct. Should be: Cash (Debit $5,000) | Service Revenue (Credit $5,000)`;
+            } else {
+                feedback11.className = 'feedback incorrect';
+                feedback11.innerHTML = '✗ Incorrect. Should be: Cash (Debit $5,000) | Service Revenue (Credit $5,000)';
+            }
+
+            // Grade Q13 (numeric)
+            const q13Value = parseInt(document.getElementById('q13-input').value);
+            const feedback13 = document.getElementById('feedback13');
+            if (q13Value) {
+                answeredQuestions++;
+                if (q13Value === answers.q13) {
+                    correctAnswers++;
+                    feedback13.className = 'feedback correct';
+                    feedback13.innerHTML = '✓ Correct! Net Income = $7,000';
+                } else {
+                    feedback13.className = 'feedback incorrect';
+                    feedback13.innerHTML = `✗ Incorrect. Net Income = $25,000 - $18,000 = $7,000`;
+                }
+            } else {
+                feedback13.className = 'feedback incorrect';
+                feedback13.innerHTML = '✗ No answer provided.';
+            }
+
+            // Grade Q14 (numeric)
+            const q14Value = parseInt(document.getElementById('q14-input').value);
+            const feedback14 = document.getElementById('feedback14');
+            if (q14Value) {
+                answeredQuestions++;
+                if (q14Value === answers.q14) {
+                    correctAnswers++;
+                    feedback14.className = 'feedback correct';
+                    feedback14.innerHTML = '✓ Correct! Ending RE = $15,000';
+                } else {
+                    feedback14.className = 'feedback incorrect';
+                    feedback14.innerHTML = `✗ Incorrect. Ending RE = $10,000 + $7,000 - $2,000 = $15,000`;
+                }
+            } else {
+                feedback14.className = 'feedback incorrect';
+                feedback14.innerHTML = '✗ No answer provided.';
+            }
+
+            // Grade Q17 (journal entry - prepaid insurance)
+            const q17Account1 = normalizeText(document.getElementById('q17-account1').value);
+            const q17Debit1 = parseInt(document.getElementById('q17-debit1').value) || 0;
+            const q17Credit1 = parseInt(document.getElementById('q17-credit1').value) || 0;
+            const q17Account2 = normalizeText(document.getElementById('q17-account2').value);
+            const q17Debit2 = parseInt(document.getElementById('q17-debit2').value) || 0;
+            const q17Credit2 = parseInt(document.getElementById('q17-credit2').value) || 0;
+            const feedback17 = document.getElementById('feedback17');
+
+            let q17Correct = 0;
+            if ((q17Account1.includes('insurance') && q17Account1.includes('expense')) && q17Debit1 === 12000 && q17Credit1 === 0) q17Correct += 2;
+            if ((q17Account2.includes('prepaid') && q17Account2.includes('insurance')) && q17Debit2 === 0 && q17Credit2 === 12000) q17Correct += 2;
+
+            if (q17Account1 || q17Account2) answeredQuestions++;
+
+            if (q17Correct === 4) {
+                correctAnswers++;
+                feedback17.className = 'feedback correct';
+                feedback17.innerHTML = '✓ Perfect! Insurance Expense (Debit $12,000) | Prepaid Insurance (Credit $12,000)';
+            } else if (q17Correct > 0) {
+                correctAnswers += 0.5;
+                feedback17.className = 'feedback partial';
+                feedback17.innerHTML = `⚠ Partially correct. Should be: Insurance Expense (Debit $12,000) | Prepaid Insurance (Credit $12,000)`;
+            } else {
+                feedback17.className = 'feedback incorrect';
+                feedback17.innerHTML = '✗ Incorrect. Should be: Insurance Expense (Debit $12,000) | Prepaid Insurance (Credit $12,000)';
+            }
+
+            // Grade Q18 (unearned revenue)
+            const q18Amount = parseInt(document.getElementById('q18-amount').value) || 0;
+            const q18Account1 = normalizeText(document.getElementById('q18-account1').value);
+            const q18Debit1 = parseInt(document.getElementById('q18-debit1').value) || 0;
+            const q18Credit1 = parseInt(document.getElementById('q18-credit1').value) || 0;
+            const q18Account2 = normalizeText(document.getElementById('q18-account2').value);
+            const q18Debit2 = parseInt(document.getElementById('q18-debit2').value) || 0;
+            const q18Credit2 = parseInt(document.getElementById('q18-credit2').value) || 0;
+            const feedback18 = document.getElementById('feedback18');
+
+            let q18Correct = 0;
+            if (q18Amount === 2000) q18Correct += 1;
+            if ((q18Account1.includes('unearned') && q18Account1.includes('revenue')) && q18Debit1 === 2000 && q18Credit1 === 0) q18Correct += 2;
+            if ((q18Account2.includes('service') || q18Account2.includes('revenue')) && q18Debit2 === 0 && q18Credit2 === 2000) q18Correct += 2;
+
+            if (q18Amount || q18Account1 || q18Account2) answeredQuestions++;
+
+            if (q18Correct === 5) {
+                correctAnswers++;
+                feedback18.className = 'feedback correct';
+                feedback18.innerHTML = '✓ Perfect! Amount = $2,000 | Unearned Revenue (Debit $2,000) | Service Revenue (Credit $2,000)';
+            } else if (q18Correct > 0) {
+                correctAnswers += 0.5;
+                feedback18.className = 'feedback partial';
+                feedback18.innerHTML = `⚠ Partially correct. Amount = $2,000 (6000 × 2/6). Entry: Unearned Revenue (Debit $2,000) | Service Revenue (Credit $2,000)`;
+            } else {
+                feedback18.className = 'feedback incorrect';
+                feedback18.innerHTML = '✗ Incorrect. Amount = $2,000 (6000 × 2/6). Entry: Unearned Revenue (Debit $2,000) | Service Revenue (Credit $2,000)';
+            }
+
+            // Grade Q19 (depreciation calculation)
+            const q19Value = parseInt(document.getElementById('q19-input').value);
+            const feedback19 = document.getElementById('feedback19');
+            if (q19Value) {
+                answeredQuestions++;
+                if (q19Value === answers.q19) {
+                    correctAnswers++;
+                    feedback19.className = 'feedback correct';
+                    feedback19.innerHTML = '✓ Correct! $6,000 per year';
+                } else {
+                    feedback19.className = 'feedback incorrect';
+                    feedback19.innerHTML = `✗ Incorrect. ($30,000 - $0) / 5 years = $6,000`;
+                }
+            } else {
+                feedback19.className = 'feedback incorrect';
+                feedback19.innerHTML = '✗ No answer provided.';
+            }
+
+            // Grade Q21 (accrued wages)
+            const q21Account1 = normalizeText(document.getElementById('q21-account1').value);
+            const q21Debit1 = parseInt(document.getElementById('q21-debit1').value) || 0;
+            const q21Credit1 = parseInt(document.getElementById('q21-credit1').value) || 0;
+            const q21Account2 = normalizeText(document.getElementById('q21-account2').value);
+            const q21Debit2 = parseInt(document.getElementById('q21-debit2').value) || 0;
+            const q21Credit2 = parseInt(document.getElementById('q21-credit2').value) || 0;
+            const feedback21 = document.getElementById('feedback21');
+
+            let q21Correct = 0;
+            if ((q21Account1.includes('wage') || q21Account1.includes('salary')) && q21Account1.includes('expense') && q21Debit1 === 4500 && q21Credit1 === 0) q21Correct += 2;
+            if ((q21Account2.includes('wage') || q21Account2.includes('salary')) && q21Account2.includes('payable') && q21Debit2 === 0 && q21Credit2 === 4500) q21Correct += 2;
+
+            if (q21Account1 || q21Account2) answeredQuestions++;
+
+            if (q21Correct === 4) {
+                correctAnswers++;
+                feedback21.className = 'feedback correct';
+                feedback21.innerHTML = '✓ Perfect! Wages Expense (Debit $4,500) | Wages Payable (Credit $4,500)';
+            } else if (q21Correct > 0) {
+                correctAnswers += 0.5;
+                feedback21.className = 'feedback partial';
+                feedback21.innerHTML = `⚠ Partially correct. Should be: Wages Expense (Debit $4,500) | Wages Payable (Credit $4,500)`;
+            } else {
+                feedback21.className = 'feedback incorrect';
+                feedback21.innerHTML = '✗ Incorrect. Should be: Wages Expense (Debit $4,500) | Wages Payable (Credit $4,500)';
+            }
+
+            // Grade Q23 (interest calculation)
+            const q23Value = parseInt(document.getElementById('q23-input').value);
+            const feedback23 = document.getElementById('feedback23');
+            if (q23Value) {
+                answeredQuestions++;
+                if (q23Value === answers.q23) {
+                    correctAnswers++;
+                    feedback23.className = 'feedback correct';
+                    feedback23.innerHTML = '✓ Correct! $150';
+                } else {
+                    feedback23.className = 'feedback incorrect';
+                    feedback23.innerHTML = `✗ Incorrect. $10,000 × 6% × (3/12) = $10,000 × 0.06 × 0.25 = $150`;
+                }
+            } else {
+                feedback23.className = 'feedback incorrect';
+                feedback23.innerHTML = '✗ No answer provided.';
+            }
+
+            // Grade Q25 (interest revenue)
+            const q25Value = parseInt(document.getElementById('q25-input').value);
+            const feedback25 = document.getElementById('feedback25');
+            if (q25Value) {
+                answeredQuestions++;
+                if (q25Value === answers.q25) {
+                    correctAnswers++;
+                    feedback25.className = 'feedback correct';
+                    feedback25.innerHTML = '✓ Correct! $900';
+                } else {
+                    feedback25.className = 'feedback incorrect';
+                    feedback25.innerHTML = `✗ Incorrect. $20,000 × 9% × (6/12) = $20,000 × 0.09 × 0.5 = $900`;
+                }
+            } else {
+                feedback25.className = 'feedback incorrect';
+                feedback25.innerHTML = '✗ No answer provided.';
+            }
+
+            // Grade Q33 (subscription revenue)
+            const q33Value = parseInt(document.getElementById('q33-input').value);
+            const feedback33 = document.getElementById('feedback33');
+            if (q33Value) {
+                answeredQuestions++;
+                if (q33Value === answers.q33) {
+                    correctAnswers++;
+                    feedback33.className = 'feedback correct';
+                    feedback33.innerHTML = '✓ Correct! $30';
+                } else {
+                    feedback33.className = 'feedback incorrect';
+                    feedback33.innerHTML = `✗ Incorrect. $120 / 12 months = $10/month. 3 months × $10 = $30`;
+                }
+            } else {
+                feedback33.className = 'feedback incorrect';
+                feedback33.innerHTML = '✗ No answer provided.';
+            }
+
+            // Calculate percentage
+            const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+
+            // Update progress bar
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = percentage + '%';
+
+            // Show results
+            const results = document.getElementById('results');
+            const finalScore = document.getElementById('finalScore');
+            const scoreMessage = document.getElementById('scoreMessage');
+
+            finalScore.textContent = percentage + '%';
+
+            if (percentage >= 90) {
+                scoreMessage.textContent = 'Excellent work! You\'re ready for the exam! 🎉';
+            } else if (percentage >= 80) {
+                scoreMessage.textContent = 'Great job! Review the questions you missed and you\'ll ace it! 👍';
+            } else if (percentage >= 70) {
+                scoreMessage.textContent = 'Good effort! Study the areas you missed for better results. 📚';
+            } else {
+                scoreMessage.textContent = 'Keep studying! Review the study guide and try again. 💪';
+            }
+
+            results.classList.add('show');
+            results.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Randomize questions on page load
+        function randomizeQuestions() {
+            const sections = document.querySelectorAll('.section');
+
+            sections.forEach(section => {
+                const questions = Array.from(section.querySelectorAll('.question'));
+
+                // Shuffle array using Fisher-Yates algorithm
+                for (let i = questions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [questions[i], questions[j]] = [questions[j], questions[i]];
+                }
+
+                // Re-append questions in new order
+                questions.forEach(question => {
+                    section.appendChild(question);
+                });
+            });
+        }
+
+        // Add Check Answer buttons to all questions
+        function addCheckButtons() {
+            const questions = document.querySelectorAll('.question');
+            let displayNumber = 1;
+
+            questions.forEach((question, index) => {
+                // Find the original question ID from inputs or feedback
+                let qId = null;
+
+                // Try to find from radio inputs
+                const radioInput = question.querySelector('input[type="radio"]');
+                if (radioInput) {
+                    qId = radioInput.name;
+                }
+
+                // Try to find from feedback ID
+                if (!qId) {
+                    const feedback = question.querySelector('.feedback');
+                    if (feedback && feedback.id) {
+                        qId = 'q' + feedback.id.replace('feedback', '');
+                    }
+                }
+
+                // Try to find from input IDs
+                if (!qId) {
+                    const input = question.querySelector('input[id*="-input"]');
+                    if (input && input.id) {
+                        qId = input.id.split('-')[0];
+                    }
+                }
+
+                if (!qId) {
+                    console.warn('Could not find question ID for', question);
+                    return;
+                }
+
+                // Update question number in the display text
+                const questionText = question.querySelector('.question-text');
+                if (questionText) {
+                    const originalText = questionText.textContent;
+                    questionText.textContent = `${displayNumber}. ${originalText.replace(/^\d+\.\s*/, '')}`;
+                }
+
+                // Find or create button group
+                let buttonGroup = question.querySelector('.button-group');
+                if (!buttonGroup) {
+                    buttonGroup = document.createElement('div');
+                    buttonGroup.className = 'button-group';
+
+                    // Insert before feedback div
+                    const feedback = question.querySelector('.feedback');
+                    if (feedback) {
+                        feedback.parentNode.insertBefore(buttonGroup, feedback);
+                    } else {
+                        question.appendChild(buttonGroup);
+                    }
+                }
+
+                // Move hint button to button group if exists
+                const hintBtn = question.querySelector('.hint-btn');
+                if (hintBtn && !buttonGroup.contains(hintBtn)) {
+                    buttonGroup.appendChild(hintBtn);
+                }
+
+                // Add check button if it doesn't exist
+                if (!buttonGroup.querySelector('.check-btn')) {
+                    const checkBtn = document.createElement('button');
+                    checkBtn.className = 'check-btn';
+                    checkBtn.textContent = 'Check Answer';
+                    checkBtn.onclick = () => checkQuestion(qId);
+                    buttonGroup.appendChild(checkBtn);
+                }
+
+                displayNumber++;
+            });
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            // Clear all previous answers from localStorage
+            localStorage.clear();
+
+            // Randomize questions
+            randomizeQuestions();
+
+            // Add check buttons
+            addCheckButtons();
+
+            // Initialize progress bar
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
