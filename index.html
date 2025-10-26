@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACCT101 Study Tools - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-icon {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.3em;
+        }
+
+        .file-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .file-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .file-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .file-desc {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .highlight h2 {
+            margin-bottom: 15px;
+        }
+
+        .highlight a {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-top: 15px;
+            transition: transform 0.2s;
+        }
+
+        .highlight a:hover {
+            transform: scale(1.05);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+            color: #666;
+        }
+
+        .key-concepts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .concept-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .concept-title {
+            font-weight: 600;
+            color: #764ba2;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 ACCT101 Study Tools</h1>
+        <p class="subtitle">Interactive Learning Resources for Introduction to Accounting</p>
+
+        <div class="highlight">
+            <h2>🎯 Ready for the Final?</h2>
+            <p>Start here with our comprehensive all-in-one study tool!</p>
+            <a href="05-Final-Exam-Prep/final-exam-prep.html">Launch Final Exam Prep →</a>
+        </div>
+
+        <!-- Section 1: Study Materials -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">📖</span>
+                01. Study Materials
+            </div>
+            <p style="margin-bottom: 15px; color: #666;">Core reference materials from the course</p>
+            <div class="file-list">
+                <div class="file-card">
+                    <div class="file-name">Study Guide</div>
+                    <div class="file-desc">Complete markdown guide covering all units</div>
+                </div>
+                <div class="file-card">
+                    <div class="file-name">Unit Quizzes (PDF)</div>
+                    <div class="file-desc">Official quiz PDFs for Units 02A, 02B, 03A, 04</div>
+                </div>
+                <div class="file-card">
+                    <div class="file-name">Visual Aids</div>
+                    <div class="file-desc">11 reference images for key concepts</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Practice Quizzes -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">✍️</span>
+                02. Practice Quizzes
+            </div>
+            <p style="margin-bottom: 15px; color: #666;">Self-assessment tools for building confidence</p>
+            <div class="file-list">
+                <a href="02-Practice-Quizzes/study-guide-quiz.html" class="file-card">
+                    <div class="file-name">Study Guide Quiz</div>
+                    <div class="file-desc">Questions based on the study guide</div>
+                </a>
+                <a href="02-Practice-Quizzes/practice-quiz.html" class="file-card">
+                    <div class="file-name">Interactive Practice Quiz</div>
+                    <div class="file-desc">With detailed explanations for each answer</div>
+                </a>
+                <a href="02-Practice-Quizzes/scenario-quiz.html" class="file-card">
+                    <div class="file-name">Scenario Quiz</div>
+                    <div class="file-desc">Real-world scenario-based questions</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Section 3: Official Quizzes -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">📝</span>
+                03. Official Quizzes
+            </div>
+            <p style="margin-bottom: 15px; color: #666;">Based on actual course quiz materials</p>
+            <div class="file-list">
+                <a href="Official-Quizzes/official-quiz.html" class="file-card">
+                    <div class="file-name">Official Quiz</div>
+                    <div class="file-desc">37 questions from Units 02A-04</div>
+                </a>
+                <a href="Official-Quizzes/official-quiz-stoner.html" class="file-card">
+                    <div class="file-name">🌿 Official Quiz - Stoner Edition</div>
+                    <div class="file-desc">Same 37 questions, cannabis-themed for better recall!</div>
+                </a>
+                <a href="Official-Quizzes/unit05-quiz.html" class="file-card">
+                    <div class="file-name">Unit 05 Quiz - Closing Entries</div>
+                    <div class="file-desc">12 questions on closing entries, R.E.I.D., and trial balances</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Section 4: Interactive Tools -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🎮</span>
+                04. Interactive Learning Tools
+            </div>
+            <p style="margin-bottom: 15px; color: #666;">Hands-on practice for specific concepts</p>
+            <div class="file-list">
+                <a href="04-Interactive-Tools/account-classification.html" class="file-card">
+                    <div class="file-name">Account Classification</div>
+                    <div class="file-desc">Drag & drop game for the 5 account types</div>
+                </a>
+                <a href="04-Interactive-Tools/dealer-simulator.html" class="file-card">
+                    <div class="file-name">DEALER Simulator</div>
+                    <div class="file-desc">Master debits vs credits with the DEALER mnemonic</div>
+                </a>
+                <a href="04-Interactive-Tools/journal-builder.html" class="file-card">
+                    <div class="file-name">Journal Builder</div>
+                    <div class="file-desc">Practice creating journal entries</div>
+                </a>
+                <a href="04-Interactive-Tools/ledger-builder.html" class="file-card">
+                    <div class="file-name">Ledger Builder</div>
+                    <div class="file-desc">Post entries to T-accounts</div>
+                </a>
+                <a href="04-Interactive-Tools/adjusting-entries.html" class="file-card">
+                    <div class="file-name">Adjusting Entries</div>
+                    <div class="file-desc">Practice prepaid, accrued, depreciation, unearned</div>
+                </a>
+                <a href="04-Interactive-Tools/closing-entries.html" class="file-card">
+                    <div class="file-name">Closing Entries</div>
+                    <div class="file-desc">R.E.I.D. method practice</div>
+                </a>
+                <a href="04-Interactive-Tools/financial-statement.html" class="file-card">
+                    <div class="file-name">Financial Statements</div>
+                    <div class="file-desc">Build Income Statement, RE Statement, Balance Sheet</div>
+                </a>
+                <a href="04-Interactive-Tools/complete-accounting-cycle.html" class="file-card">
+                    <div class="file-name">Complete Accounting Cycle</div>
+                    <div class="file-desc">Full cycle walkthrough (Steps 1-7)</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Section 5: Final Exam Prep -->
+        <div class="section" style="border-left-color: #10b981; background: #f0fdf4;">
+            <div class="section-title" style="color: #10b981;">
+                <span class="section-icon" style="background: #10b981;">🎯</span>
+                05. Final Exam Prep
+            </div>
+            <p style="margin-bottom: 15px; color: #666;">Comprehensive all-in-one final exam preparation tool</p>
+            <a href="05-Final-Exam-Prep/final-exam-prep.html" class="file-card" style="border-left: 4px solid #10b981;">
+                <div class="file-name" style="color: #10b981; font-size: 1.1em;">📊 Final Exam Prep (All-in-One)</div>
+                <div class="file-desc" style="margin-top: 10px;">
+                    <strong>5 Tabs of Practice:</strong><br>
+                    • Tab 1: 60-Question Quiz (Units 02A-05)<br>
+                    • Tab 2: Account Analysis (AR, AP, Cash)<br>
+                    • Tab 3: Transaction Analysis<br>
+                    • Tab 4: Trial Balance Practice<br>
+                    • Tab 5: 🌿 Stoner Edition (First 10 questions)
+                </div>
+            </a>
+        </div>
+
+        <!-- Key Concepts -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🔑</span>
+                Key Concepts to Master
+            </div>
+            <div class="key-concepts">
+                <div class="concept-card">
+                    <div class="concept-title">DEALER Mnemonic</div>
+                    <div><strong>D</strong>ividends, <strong>E</strong>xpenses, <strong>A</strong>ssets = Debit</div>
+                    <div><strong>L</strong>iabilities, <strong>E</strong>quity, <strong>R</strong>evenue = Credit</div>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-title">Accounting Equation</div>
+                    <div><strong>Assets = Liabilities + Equity</strong></div>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-title">R.E.I.D. Closing</div>
+                    <div>1. <strong>R</strong>evenues → Income Summary</div>
+                    <div>2. <strong>E</strong>xpenses → Income Summary</div>
+                    <div>3. <strong>I</strong>ncome Summary → RE</div>
+                    <div>4. <strong>D</strong>ividends → RE</div>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-title">Accounting Cycle</div>
+                    <div>1. Analyze → 2. Journalize → 3. Post</div>
+                    <div>4. Trial Balance → 5. Adjust</div>
+                    <div>6. Adjusted TB → 7. Financials</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>30 interactive files</strong> organized for your success! 🎓</p>
+            <p style="margin-top: 10px;">Good luck on your final exam! You got this! 💪</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 05 Quiz - Closing Entries</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-number {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.05em;
+        }
+
+        .options {
+            margin-left: 10px;
+        }
+
+        .option {
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #f8f9fa;
+        }
+
+        .option:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .option label {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .input-group input {
+            width: 200px;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-check {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-right: 10px;
+        }
+
+        .btn-check:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .btn-hint {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.3s;
+        }
+
+        .btn-hint:hover {
+            background: #059669;
+        }
+
+        .hint {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            border-radius: 6px;
+            color: #065f46;
+        }
+
+        .hint.show {
+            display: block;
+        }
+
+        .feedback {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+
+        .feedback.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+
+        .summary {
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        .summary h2 {
+            margin-bottom: 20px;
+        }
+
+        .summary p {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Unit 05 Quiz</h1>
+        <p class="subtitle">Closing Entries - 12 Questions</p>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar">0/12 (0%)</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">05</span>
+                Closing Entries
+            </div>
+
+            <!-- Question 1 -->
+            <div class="question" data-answer="zero">
+                <div class="question-text">1. To close out an account means to make its balance equal to ___.</div>
+                <div class="input-group">
+                    <label for="q1">Your answer:</label>
+                    <input type="text" id="q1" name="q1" placeholder="Enter answer">
+                </div>
+                <button class="btn-check" onclick="checkQuestion('q1')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('h1')">💡 Hint</button>
+                <div class="hint" id="h1">Think about what happens to temporary accounts at period end - they need to have no balance left.</div>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question" data-answer="debit">
+                <div class="question-text">2. If Income Summary has a credit balance, it is closed out via a ___.</div>
+                <div class="input-group">
+                    <label for="q2">Your answer:</label>
+                    <input type="text" id="q2" name="q2" placeholder="Enter answer">
+                </div>
+                <button class="btn-check" onclick="checkQuestion('q2')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('h2')">💡 Hint</button>
+                <div class="hint" id="h2">To close an account with a credit balance, you need the opposite side to bring it to zero.</div>
+                <div class="feedback" id="feedback2"></div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question" data-answer="beginning">
+                <div class="question-text">3. The balance of Retained Earnings on the adjusted trial balance is the balance at the ___ of the period.</div>
+                <div class="input-group">
+                    <label for="q3">Your answer:</label>
+                    <input type="text" id="q3" name="q3" placeholder="Enter answer">
+                </div>
+                <button class="btn-check" onclick="checkQuestion('q3')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('h3')">💡 Hint</button>
+                <div class="hint" id="h3">The adjusted trial balance happens BEFORE closing entries, so RE still has its old balance.</div>
+                <div class="feedback" id="feedback3"></div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question" data-answer="end">
+                <div class="question-text">4. The balance of Retained Earnings on the post-closing trial balance is the balance at the ___ of the period.</div>
+                <div class="input-group">
+                    <label for="q4">Your answer:</label>
+                    <input type="text" id="q4" name="q4" placeholder="Enter answer">
+                </div>
+                <button class="btn-check" onclick="checkQuestion('q4')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('h4')">💡 Hint</button>
+                <div class="hint" id="h4">POST-closing means after all closing entries are done, so RE has been updated with net income/loss.</div>
+                <div class="feedback" id="feedback4"></div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question" data-answer="false">
+                <div class="question-text">5. Accumulated Depreciation is closed out at the end of each period.</div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q5" id="q5a" value="true"><label for="q5a">True</label></div>
+                    <div class="option"><input type="radio" name="q5" id="q5b" value="false"><label for="q5b">False</label></div>
+                </div>
+                <button class="btn-check" onclick="checkQuestion('q5')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('h5')">💡 Hint</button>
+                <div class="hint" id="h5">Accumulated Depreciation is a PERMANENT (contra-asset) account. Only TEMPORARY accounts get closed.</div>
+                <div class="feedback" id="feedback5"></div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question" data-answer="permanent">
+                <div class="question-text">6. The post-closing trial balance contains all ___ accounts.</div>
+                <div class="input-group">
+                    <label for="q6">Your answer:</label>
+                    <input type="text" id="q6" name="q6" placeholder="Enter answer">
+                </div>
+                <button class="btn-check" onclick="checkQuestion('q6')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('h6')">💡 Hint</button>
+                <div class="hint" id="h6">After closing entries, all temporary accounts have zero balance. What type of accounts remain?</div>
+                <div class="feedback" id="feedback6"></div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question" data-answer="loss">
+                <div class="question-text">7. If Income Summary has a debit balance during the closing process prior to being closed out, it indicates that a company has a net ___ for the period.</div>
+                <div class="input-group">
+                    <label for="q7">Your answer:</label>
+                    <input type="text" id="q7" name="q7" placeholder="Enter answer">
+                </div>
+                <button class="btn-check" onclick="checkQuestion('q7')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('h7')">💡 Hint</button>
+                <div class="hint" id="h7">Debit balance in Income Summary means Expenses > Revenues. What does that indicate?</div>
+                <div class="feedback" id="feedback7"></div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question" data-answer="income">
+                <div class="question-text">8. If Income Summary has a credit balance during the closing process prior to being closed out, it indicates that a company has a net ___ for the period.</div>
+                <div class="input-group">
+                    <label for="q8">Your answer:</label>
+                    <input type="text" id="q8" name="q8" placeholder="Enter answer">
+                </div>
+                <button class="btn-check" onclick="checkQuestion('q8')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('h8')">💡 Hint</button>
+                <div class="hint" id="h8">Credit balance in Income Summary means Revenues > Expenses. This is profitable!</div>
+                <div class="feedback" id="feedback8"></div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question" data-answer="temporary">
+                <div class="question-text">9. The purpose of closing entries is to close out all ___ accounts.</div>
+                <div class="input-group">
+                    <label for="q9">Your answer:</label>
+                    <input type="text" id="q9" name="q9" placeholder="Enter answer">
+                </div>
+                <button class="btn-check" onclick="checkQuestion('q9')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('h9')">💡 Hint</button>
+                <div class="hint" id="h9">Remember R.E.I.D.? Revenues, Expenses, Income Summary, Dividends - these all get closed.</div>
+                <div class="feedback" id="feedback9"></div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question" data-answer="retained earnings">
+                <div class="question-text">10. If the company sustained a net loss for the year, ___ ___ is debited.</div>
+                <div class="input-group">
+                    <label for="q10">Your answer (two words):</label>
+                    <input type="text" id="q10" name="q10" placeholder="Enter answer">
+                </div>
+                <button class="btn-check" onclick="checkQuestion('q10')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('h10')">💡 Hint</button>
+                <div class="hint" id="h10">Net loss DECREASES this equity account. Remember R.E.I.D. step 3?</div>
+                <div class="feedback" id="feedback10"></div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question" data-answer="income summary">
+                <div class="question-text">11. If the company sustained a net income for the year, ___ ___ is debited.</div>
+                <div class="input-group">
+                    <label for="q11">Your answer (two words):</label>
+                    <input type="text" id="q11" name="q11" placeholder="Enter answer">
+                </div>
+                <button class="btn-check" onclick="checkQuestion('q11')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('h11')">💡 Hint</button>
+                <div class="hint" id="h11">To close this account with a CREDIT balance (net income), we debit it. Then credit Retained Earnings.</div>
+                <div class="feedback" id="feedback11"></div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question" data-answer="dividends">
+                <div class="question-text">12. ___ has/have the effect of decreasing Retained Earnings without reducing income.</div>
+                <div class="input-group">
+                    <label for="q12">Your answer:</label>
+                    <input type="text" id="q12" name="q12" placeholder="Enter answer">
+                </div>
+                <button class="btn-check" onclick="checkQuestion('q12')">Check Answer</button>
+                <button class="btn-hint" onclick="toggleHint('h12')">💡 Hint</button>
+                <div class="hint" id="h12">This is the "D" in R.E.I.D. - a distribution to shareholders that reduces RE but isn't an expense.</div>
+                <div class="feedback" id="feedback12"></div>
+            </div>
+        </div>
+
+        <div class="summary">
+            <h2>Quiz Complete!</h2>
+            <p>Check all your answers to see your final score.</p>
+            <p id="finalScore"></p>
+        </div>
+    </div>
+
+    <script>
+        const answers = {
+            'q1': 'zero',
+            'q2': 'debit',
+            'q3': 'beginning',
+            'q4': 'end',
+            'q5': 'false',
+            'q6': 'permanent',
+            'q7': 'loss',
+            'q8': 'income',
+            'q9': 'temporary',
+            'q10': 'retained earnings',
+            'q11': 'income summary',
+            'q12': 'dividends'
+        };
+
+        let checkedQuestions = new Set();
+        let correctQuestions = new Set();
+
+        function checkQuestion(qName) {
+            const question = document.querySelector(`input[name="${qName}"], #${qName}`);
+            const qNum = qName.replace('q', '');
+            const feedback = document.getElementById(`feedback${qNum}`);
+            const correctAnswer = answers[qName];
+
+            let userAnswer;
+            if (question.type === 'text') {
+                userAnswer = question.value.trim().toLowerCase();
+            } else {
+                const selected = document.querySelector(`input[name="${qName}"]:checked`);
+                if (!selected) {
+                    feedback.className = 'feedback show incorrect';
+                    feedback.textContent = '⚠️ Please select an answer first.';
+                    return;
+                }
+                userAnswer = selected.value;
+            }
+
+            if (!userAnswer) {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '⚠️ Please enter an answer first.';
+                return;
+            }
+
+            checkedQuestions.add(qName);
+
+            if (userAnswer === correctAnswer) {
+                feedback.className = 'feedback show correct';
+                feedback.textContent = '✓ Correct! Great job!';
+                correctQuestions.add(qName);
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = `✗ Incorrect. The correct answer is: ${correctAnswer}`;
+                correctQuestions.delete(qName);
+            }
+
+            updateProgress();
+        }
+
+        function toggleHint(hintId) {
+            const hint = document.getElementById(hintId);
+            hint.classList.toggle('show');
+        }
+
+        function updateProgress() {
+            const progressBar = document.getElementById('progressBar');
+            const percentage = Math.round((checkedQuestions.size / 12) * 100);
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = `${checkedQuestions.size}/12 (${percentage}%)`;
+
+            if (checkedQuestions.size === 12) {
+                const finalScore = document.getElementById('finalScore');
+                const scorePercent = Math.round((correctQuestions.size / 12) * 100);
+                finalScore.textContent = `Final Score: ${correctQuestions.size}/12 (${scorePercent}%)`;
+            }
+        }
+    </script>
+</body>
+</html>
